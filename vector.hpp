@@ -11,15 +11,27 @@ namespace ft
 	{
 	};
 
-	template <typename T, typename  Alloc = Alloc<T> >
+	template <class T, class Alloc = std::allocator<T> >
 	class vector
 	{
+	public:
+		typedef Alloc allocator_type;
+		typedef T value_type;
+		typedef typename Alloc::reference reference;
+		typedef typename Alloc::const_reference const_reference;
+		// typedef implementation defined iterator;		
+		// typedef implementation defined const_iterator;	
+		// typedef implementation defined size_type;		
+		// typedef implementation defined difference_type; 
+		typedef typename Alloc::pointer pointer;
+		typedef typename Alloc::const_pointer const_pointer typedef std::reverse_iterator<iterator> reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+
 	private:
-		Alloc	alloc;
 		T	*data;
-		// int capacity;
-		// int	length;
-		// int	size;
+		int capacity;
+		int	length;
+		int	size;
 	public:
 		//construct
 		explicit vector(const allocator_type &alloc = allocator_type())
