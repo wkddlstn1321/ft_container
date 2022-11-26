@@ -2,19 +2,26 @@
 #include<vector>
 #include<iostream>
 
-typedef int asd;
-typedef asd qwe;
-typedef qwe qqq;
+using namespace std;
 
-void	test(const qqq a = 10)
+template <typename T>
+T max(T a, T b)
 {
-	std::cout << a << std::endl;
+	return (a > b ? a : b);
+}
+
+template <>
+double max(double a, double b)
+{
+	cout << a << " " << b << "중 큰수는 ? " << endl;
+	return (a > b ? a : b);
 }
 
 int	main(void)
 {
-	test(30);
-	std::vector<int> vec = {1,2,3,4,5};
+	cout << max(5, 6) << endl;
+	cout << max(12.5, 16.7) << endl;
+	// std::vector<int> vec = {1,2,3,4,5};
 	// std::vector<int> vec2;
 	// std::vector<int>::iterator i = vec.begin();
 	// std::vector<int>::iterator j = vec.end();
