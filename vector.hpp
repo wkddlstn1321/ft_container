@@ -6,26 +6,22 @@
 
 namespace ft
 {
-	template <typename T>
-	class Alloc
-	{
-	};
-
 	template <class T, class Alloc = std::allocator<T> >
 	class vector
 	{
 	public:
-		typedef Alloc allocator_type;
 		typedef T value_type;
-		typedef typename Alloc::reference reference;
-		typedef typename Alloc::const_reference const_reference;
-		// typedef implementation defined iterator;		
-		// typedef implementation defined const_iterator;	
-		// typedef implementation defined size_type;		
-		// typedef implementation defined difference_type; 
-		typedef typename Alloc::pointer pointer;
-		typedef typename Alloc::const_pointer const_pointer typedef std::reverse_iterator<iterator> reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+		typedef Alloc allocator_type;
+		typedef typename allocator_type::reference reference;
+		typedef typename allocator_type::const_reference const_reference;
+		typedef typename allocator_type::pointer pointer;
+		typedef typename allocator_type::const_pointer const_pointer
+		// typedef implementation defined iterator;
+		// typedef implementation defined const_iterator;
+		// typedef implementation defined reverse_iterator;
+		// typedef implementation defined const_reverse_iterator;
+		typedef ft::iterator_traits<iterator>::difference_type difference_type;
+		typedef implementation defined size_type;
 
 	private:
 		T	*data;
@@ -48,6 +44,12 @@ namespace ft
 
 		}
 		vector(const vector &x)
+		{
+
+		}
+
+		//destructor
+		~vector()
 		{
 
 		}
@@ -93,12 +95,6 @@ namespace ft
 		const_reference back() const;
 		value_type *data() noexcept;
 		const value_type *data() const noexcept;
-
-		//Modifiers
-
-		// ~vector()
-		// {
-		// }
 
 		// // Modifieres
 		template <class InputIterator>

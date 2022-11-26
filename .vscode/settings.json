@@ -17,6 +17,8 @@
 		"__config": "cpp",
 		"__node_handle": "cpp",
 		"__bit_reference": "cpp",
-		"iterator": "cpp"
+		"iterator": "cpp",
+		"memory_resource": "cpp",
+		"sstream": "cpp"
 	}
 }
