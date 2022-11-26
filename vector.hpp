@@ -24,11 +24,11 @@ namespace ft
 		typedef typename allocator_type::size_type size_type;
 
 	//friend keyword need protected not private
-	// protected:
-		// T	*data;
-		// int capacity;
-		// int	length;
-		// int	size;
+	protected:
+		value_type	*data;
+		int capacity;
+		int	length;
+		int	size;
 
 	public:
 		//construct
