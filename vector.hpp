@@ -16,18 +16,20 @@ namespace ft
 		typedef typename allocator_type::const_reference const_reference;
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer
-		// typedef implementation defined iterator;
-		// typedef implementation defined const_iterator;
-		// typedef implementation defined reverse_iterator;
-		// typedef implementation defined const_reverse_iterator;
+		typedef ft::random_access_iterator<value_type> iterator;
+		typedef ft::random_access_iterator<const_value_type> const_iterator;
+		typedef ft::reverse_iterator<iterator> reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		typedef ft::iterator_traits<iterator>::difference_type difference_type;
-		typedef implementation defined size_type;
+		typedef typename allocator_type::size_type size_type;
 
-	private:
-		T	*data;
-		int capacity;
-		int	length;
-		int	size;
+	//friend keyword need protected not private
+	// protected:
+		// T	*data;
+		// int capacity;
+		// int	length;
+		// int	size;
+
 	public:
 		//construct
 		explicit vector(const allocator_type &alloc = allocator_type())
