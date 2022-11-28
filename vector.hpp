@@ -70,7 +70,7 @@ namespace ft
 		//Capacity
 		size_type size() const
 		{
-
+			return (this->size);
 		}
 		size_type max_size() const
 		{
@@ -82,11 +82,11 @@ namespace ft
 		}
 		size_type capacity() const
 		{
-
+			return (this->capacity);
 		}
 		bool empty() const
 		{
-
+			return (this->size = 0);
 		}
 		void reserve (size_type n)
 		{
