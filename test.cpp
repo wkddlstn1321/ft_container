@@ -19,8 +19,6 @@ double max(double a, double b)
 
 int	main(void)
 {
-	cout << max(5, 6) << endl;
-	cout << max(12.5, 16.7) << endl;
 	// std::vector<int> vec = {1,2,3,4,5};
 	// std::vector<int> vec2;
 	// std::vector<int>::iterator i = vec.begin();
