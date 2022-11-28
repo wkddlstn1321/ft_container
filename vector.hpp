@@ -29,15 +29,27 @@ namespace ft
 		pointer			data;
 		size_type		capacity;
 		size_type		size;
+
 	public:
 		//construct
 		explicit vector(const allocator_type &alloc = allocator_type())
 		{
-
+			this->alloc = alloc;
+			this->data = 0;
+			this->capacity = 0;
+			this->size = 0;
 		}
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 		{
-
+			this->alloc = alloc;
+			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
+			this->data = this->alloc.allocate(n);
+			this->capacity = n;
+			this->size = n;
+			for (size_type i = 0 ; i < n ; i++)
+			{
+				this->alloc.construct(this->data + i, val);
+			}
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())

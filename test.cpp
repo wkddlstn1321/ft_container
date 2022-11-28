@@ -4,23 +4,13 @@
 
 using namespace std;
 
-template <typename T>
-T max(T a, T b)
-{
-	return (a > b ? a : b);
-}
-
-template <>
-double max(double a, double b)
-{
-	cout << a << " " << b << "중 큰수는 ? " << endl;
-	return (a > b ? a : b);
-}
-
 int	main(void)
 {
-	// std::vector<int> vec = {1,2,3,4,5};
-	// std::vector<int> vec2;
+	std::vector<int> vec;
+	// cout << vec.max_size();
+	vector<int> vec2(461, 2);
+	cout << vec2.size() << endl;
+	// std::vector<int> vec2();
 	// std::vector<int>::iterator i = vec.begin();
 	// std::vector<int>::iterator j = vec.end();
 	// // std::cout << vec.capacity() << std::endl;
