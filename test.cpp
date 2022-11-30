@@ -2,27 +2,43 @@
 #include<vector>
 #include<iostream>
 #include<memory>
-
+#include<exception>
 using namespace std;
 
 int	main(void)
 {
-	// allocator<int> alloc;
-	std::vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-	vec.push_back(4);
-	vec.push_back(5);
-	vector<int>::iterator go_end = vec.end();
-	vec.resize(3, 123);
-	vector<int>::iterator beg = vec.begin();
-	vector<int>::iterator end = vec.end();
-	for ( ; beg != end ; beg++)
+	allocator<int>();
+	std::vector<int> vec(3);
+	// while (!vec.empty())
+	// {
+	// 	cout << vec.back() <<endl;
+	// 	vec.pop_back();
+	// }
+	try
 	{
-		cout << *beg << endl;
+		cout << vec[-1] << endl;
+		/* code */
 	}
-	cout << *(go_end - 1) << endl;
+	catch(const std::exception& e)
+	{
+		std::cout << "?" << '\n';
+	}
+	
+	// vec.pop_back();
+	// vec.pop_back();
+
+	// vec.shrink_to_fit();
+	// vector<int>::iterator go_end = vec.end();
+	// vec.resize(6, 123);
+	// vector<int>::iterator beg = vec.begin();
+	// vector<int>::iterator end = vec.end();
+	// vec.shrink_to_fit();
+	// vec.push_back(1);
+	// for ( ; beg != end ; beg++)
+	// {
+	// 	cout << *beg << endl;
+	// }
+	// cout << *(go_end - 1) << endl;
 	// cout << alloc.max_size() << endl;
 	// std::vector<int> vec2();
 	// std::vector<int>::iterator i = vec.begin();

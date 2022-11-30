@@ -64,7 +64,7 @@ namespace ft
 		//destructor
 		~vector()
 		{
-
+			this->alloc.deallocate(this->data, this->capacity);
 		}
 
 		//Capacity
@@ -74,8 +74,9 @@ namespace ft
 		}
 		size_type max_size() const
 		{
-
+			return (this->alloc.maxsize());
 		}
+		//size 현재 크기보다 작아져도 반복자는 유지되어야 함
 		void resize(size_type n, value_type val = value_type())
 		{
 
