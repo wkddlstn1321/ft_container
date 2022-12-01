@@ -5,25 +5,29 @@
 #include<exception>
 using namespace std;
 
+void	test(vector<int>::iterator& iter)
+{
+	vector<int> vec;
+	vec.push_back(1);
+	vec.push_back(2);
+	vec.push_back(3);
+	iter = vec.begin();
+	cout << *iter << endl;
+	iter++;
+}
+
 int	main(void)
 {
-	allocator<int>();
-	std::vector<int> vec(3);
+	// allocator<int>();
+	// std::vector<int> vec(3);
+	std::vector<int>::iterator iter;
+	test(iter);
+	cout << *iter << endl;
 	// while (!vec.empty())
 	// {
 	// 	cout << vec.back() <<endl;
 	// 	vec.pop_back();
 	// }
-	try
-	{
-		cout << vec[-1] << endl;
-		/* code */
-	}
-	catch(const std::exception& e)
-	{
-		std::cout << "?" << '\n';
-	}
-	
 	// vec.pop_back();
 	// vec.pop_back();
 
