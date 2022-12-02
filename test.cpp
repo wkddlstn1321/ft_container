@@ -5,24 +5,19 @@
 #include<exception>
 using namespace std;
 
-void	test(vector<int>::iterator& iter)
-{
-	vector<int> vec;
-	vec.push_back(1);
-	vec.push_back(2);
-	vec.push_back(3);
-	iter = vec.begin();
-	cout << *iter << endl;
-	iter++;
-}
-
 int	main(void)
 {
 	// allocator<int>();
-	// std::vector<int> vec(3);
-	std::vector<int>::iterator iter;
-	test(iter);
-	cout << *iter << endl;
+	std::vector<int> vec;
+
+	// std::vector<int>::iterator iter;
+	for (int i = 0 ; i < 10 ; i++)
+	{
+		vec.push_back(i);
+	}
+	cout << vec.at(-1) << endl;
+	// test(iter);
+	// cout << vec[-1] << endl;
 	// while (!vec.empty())
 	// {
 	// 	cout << vec.back() <<endl;

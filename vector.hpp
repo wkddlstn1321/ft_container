@@ -25,30 +25,30 @@ namespace ft
 
 	//friend keyword need protected not private
 	protected:
-		allocator_type	alloc;
-		pointer			data;
-		size_type		capacity;
-		size_type		size;
+		allocator_type	_alloc;
+		pointer			_data;
+		size_type		_capacity;
+		size_type		_size;
 
 	public:
 		//construct
 		explicit vector(const allocator_type &alloc = allocator_type())
 		{
-			this->alloc = alloc;
-			this->data = 0;
-			this->capacity = 0;
-			this->size = 0;
+			this->_alloc = alloc;
+			this->_data = 0;
+			this->_capacity = 0;
+			this->_size = 0;
 		}
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 		{
-			this->alloc = alloc;
+			this->_alloc = alloc;
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
-			this->data = this->alloc.allocate(n);
-			this->capacity = n;
-			this->size = n;
+			this->_data = this->_alloc.allocate(n);
+			this->_capacity = n;
+			this->_size = n;
 			for (size_type i = 0 ; i < n ; i++)
 			{
-				this->alloc.construct(this->data + i, val);
+				this->_alloc.construct(this->_data + i, val);
 			}
 		}
 		template <class InputIterator>
@@ -64,17 +64,17 @@ namespace ft
 		//destructor
 		~vector()
 		{
-			this->alloc.deallocate(this->data, this->capacity);
+			this->_alloc.deallocate(this->_data, this->capacity);
 		}
 
 		//Capacity
 		size_type size() const
 		{
-			return (this->size);
+			return (this->_size);
 		}
 		size_type max_size() const
 		{
-			return (this->alloc.maxsize());
+			return (this->_alloc.maxsize());
 		}
 		//size 현재 크기보다 작아져도 반복자는 유지되어야 함
 		void resize(size_type n, value_type val = value_type())
@@ -83,11 +83,11 @@ namespace ft
 		}
 		size_type capacity() const
 		{
-			return (this->capacity);
+			return (this->_capacity);
 		}
 		bool empty() const
 		{
-			return (this->size = 0);
+			return (this->_size = 0);
 		}
 		void reserve (size_type n)
 		{
@@ -99,16 +99,52 @@ namespace ft
 		}
 
 		//Element access
-		reference operator[](size_type n);
-		const_reference operator[](size_type n) const;
-		reference at(size_type n);
-		const_reference at(size_type n) const;
-		reference front();
-		const_reference front() const;
-		reference back();
-		const_reference back() const;
-		value_type *data() noexcept;
-		const value_type *data() const noexcept;
+		reference operator[](size_type n)
+		{
+			return (this->_data[n]);
+		}
+		const_reference operator[](size_type n) const
+		{
+			return (this->_data[n]);
+		}
+		reference at(size_type n)
+		{
+			if (n > 0 && n < this->_size)
+				return (this->_data[n]);
+			else
+				throw std::out_of_range("out_of_range");
+		}
+		const_reference at(size_type n) const
+		{
+			if (n > 0 && n < this->_size)
+				return (this->_data[n]);
+			else
+				throw std::out_of_range("out_of_range");
+		}
+		reference front()
+		{
+			return (*this->_data);
+		}
+		const_reference front() const
+		{
+			return (*this->_data);
+		}
+		reference back()
+		{
+			return (*(this->_data + this->size - 1))
+		}
+		const_reference back() const
+		{
+			return (*(this->_data + this->size - 1))
+		}
+		value_type *data() noexcept
+		{
+			return (this->_data);
+		}
+		const value_type *data() const noexcept
+		{
+			return (this->_data);
+		}
 
 		// // Modifieres
 		template <class InputIterator>
