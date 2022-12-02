@@ -7,15 +7,26 @@ using namespace std;
 
 int	main(void)
 {
-	// allocator<int>();
 	std::vector<int> vec;
-
-	// std::vector<int>::iterator iter;
+	vector<int> newvec;
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);
+		newvec.push_back(i);
 	}
-	cout << vec.at(-1) << endl;
+	//vec
+	//newvec
+	if (vec == newvec)
+		cout << "sames same" << endl;
+	vector<int>::iterator it = vec.begin();
+	vector<int>::iterator its = vec.end();
+	newvec.swap(vec);
+	vec.push_back(10);
+	its = newvec.end();
+	for (; it != its ; it++)
+	{
+		cout << *it << endl;
+	}
 	// test(iter);
 	// cout << vec[-1] << endl;
 	// while (!vec.empty())
