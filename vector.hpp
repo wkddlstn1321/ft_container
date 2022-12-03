@@ -92,7 +92,21 @@ namespace ft
 		}
 		void reserve (size_type n)
 		{
-
+			if (n > max_size())
+				throw std::length_error("ft::vector");
+			if (this->_capacity >= n)
+				return ;
+			pointer temp;
+			//할당 실패 시 bad_alloc throw?
+			temp = this->_alloc.allocate(n);
+			for (size_type i = 0 ; i < this->_size ; i++)
+			{
+				this->_alloc.construct(temp + i, this->_data[i]);
+				this->_alloc.destory(this->_data[i]);
+			}
+			this->_alloc.deallocate(this->_data, this->_capacity);
+			this->_data = temp;
+			this->_capacity = n;
 		}
 		void shrink_to_fit()
 		{
@@ -147,15 +161,24 @@ namespace ft
 			return (this->_data);
 		}
 
-		// // Modifieres
+		// Modifieres
 		template <class InputIterator>
 		void assign(InputIterator first, InputIterator last)
 		{
-			
+			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
 		}
-		void assign(size_type n, const value_type &val);
-		void push_back(const value_type &val);
-		void pop_back();
+		void assign(size_type n, const value_type &val)
+		{
+
+		}
+		void push_back(const value_type &val)
+		{
+
+		}
+		void pop_back()
+		{
+			this->_alloc.destory(this->_data + this->_size - 1);
+		}
 		iterator insert(iterator position, const value_type &val);
 		void insert(iterator position, size_type n, const value_type &val);
 		template <class InputIterator>
@@ -182,7 +205,13 @@ namespace ft
 			//NULL로 안바꾸면 복사된 this의 소멸자에서 문제가 생기나? 확인해봐야됨
 			temp._data = NULL;
 		}
-		void clear();
+		void clear()
+		{
+			//요소만 제거
+			for (size_type i = 0 ; i < this->_size ; i++)
+				this->_alloc.destory(this->_data[i]);
+			this->_size = 0;
+		}
 		template <class... Args>
 		iterator emplace(const_iterator position, Args &&...args);
 		template <class... Args>
