@@ -149,7 +149,10 @@ namespace ft
 
 		// // Modifieres
 		template <class InputIterator>
-		void assign(InputIterator first, InputIterator last);
+		void assign(InputIterator first, InputIterator last)
+		{
+			
+		}
 		void assign(size_type n, const value_type &val);
 		void push_back(const value_type &val);
 		void pop_back();
