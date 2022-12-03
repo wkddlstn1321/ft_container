@@ -161,7 +161,23 @@ namespace ft
 		iterator erase(iterator first, iterator last);
 		void swap(vector &x)
 		{
-			
+			//swap 후에도 반복자는 유효
+			//물론 이제는 바뀐 컨테이너를 가리키는
+			//ex) iter = vec[0] -> vec.swap(vec2) -> iter = vec2[0] ㅇㅇ
+			vector temp;
+
+			temp._data = x._data;
+			temp._capacity = x._capacity;
+			temp._size = x._size;
+			x._data = this->_data;
+			x._capacity = this->_capacity;
+			x._size = this->_size;
+			this->_data = temp._data;
+			this->_capacity = temp._capacity;
+			this->_size = temp._size;
+
+			//NULL로 안바꾸면 복사된 this의 소멸자에서 문제가 생기나? 확인해봐야됨
+			temp._data = NULL;
 		}
 		void clear();
 		template <class... Args>
