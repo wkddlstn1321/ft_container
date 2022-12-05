@@ -13,24 +13,15 @@ int	main(void)
 	{
 		vec.push_back(i);
 	}
-	//vec
-	//newvec
-	// vector<int>::iterator it = vec.begin();
-	// vector<int>::iterator its = vec.end();
-	// vec.clear();
-	// vec.insert(vec.begin() + 4, 122);
-	vec.pop_back();
-	vec.pop_back();
-	vec.pop_back();
-	vec.pop_back();
+	vector<int>::iterator it = vec.begin();
+	vector<int>::iterator its = vec.end();
+	vec.resize(3, 5);
 	cout << vec.size() << endl;
 	cout << vec.capacity() << endl;
-	vec.resize(vec.max_size() + 1);
-	cout << vec.capacity() << endl;
-	// for (; it != its ; it++)
-	// {
-	// 	cout << *it << endl;
-	// }
+	for (; it != its ; it++)
+	{
+		cout << *it << endl;
+	}
 	// cout << vec.size();
 	// test(iter);
 	// cout << vec[-1] << endl;

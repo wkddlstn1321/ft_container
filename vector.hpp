@@ -80,10 +80,26 @@ namespace ft
 		//size 현재 크기보다 작아져도 반복자는 유지되어야 함
 		void resize(size_type n, value_type val = value_type())
 		{
-			if (n > max_size())
-				throw std::length_error("ft::vector");
+			//n이 max_size() 보다 큰 경우 예외처리 reserve가 해줌
+			//재할당 할 경우
 			if (n > this->_capacity)
+			{
 				reserve(n);
+				for (size_type i = this->_size ; i < n ; i++)
+					this->_alloc.construct(this->_data[i], val);
+			}
+			else
+			{
+				//축소될 경우
+				if (n < this->_size)
+					for (size_type i = n ; i < this->_size ; i++)
+						this->_alloc.destory(this->_data[i]);
+				//채우기
+				else if (n > this->_size)
+					for (size_type i = this->_size ; i < n ; i++)
+						this->_alloc.construct(this->_data[i], val);
+			}
+			this->_size = n;
 		}
 		size_type capacity() const
 		{
@@ -111,10 +127,10 @@ namespace ft
 			this->_data = temp;
 			this->_capacity = n;
 		}
-		void shrink_to_fit()
-		{
-
-		}
+		//구현해야되는지 애매함
+		// void shrink_to_fit()
+		// {
+		// }
 
 		//Element access
 		reference operator[](size_type n)
