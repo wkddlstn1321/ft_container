@@ -25,7 +25,7 @@ int	main(void)
 	vec.pop_back();
 	cout << vec.size() << endl;
 	cout << vec.capacity() << endl;
-	vec.reserve(17);
+	vec.resize(vec.max_size() + 1);
 	cout << vec.capacity() << endl;
 	// for (; it != its ; it++)
 	// {

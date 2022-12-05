@@ -20,6 +20,7 @@
 		"iterator": "cpp",
 		"memory_resource": "cpp",
 		"sstream": "cpp",
-		"ostream": "cpp"
+		"ostream": "cpp",
+		"stdexcept": "cpp"
 	}
 }

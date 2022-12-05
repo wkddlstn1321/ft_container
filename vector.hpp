@@ -80,7 +80,10 @@ namespace ft
 		//size 현재 크기보다 작아져도 반복자는 유지되어야 함
 		void resize(size_type n, value_type val = value_type())
 		{
-
+			if (n > max_size())
+				throw std::length_error("ft::vector");
+			if (n > this->_capacity)
+				reserve(n);
 		}
 		size_type capacity() const
 		{
