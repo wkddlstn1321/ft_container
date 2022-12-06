@@ -8,20 +8,25 @@ using namespace std;
 int	main(void)
 {
 	std::vector<int> vec;
-	// vector<int> newvec;
+	vector<int> newvec;
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);
 	}
-	vector<int>::iterator it = vec.begin();
-	vector<int>::iterator its = vec.end();
-	vec.resize(3, 5);
+	// newvec.push_back(999);
+	// newvec.push_back(999);
+	// newvec.push_back(999);
+	vector<int>::iterator it = newvec.begin();
+	vector<int>::iterator its = newvec.end();
+	// std::copy(it, its, vec.begin());
+	// vec.assign(it, its);
+	it = vec.begin();
+	its = vec.end();
 	cout << vec.size() << endl;
-	cout << vec.capacity() << endl;
-	for (; it != its ; it++)
-	{
-		cout << *it << endl;
-	}
+	cout << its - it << endl;
+	// int	i = 0;
+	// for (; it != its ; it++, i++)
+	// 	cout << *it << " i = " << i << endl;
 	// cout << vec.size();
 	// test(iter);
 	// cout << vec[-1] << endl;

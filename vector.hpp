@@ -185,25 +185,74 @@ namespace ft
 		void assign(InputIterator first, InputIterator last)
 		{
 			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
+			this->clear();
+			size_type n = std::distance(first, last);
+			if (n > this->_capacity)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			std::copy(first, last, this->_data);
+			this->_size = n;
 		}
 		void assign(size_type n, const value_type &val)
 		{
-
+			this->clear();
+			size_type n = std::distance(first, last);
+			if (n > this->_capacity)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			for (size_type i = 0 ; i < n ; i++)
+				this->_alloc.construct(this->_data + i, val);
+			this->_size = n;
 		}
 		void push_back(const value_type &val)
 		{
-
+			size_type n = this->_size + 1;
+			if (this->_capacity < n)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			this->_alloc.construct(this->_data + this->_size, val);
+			this->_size++;
 		}
 		void pop_back()
 		{
-			this->_alloc.destory(this->_data + this->_size - 1);
+			this->_size--;
+			this->_alloc.destory(this->_data[this->_size - 1]);
 		}
-		iterator insert(iterator position, const value_type &val);
-		void insert(iterator position, size_type n, const value_type &val);
+		iterator insert(iterator position, const value_type &val)
+		{
+			size_type n = this->_size + 1;
+			if (n > this->_capacity)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			this->_size++;
+
+		}
+		void insert(iterator position, size_type n, const value_type &val)
+		{
+
+		}
 		template <class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last);
-		iterator erase(iterator position);
-		iterator erase(iterator first, iterator last);
+		void insert(iterator position, InputIterator first, InputIterator last)
+		{
+
+		}
+		iterator erase(iterator position)
+		{
+			size_type n = position - this->_data;
+			this->_size--;
+		}
+		iterator erase(iterator first, iterator last)
+		{
+
+		}
 		void swap(vector &x)
 		{
 			//swap 후에도 반복자는 유효
