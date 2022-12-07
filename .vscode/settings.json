@@ -21,6 +21,17 @@
 		"memory_resource": "cpp",
 		"sstream": "cpp",
 		"ostream": "cpp",
-		"stdexcept": "cpp"
+		"stdexcept": "cpp",
+		"functional": "cpp",
+		"iosfwd": "cpp",
+		"version": "cpp",
+		"atomic": "cpp",
+		"cmath": "cpp",
+		"complex": "cpp",
+		"type_traits": "cpp",
+		"__functional_03": "cpp",
+		"algorithm": "cpp",
+		"bit": "cpp",
+		"utility": "cpp"
 	}
 }

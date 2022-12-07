@@ -3,6 +3,7 @@
 #include<iostream>
 #include<memory>
 #include<exception>
+#include<type_traits>
 using namespace std;
 
 int	main(void)
@@ -23,7 +24,7 @@ int	main(void)
 	it = vec.begin();
 	its = vec.end();
 	cout << vec.size() << endl;
-	cout << its - it << endl;
+	cout << its - it - 5 << endl;
 	// int	i = 0;
 	// for (; it != its ; it++, i++)
 	// 	cout << *it << " i = " << i << endl;

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
+#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -251,7 +252,6 @@ namespace ft
 		}
 		iterator erase(iterator first, iterator last)
 		{
-
 		}
 		void swap(vector &x)
 		{
