@@ -8,8 +8,9 @@ using namespace std;
 
 int	main(void)
 {
+
 	std::vector<int> vec;
-	vector<int> newvec;
+	vector<int> newvec(10, 3);
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);
@@ -17,8 +18,8 @@ int	main(void)
 	// newvec.push_back(999);
 	// newvec.push_back(999);
 	// newvec.push_back(999);
-	vector<int>::iterator it = newvec.begin();
-	vector<int>::iterator its = newvec.end();
+	vector<int>::iterator it = vec.begin();
+	vector<int>::iterator its = vec.end();
 	// std::copy(it, its, vec.begin());
 	// vec.assign(it, its);
 	it = vec.begin();

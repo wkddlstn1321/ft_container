@@ -5,6 +5,7 @@
 #include <memory>
 #include <algorithm>
 #include "iterator_traits.hpp"
+#include "type_traits.hpp"
 
 namespace ft
 {
@@ -17,11 +18,11 @@ namespace ft
 		typedef typename allocator_type::reference				reference;
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
-		typedef typename allocator_type::const_pointer			const_pointer
-		typedef ft::random_access_iterator<value_type>			iterator;
-		typedef ft::random_access_iterator<const_value_type>	const_iterator;
-		typedef ft::reverse_iterator<iterator>					reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+		typedef typename allocator_type::const_pointer			const_pointer;
+		// typedef ft::random_access_iterator<value_type>			iterator;
+		// typedef ft::random_access_iterator<const_value_type>	const_iterator;
+		// typedef ft::reverse_iterator<iterator>					reverse_iterator;
+		// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef ft::iterator_traits<iterator>::difference_type	difference_type;
 		typedef typename allocator_type::size_type				size_type;
 
@@ -45,27 +46,42 @@ namespace ft
 		{
 			this->_alloc = alloc;
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
+			if (n > this->max_size())
+				throw std::length_error("ft::vector");
 			this->_data = this->_alloc.allocate(n);
 			this->_capacity = n;
 			this->_size = n;
 			for (size_type i = 0 ; i < n ; i++)
 			{
-				this->_alloc.construct(this->_data + i, val);
+				this->_alloc.construct(this->_data[i], val);
 			}
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
 		{
-
+			size_type n = std::distance(first, last);
+			this->_alloc = alloc;
+			this->_data = this->_alloc.allocate(n);
+			this->_capacity = n;
+			this->_size = n;
+			std::copy(first, last, this->_data);
 		}
 		vector(const vector &x)
 		{
-
+			this->_alloc(x._alloc);
+			this->_data = this->_alloc.allocate(n);
+			this->_size = x.size;
+			this->_capacity = x.capacity;
+			std::copy(x.begin(), x.end(), this->_data);
 		}
 
 		//destructor
 		~vector()
 		{
+			//alloc.destory???
+			size_type n = this->_size;
+			while (size_type i = 0 ; i < n ; i++)
+				this->_alloc.destory(this->_data[i]);
 			this->_alloc.deallocate(this->_data, this->capacity);
 		}
 
@@ -166,17 +182,17 @@ namespace ft
 		}
 		reference back()
 		{
-			return (*(this->_data + this->size - 1))
+			return (*(this->_data + this->size - 1));
 		}
 		const_reference back() const
 		{
-			return (*(this->_data + this->size - 1))
+			return (*(this->_data + this->size - 1));
 		}
-		value_type *data() noexcept
+		value_type *data() throw()
 		{
 			return (this->_data);
 		}
-		const value_type *data() const noexcept
+		const value_type *data() const throw()
 		{
 			return (this->_data);
 		}
@@ -281,9 +297,15 @@ namespace ft
 			this->_size = 0;
 		}
 		template <class... Args>
-		iterator emplace(const_iterator position, Args &&...args);
+		iterator emplace(const_iterator position, Args &&...args)
+		{
+
+		}
 		template <class... Args>
-		void emplace_back(Args &&...args);
+		void emplace_back(Args &&...args)
+		{
+
+		}
 
 		// Allocator
 		allocator_type get_allocator() const
