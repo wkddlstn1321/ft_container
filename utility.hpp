@@ -17,18 +17,21 @@ namespace ft
 		pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
 		pair(const first_type& a, const second_type& b) : first(a), second(b) {}
 
-		pair& operator= (const pair& pr);
-		// void swap(pair &pr) noexcept(noexcept(swap(first, pr.first)) &&noexcept(swap(second, pr.second)))
-		// {
-		// 	swap(first, pr.first);
-		// 	swap(second, pr.second);
-		// }
+		pair& operator= (const pair& pr)
+		{
+			first = pr.first;
+			second = pr.second;
+			return (*this);
+		}
 	};
+
+	//make_pair
 	template <class T1, class T2>
 	ft::pair<T1, T2> make_pair(T1 x, T2 y)
 	{
 		return (ft::pair<T1, T2>(x, y));
 	}
+
 	//Non Member func
 	template <class T1, class T2>
 	bool operator==(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
@@ -60,9 +63,6 @@ namespace ft
 	{
 		return (!(lhs<rhs));
 	}
-	// template <class T1, class T2>
-	// void swap(pair<T1, T2> &x, pair<T1, T2> &y) noexcept(noexcept(x.swap(y)));
-	// get
 }
 
 #endif
