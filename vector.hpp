@@ -3,9 +3,10 @@
 
 #include <iostream>
 #include <memory>
-#include <algorithm>
 #include "iterator_traits.hpp"
 #include "type_traits.hpp"
+#include "random_access_iterator.hpp"
+#include "algorithm.hpp"
 
 namespace ft
 {
@@ -19,11 +20,11 @@ namespace ft
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
 		typedef typename allocator_type::const_pointer			const_pointer;
-		// typedef ft::random_access_iterator<value_type>			iterator;
+		typedef ft::random_access_iterator<value_type>			iterator;
 		// typedef ft::random_access_iterator<const_value_type>	const_iterator;
 		// typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-		typedef ft::iterator_traits<iterator>::difference_type	difference_type;
+		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 		typedef typename allocator_type::size_type				size_type;
 
 	//friend keyword need protected not private
@@ -69,9 +70,9 @@ namespace ft
 		vector(const vector &x)
 		{
 			this->_alloc(x._alloc);
-			this->_data = this->_alloc.allocate(n);
-			this->_size = x.size;
-			this->_capacity = x.capacity;
+			this->_data = this->_alloc.allocate(x.capacity());
+			this->_size = x.size();
+			this->_capacity = x.capacity();
 			std::copy(x.begin(), x.end(), this->_data);
 		}
 
@@ -144,10 +145,6 @@ namespace ft
 			this->_data = temp;
 			this->_capacity = n;
 		}
-		//구현해야되는지 애매함
-		// void shrink_to_fit()
-		// {
-		// }
 
 		//Element access
 		reference operator[](size_type n)
@@ -215,7 +212,6 @@ namespace ft
 		void assign(size_type n, const value_type &val)
 		{
 			this->clear();
-			size_type n = std::distance(first, last);
 			if (n > this->_capacity)
 			{
 				reserve(n);
@@ -243,13 +239,13 @@ namespace ft
 		}
 		iterator insert(iterator position, const value_type &val)
 		{
-			size_type n = this->_size + 1;
-			if (n > this->_capacity)
-			{
-				reserve(n);
-				this->_capacity = n;
-			}
-			this->_size++;
+			// size_type n = this->_size + 1;
+			// if (n > this->_capacity)
+			// {
+			// 	reserve(n);
+			// 	this->_capacity = n;
+			// }
+			// this->_size++;
 
 		}
 		void insert(iterator position, size_type n, const value_type &val)
@@ -296,16 +292,6 @@ namespace ft
 				this->_alloc.destory(this->_data[i]);
 			this->_size = 0;
 		}
-		template <class... Args>
-		iterator emplace(const_iterator position, Args &&...args)
-		{
-
-		}
-		template <class... Args>
-		void emplace_back(Args &&...args)
-		{
-
-		}
 
 		// Allocator
 		allocator_type get_allocator() const
@@ -334,7 +320,7 @@ namespace ft
 	template <class T, class Alloc>
 	bool operator<=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
 	{
-		return (!(rhs < lhs))
+		return (!(rhs < lhs));
 	}
 	template <class T, class Alloc>
 	bool operator>(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
