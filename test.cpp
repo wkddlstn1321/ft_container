@@ -10,22 +10,24 @@ int	main(void)
 {
 
 	std::vector<int> vec;
-	vector<int> newvec(10, 3);
+	ft::vector<int> newvec;
 	for (int i = 0 ; i < 10 ; i++)
 	{
-		vec.push_back(i);
+		newvec.push_back(i);
 	}
 	// newvec.push_back(999);
 	// newvec.push_back(999);
 	// newvec.push_back(999);
-	vector<int>::iterator it = vec.begin();
-	vector<int>::iterator its = vec.end();
+	ft::vector<int>::iterator it = newvec.begin();
+	ft::vector<int>::iterator its = newvec.end();
+	// cout << *it << endl;
+	// for ( ; it != its; it++)
 	// std::copy(it, its, vec.begin());
 	// vec.assign(it, its);
-	it = vec.begin();
-	its = vec.end();
-	cout << vec.size() << endl;
-	cout << its - it - 5 << endl;
+	// it = vec.begin();
+	// its = vec.end();
+	// cout << vec.size() << endl;
+	// cout << its - it - 5 << endl;
 	// int	i = 0;
 	// for (; it != its ; it++, i++)
 	// 	cout << *it << " i = " << i << endl;
