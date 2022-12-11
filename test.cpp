@@ -8,18 +8,19 @@ using namespace std;
 
 int	main(void)
 {
-
+	std::allocator<int> a;
 	std::vector<int> vec;
 	ft::vector<int> newvec;
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		newvec.push_back(i);
 	}
+	// cout << newvec.size() << " " << newvec.capacity() << endl;
 	// newvec.push_back(999);
 	// newvec.push_back(999);
 	// newvec.push_back(999);
-	ft::vector<int>::iterator it = newvec.begin();
-	ft::vector<int>::iterator its = newvec.end();
+	// ft::vector<int>::iterator it = newvec.begin();
+	// ft::vector<int>::iterator its = newvec.end();
 	// cout << *it << endl;
 	// for ( ; it != its; it++)
 	// std::copy(it, its, vec.begin());

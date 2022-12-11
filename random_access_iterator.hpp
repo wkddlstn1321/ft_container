@@ -7,7 +7,7 @@
 namespace ft
 {
 	template <typename T>
-	class random_access_iterator
+	class random_access_iterator : public std::iterator<std::input_iterator_tag, T>
 	{
 	private:
 

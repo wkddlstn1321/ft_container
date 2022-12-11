@@ -2,7 +2,9 @@
 #define VECTOR_HPP
 
 #include <iostream>
+#include <iterator>
 #include <memory>
+
 #include "iterator_traits.hpp"
 #include "type_traits.hpp"
 #include "random_access_iterator.hpp"
@@ -27,13 +29,6 @@ namespace ft
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef ptrdiff_t										difference_type;
 		typedef size_t									size_type;
-
-	//friend keyword need protected not private
-	protected:
-		allocator_type	_alloc;
-		pointer			_data;
-		size_type		_capacity;
-		size_type		_size;
 
 	public:
 		//construct
@@ -84,7 +79,7 @@ namespace ft
 			size_type n = this->_size;
 			for (size_type i = 0 ; i < n ; i++)
 				this->_alloc.destory(this->_data[i]);
-			this->_alloc.deallocate(this->_data, this->capacity);
+			this->_alloc.deallocate(this->_data, this->_capacity);
 		}
 
 		//iterator
@@ -237,10 +232,7 @@ namespace ft
 			this->clear();
 			size_type n = std::distance(first, last);
 			if (n > this->_capacity)
-			{
 				reserve(n);
-				this->_capacity = n;
-			}
 			std::copy(first, last, this->_data);
 			this->_size = n;
 		}
@@ -337,6 +329,13 @@ namespace ft
 		{
 			return (this->_alloc);
 		}
+
+	// friend keyword need protected not private
+	protected:
+		allocator_type _alloc;
+		pointer _data;
+		size_type _capacity;
+		size_type _size;
 	};
 	//non member func
 	template <class T, class Alloc>
