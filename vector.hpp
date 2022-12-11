@@ -39,9 +39,8 @@ namespace ft
 
 	public:
 		//construct
-		explicit vector(const allocator_type &alloc = allocator_type())
+		explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 		{
-			this->_alloc = alloc;
 			this->_data = 0;
 			this->_capacity = 0;
 			this->_size = 0;
@@ -49,6 +48,7 @@ namespace ft
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 		{
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
+			std::cout << "check" << std::endl;
 			if (n > max_size())
 				throw std::length_error("ft::vector");
 			this->_data = this->_alloc.allocate(n);
@@ -61,10 +61,9 @@ namespace ft
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr) : _alloc(alloc)
 		{
 			size_type n = std::distance(first, last);
-			this->_alloc = alloc;
 			this->_data = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < n ; i++)
 			{
@@ -74,9 +73,8 @@ namespace ft
 			this->_size = n;
 			std::copy(first, last, this->_data);
 		}
-		vector(const vector &x)
+		vector(const vector &x) : _alloc(x._alloc)
 		{
-			this->_alloc(x._alloc);
 			size_type n = x.capacity();
 			this->_data = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < n ; i++)
@@ -85,7 +83,7 @@ namespace ft
 			}
 			this->_size = x.size();
 			this->_capacity = n;
-			std::copy(x.begin(), x.end(), this->_data);
+			// std::copy(x.begin(), x.end(), this->_data);
 		}
 
 		//destructor
@@ -172,6 +170,8 @@ namespace ft
 		}
 		void reserve (size_type n)
 		{
+			if (n == 0)
+				n = 1;
 			if (n > max_size())
 				throw std::length_error("ft::vector");
 			if (this->_capacity >= n)
@@ -265,10 +265,7 @@ namespace ft
 		{
 			size_type n = this->_size + 1;
 			if (this->_capacity < n)
-			{
-				this->reserve(n);
-				this->_capacity = n;
-			}
+				reserve(this->_capacity * 2);
 			this->_alloc.construct(this->_data + this->_size, val);
 			this->_size++;
 		}

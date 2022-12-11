@@ -5,24 +5,16 @@ using namespace std;
 
 int	main(void)
 {
-	// std::vector<int> vec;
-	ft::vector<int> newvec(10, 3);
+	std::vector<int> vec;
+	ft::vector<int> newvec;
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		newvec.push_back(i);
+		vec.push_back(i);
 	}
-	// cout << newvec.size() << " " << newvec.capacity() << endl;
-	// newvec.push_back(999);
-	// newvec.push_back(999);
-	// newvec.push_back(999);
-	// ft::vector<int>::iterator it = newvec.begin();
-	// ft::vector<int>::iterator its = newvec.end();
-	// cout << *it << endl;
-	// for ( ; it != its; it++)
-	// std::copy(it, its, vec.begin());
-	// vec.assign(it, its);
-	// it = vec.begin();
-	// its = vec.end();
+	ft::vector<int> newvec2(newvec);
+	cout << "this.size = " << newvec2.capacity() << endl;
+	cout << "vec .size = " << vec.capacity() << endl;
 }
 
 /*
