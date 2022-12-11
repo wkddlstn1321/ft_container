@@ -28,7 +28,14 @@ namespace ft
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef ptrdiff_t										difference_type;
-		typedef size_t									size_type;
+		typedef size_t											size_type;
+
+	// friend keyword need protected not private
+	protected:
+		allocator_type _alloc;
+		pointer _data;
+		size_type _capacity;
+		size_type _size;
 
 	public:
 		//construct
@@ -50,15 +57,20 @@ namespace ft
 			this->_size = n;
 			for (size_type i = 0 ; i < n ; i++)
 			{
-				this->_alloc.construct(this->_data[i], val);
+				this->_alloc.construct(this->_data + i, val);
 			}
 		}
 		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
+		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
 		{
 			size_type n = std::distance(first, last);
 			this->_alloc = alloc;
 			this->_data = this->_alloc.allocate(n);
+			for (size_type i = 0 ; i < n ; i++)
+			{
+				this->_alloc.construct(this->_data + i);
+			}
 			this->_capacity = n;
 			this->_size = n;
 			std::copy(first, last, this->_data);
@@ -66,19 +78,21 @@ namespace ft
 		vector(const vector &x)
 		{
 			this->_alloc(x._alloc);
-			this->_data = this->_alloc.allocate(x.capacity());
+			size_type n = x.capacity();
+			this->_data = this->_alloc.allocate(n);
+			for (size_type i = 0 ; i < n ; i++)
+			{
+				this->_alloc.construct(this->_data + i);
+			}
 			this->_size = x.size();
-			this->_capacity = x.capacity();
+			this->_capacity = n;
 			std::copy(x.begin(), x.end(), this->_data);
 		}
 
 		//destructor
 		~vector()
 		{
-			//alloc.destory???
-			size_type n = this->_size;
-			for (size_type i = 0 ; i < n ; i++)
-				this->_alloc.destory(this->_data[i]);
+			clear();
 			this->_alloc.deallocate(this->_data, this->_capacity);
 		}
 
@@ -134,18 +148,18 @@ namespace ft
 			{
 				reserve(n);
 				for (size_type i = this->_size ; i < n ; i++)
-					this->_alloc.construct(this->_data[i], val);
+					this->_alloc.construct(this->_data + i, val);
 			}
 			else
 			{
 				//축소될 경우
 				if (n < this->_size)
 					for (size_type i = n ; i < this->_size ; i++)
-						this->_alloc.destory(this->_data[i]);
+						this->_alloc.destory(this->_data + i);
 				//채우기
 				else if (n > this->_size)
 					for (size_type i = this->_size ; i < n ; i++)
-						this->_alloc.construct(this->_data[i], val);
+						this->_alloc.construct(this->_data + i, val);
 			}
 			this->_size = n;
 		}
@@ -168,8 +182,8 @@ namespace ft
 			temp = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < this->_size ; i++)
 			{
-				this->_alloc.construct(temp + i, this->_data[i]);
-				this->_alloc.destory(this->_data[i]);
+				this->_alloc.construct(temp + i, this->_data + i);
+				this->_alloc.destory(this->_data + i);
 			}
 			this->_alloc.deallocate(this->_data, this->_capacity);
 			this->_data = temp;
@@ -320,7 +334,7 @@ namespace ft
 		{
 			//요소만 제거
 			for (size_type i = 0 ; i < this->_size ; i++)
-				this->_alloc.destory(this->_data[i]);
+				this->_alloc.destory(this->_data + i);
 			this->_size = 0;
 		}
 
@@ -329,13 +343,6 @@ namespace ft
 		{
 			return (this->_alloc);
 		}
-
-	// friend keyword need protected not private
-	protected:
-		allocator_type _alloc;
-		pointer _data;
-		size_type _capacity;
-		size_type _size;
 	};
 	//non member func
 	template <class T, class Alloc>

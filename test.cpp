@@ -10,11 +10,12 @@ int	main(void)
 {
 	std::allocator<int> a;
 	std::vector<int> vec;
-	ft::vector<int> newvec;
-	for (int i = 0 ; i < 10 ; i++)
-	{
-		newvec.push_back(i);
-	}
+	ft::vector<int> newvec(10, 3);
+	std::allocator<int> alloc;
+	// for (int i = 0 ; i < 10 ; i++)
+	// {
+	// 	newvec.push_back(i);
+	// }
 	// cout << newvec.size() << " " << newvec.capacity() << endl;
 	// newvec.push_back(999);
 	// newvec.push_back(999);
@@ -27,50 +28,49 @@ int	main(void)
 	// vec.assign(it, its);
 	// it = vec.begin();
 	// its = vec.end();
-	// cout << vec.size() << endl;
-	// cout << its - it - 5 << endl;
-	// int	i = 0;
-	// for (; it != its ; it++, i++)
-	// 	cout << *it << " i = " << i << endl;
-	// cout << vec.size();
-	// test(iter);
-	// cout << vec[-1] << endl;
-	// while (!vec.empty())
-	// {
-	// 	cout << vec.back() <<endl;
-	// 	vec.pop_back();
-	// }
-	// vec.pop_back();
-	// vec.pop_back();
-
-	// vec.shrink_to_fit();
-	// vector<int>::iterator go_end = vec.end();
-	// vec.resize(6, 123);
-	// vector<int>::iterator beg = vec.begin();
-	// vector<int>::iterator end = vec.end();
-	// vec.shrink_to_fit();
-	// vec.push_back(1);
-	// for ( ; beg != end ; beg++)
-	// {
-	// 	cout << *beg << endl;
-	// }
-	// cout << *(go_end - 1) << endl;
-	// cout << alloc.max_size() << endl;
-	// std::vector<int> vec2();
-	// std::vector<int>::iterator i = vec.begin();
-	// std::vector<int>::iterator j = vec.end();
-	// // std::cout << vec.capacity() << std::endl;
-	// vec.push_back(5);
-	// std::cout << vec.capacity() << std::endl;
-	// vec.shrink_to_fit();
-	// std::cout << vec.capacity() << std::endl;
-	// vec.push_back(5);
-	// std::cout << vec.capacity() << std::endl;
-	// vec.insert(vec.begin(), 2);
-	// std::cout << vec.size() << "  " << *vec.begin() << std::endl;
-	// vec.swap(vec2);
-	// for (i = vec2.begin(), j = vec2.end() ; i != j ; i++)
-	// {
-	// 	std::cout << *i << std::endl;
-	// }
 }
+
+/*
+void __init(size_type n)
+{
+	if (n > max_size())
+	{
+		throw std::length_error("allocation size too big");
+	}
+	__begin = __alloc.allocate(n);
+	__end = __begin;
+	__cap = __begin + n;
+}
+
+void __construct(size_type n)
+{
+	for (; n > 0; __end++, n--)
+	{
+		__alloc.construct(__end);
+	}
+}
+
+void __construct(size_type n, T value) {
+	for ( ; n > 0 ; __end++, n--)
+	{
+		__alloc.construct(__end);
+		*__end = value;
+	}
+}
+
+void __destruct(size_type n)
+{
+	for (; n > 0 && __end--; n--)
+	{
+		__alloc.destroy(__end);
+	}
+}
+
+void __destruct(pointer until)
+{
+	for (; __end != until && __end--;)
+	{
+		__alloc.destroy(__end);
+	}
+}
+*/
