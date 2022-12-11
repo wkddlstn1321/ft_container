@@ -181,7 +181,7 @@ namespace ft
 			temp = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < this->_size ; i++)
 			{
-				this->_alloc.construct(temp + i, this->_data + i);
+				this->_alloc.construct(temp + i, *(this->_data + i));
 				this->_alloc.destroy(this->_data + i);
 			}
 			this->_alloc.deallocate(this->_data, this->_capacity);

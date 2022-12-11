@@ -1,4 +1,4 @@
-// #include<vector>
+#include<vector>
 #include"vector.hpp"
 
 using namespace std;
@@ -7,11 +7,10 @@ int	main(void)
 {
 	// std::vector<int> vec;
 	ft::vector<int> newvec(10, 3);
-	cout << newvec.max_size() << endl;
-	newvec.push_back(20);
-	// for (int i = 0 ; i < 10 ; i++)
-	// {
-	// }
+	for (int i = 0 ; i < 10 ; i++)
+	{
+		newvec.push_back(i);
+	}
 	// cout << newvec.size() << " " << newvec.capacity() << endl;
 	// newvec.push_back(999);
 	// newvec.push_back(999);
