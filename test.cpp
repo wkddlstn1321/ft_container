@@ -1,21 +1,17 @@
+// #include<vector>
 #include"vector.hpp"
-#include<vector>
-#include<iostream>
-#include<memory>
-#include<exception>
-#include<type_traits>
+
 using namespace std;
 
 int	main(void)
 {
-	std::vector<int> vec;
+	// std::vector<int> vec;
 	ft::vector<int> newvec(10, 3);
-	std::allocator<int> alloc;
-	cout << alloc.max_size() << endl;
-	for (int i = 0 ; i < 10 ; i++)
-	{
-		newvec.push_back(i);
-	}
+	cout << newvec.max_size() << endl;
+	newvec.push_back(20);
+	// for (int i = 0 ; i < 10 ; i++)
+	// {
+	// }
 	// cout << newvec.size() << " " << newvec.capacity() << endl;
 	// newvec.push_back(999);
 	// newvec.push_back(999);
