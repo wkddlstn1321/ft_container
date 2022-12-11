@@ -8,14 +8,14 @@ using namespace std;
 
 int	main(void)
 {
-	std::allocator<int> a;
 	std::vector<int> vec;
 	ft::vector<int> newvec(10, 3);
 	std::allocator<int> alloc;
-	// for (int i = 0 ; i < 10 ; i++)
-	// {
-	// 	newvec.push_back(i);
-	// }
+	cout << alloc.max_size() << endl;
+	for (int i = 0 ; i < 10 ; i++)
+	{
+		newvec.push_back(i);
+	}
 	// cout << newvec.size() << " " << newvec.capacity() << endl;
 	// newvec.push_back(999);
 	// newvec.push_back(999);

@@ -46,11 +46,10 @@ namespace ft
 			this->_capacity = 0;
 			this->_size = 0;
 		}
-		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 		{
-			this->_alloc = alloc;
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
-			if (n > this->max_size())
+			if (n > max_size())
 				throw std::length_error("ft::vector");
 			this->_data = this->_alloc.allocate(n);
 			this->_capacity = n;
@@ -137,7 +136,7 @@ namespace ft
 		}
 		size_type max_size() const
 		{
-			return (this->_alloc.maxsize());
+			return (this->_alloc.max_size());
 		}
 		//size 현재 크기보다 작아져도 반복자는 유지되어야 함
 		void resize(size_type n, value_type val = value_type())
@@ -155,7 +154,7 @@ namespace ft
 				//축소될 경우
 				if (n < this->_size)
 					for (size_type i = n ; i < this->_size ; i++)
-						this->_alloc.destory(this->_data + i);
+						this->_alloc.destroy(this->_data + i);
 				//채우기
 				else if (n > this->_size)
 					for (size_type i = this->_size ; i < n ; i++)
@@ -183,7 +182,7 @@ namespace ft
 			for (size_type i = 0 ; i < this->_size ; i++)
 			{
 				this->_alloc.construct(temp + i, this->_data + i);
-				this->_alloc.destory(this->_data + i);
+				this->_alloc.destroy(this->_data + i);
 			}
 			this->_alloc.deallocate(this->_data, this->_capacity);
 			this->_data = temp;
@@ -267,7 +266,7 @@ namespace ft
 			size_type n = this->_size + 1;
 			if (this->_capacity < n)
 			{
-				reserve(n);
+				this->reserve(n);
 				this->_capacity = n;
 			}
 			this->_alloc.construct(this->_data + this->_size, val);
@@ -276,7 +275,7 @@ namespace ft
 		void pop_back()
 		{
 			this->_size--;
-			this->_alloc.destory(this->_data[this->_size]);
+			this->_alloc.destroy(this->_data[this->_size]);
 		}
 		// iterator insert(iterator position, const value_type &val)
 		// {
@@ -303,7 +302,7 @@ namespace ft
 			if (position + 1 != end())
 				std::copy(position + 1, end(), position);
 			this->_size--;
-			this->_alloc.destory(this->_data[this->_size]);
+			this->_alloc.destroy(this->_data[this->_size]);
 			return (position);
 		}
 		// iterator erase(iterator first, iterator last)
@@ -334,7 +333,7 @@ namespace ft
 		{
 			//요소만 제거
 			for (size_type i = 0 ; i < this->_size ; i++)
-				this->_alloc.destory(this->_data + i);
+				this->_alloc.destroy(this->_data + i);
 			this->_size = 0;
 		}
 
