@@ -32,10 +32,10 @@ namespace ft
 
 	// friend keyword need protected not private
 	protected:
-		allocator_type _alloc;
-		pointer _data;
-		size_type _capacity;
-		size_type _size;
+		allocator_type	_alloc;
+		pointer			_data;
+		size_type		_capacity;
+		size_type		_size;
 
 	public:
 		//construct
@@ -48,7 +48,6 @@ namespace ft
 		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc)
 		{
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
-			std::cout << "check" << std::endl;
 			if (n > max_size())
 				throw std::length_error("ft::vector");
 			this->_data = this->_alloc.allocate(n);
@@ -61,7 +60,7 @@ namespace ft
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr) : _alloc(alloc)
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type = 0) : _alloc(alloc)
 		{
 			size_type n = std::distance(first, last);
 			this->_data = this->_alloc.allocate(n);
@@ -78,12 +77,10 @@ namespace ft
 			size_type n = x.capacity();
 			this->_data = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < n ; i++)
-			{
 				this->_alloc.construct(this->_data + i);
-			}
 			this->_size = x.size();
 			this->_capacity = n;
-			// std::copy(x.begin(), x.end(), this->_data);
+			std::copy(x.begin(), x.end(), this->_data);
 		}
 
 		//destructor
@@ -239,7 +236,8 @@ namespace ft
 
 		// Modifieres
 		template <class InputIterator>
-		void assign(InputIterator first, InputIterator last)
+		void assign(InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
 		{
 			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
 			this->clear();

@@ -6,15 +6,16 @@ using namespace std;
 int	main(void)
 {
 	std::vector<int> vec;
-	ft::vector<int> newvec;
-	for (int i = 0 ; i < 10 ; i++)
-	{
-		newvec.push_back(i);
-		vec.push_back(i);
-	}
+	ft::vector<int> newvec(3, 2);
 	ft::vector<int> newvec2(newvec);
-	cout << "this.size = " << newvec2.capacity() << endl;
-	cout << "vec .size = " << vec.capacity() << endl;
+	// for (int i = 0 ; i < 10 ; i++)
+	// {
+	// 	newvec.push_back(i);
+	// 	vec.push_back(i);
+	// }
+	// ft::vector<int> newvec2(newvec);
+	// cout << "this.size = " << newvec2.capacity() << endl;
+	// cout << "vec .size = " << vec.capacity() << endl;
 }
 
 /*
