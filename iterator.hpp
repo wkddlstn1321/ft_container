@@ -18,7 +18,11 @@ namespace ft
 			  class Reference = T&         // iterator::reference
 			  > class iterator
 	{
-
+		typedef	T value_type;
+		typedef	Distance difference_type;
+		typedef	Pointer pointer;
+		typedef	Reference reference;
+		typedef	Category iterator_category;
 	};
 }
 
