@@ -93,19 +93,19 @@ namespace ft
 		//iterator
 		iterator begin()
 		{
-			return (this->_data);
+			return (iterator(this->_data));
 		}
 		const_iterator begin() const
 		{
-			return (this->_data);
+			return (const_iterator(this->_data));
 		}
 		iterator end()
 		{
-			return (this->_data + this->_size);
+			return (iterator(this->_data + this->_size));
 		}
 		const_iterator end() const
 		{
-			return (this->_data + this->_size);
+			return (const_iterator(end()));
 		}
 		reverse_iterator rbegin()
 		{

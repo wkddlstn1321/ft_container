@@ -5,7 +5,8 @@ using namespace std;
 
 int	main(void)
 {
-	std::vector<int> vec;
+	// std::vector<int> vec(3, 2);
+	// std::vector<int> vec2(vec);
 	ft::vector<int> newvec(3, 2);
 	ft::vector<int> newvec2(newvec);
 	// for (int i = 0 ; i < 10 ; i++)

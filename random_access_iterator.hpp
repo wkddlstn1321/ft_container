@@ -38,7 +38,7 @@ namespace ft
 		{
 			random_access_iterator(this->_pointer + n);
 		}
-		reference& operator++()
+		random_access_iterator& operator++()
 		{
 			++this->_pointer;
 			return (*this);
