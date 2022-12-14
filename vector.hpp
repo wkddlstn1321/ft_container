@@ -163,7 +163,7 @@ namespace ft
 		}
 		bool empty() const
 		{
-			return (this->_size = 0);
+			return (this->_size == 0);
 		}
 		void reserve (size_type n)
 		{
@@ -200,7 +200,7 @@ namespace ft
 			if (n > 0 && n < this->_size)
 				return (this->_data[n]);
 			else
-				throw std::out_of_range("out_of_range");
+				throw std::out_of_range("ft::vector");
 		}
 		const_reference at(size_type n) const
 		{
@@ -219,11 +219,11 @@ namespace ft
 		}
 		reference back()
 		{
-			return (*(this->_data + this->size - 1));
+			return (*(this->_data + this->_size - 1));
 		}
 		const_reference back() const
 		{
-			return (*(this->_data + this->size - 1));
+			return (*(this->_data + this->_size - 1));
 		}
 		value_type *data() throw()
 		{
@@ -270,7 +270,7 @@ namespace ft
 		void pop_back()
 		{
 			this->_size--;
-			this->_alloc.destroy(this->_data[this->_size]);
+			this->_alloc.destroy(this->_data + this->_size);
 		}
 		// iterator insert(iterator position, const value_type &val)
 		// {

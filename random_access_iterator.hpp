@@ -57,9 +57,9 @@ namespace ft
 			++this->_pointer;
 			return (*this);
 		}
-		reference  operator++(int)
+		random_access_iterator  operator++(int)
 		{
-			reference tmp = *this;
+			random_access_iterator tmp = (*this);
 			++this->_pointer;
 			return (tmp);
 		}
