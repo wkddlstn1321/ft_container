@@ -272,26 +272,35 @@ namespace ft
 			this->_size--;
 			this->_alloc.destroy(this->_data + this->_size);
 		}
-		// iterator insert(iterator position, const value_type &val)
-		// {
-		// 	size_type n = this->_size + 1;
-		// 	if (n > this->_capacity)
-		// 	{
-		// 		reserve(n);
-		// 		this->_capacity = n;
-		// 	}
-		// 	this->_size++;
+		iterator insert(iterator position, const value_type &val)
+		{
+			size_type n = this->_size + 1;
+			if (n > this->_capacity)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			this->_size++;
 
-		// }
-		// void insert(iterator position, size_type n, const value_type &val)
-		// {
+		}
+		void insert(iterator position, size_type n, const value_type &val)
+		{
+			size_type dis = position - this->_data;
+			size_type n = this->_size + 1;
+			if (n > this->_capacity)
+			{
+				reserve(n);
+				this->_capacity = n;
+			}
+			std::copy()
+			this->_size += n;
+		}
+		template <class InputIterator>
+		void insert(iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
+		{
 
-		// }
-		// template <class InputIterator>
-		// void insert(iterator position, InputIterator first, InputIterator last)
-		// {
-
-		// }
+		}
 		iterator erase(iterator position)
 		{
 			if (position + 1 != end())
@@ -300,10 +309,10 @@ namespace ft
 			this->_alloc.destroy(this->_data[this->_size]);
 			return (position);
 		}
-		// iterator erase(iterator first, iterator last)
-		// {
+		iterator erase(iterator first, iterator last)
+		{
 
-		// }
+		}
 		void swap(vector &x)
 		{
 			//swap 후에도 반복자는 유효

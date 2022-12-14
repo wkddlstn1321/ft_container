@@ -28,8 +28,9 @@ int	main(void)
 	its = newvec.end();
 	vit = vec.begin();
 	vits = vec.end();
-	for ( ; it != its ; it++)
-		cout << *it << endl;
+	cout << *(it) << endl;
+	// for ( ; it != its ; it++)
+	// 	cout << *it << endl;
 	// for (; vit != vits ; vit++)
 	// 	cout << *vit << endl;
 	// for (int i = 0 ; i < 10 ; i++)

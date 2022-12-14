@@ -48,9 +48,9 @@ namespace ft
 		{
 			return (*(this->_pointer));
 		}
-		reference operator+ (difference_type n) const
+		random_access_iterator operator+ (difference_type n) const
 		{
-			random_access_iterator(this->_pointer + n);
+			return (random_access_iterator(this->_pointer + n));
 		}
 		random_access_iterator& operator++()
 		{
@@ -68,22 +68,22 @@ namespace ft
 			this->_pointer += n;
 			return (*this);
 		}
-		reference operator- (difference_type n) const
+		random_access_iterator operator- (difference_type n) const
 		{
-			return (reference(this->_pointer - n));
+			return (random_access_iterator(this->_pointer - n));
 		}
-		reference& operator--()
+		random_access_iterator& operator--()
 		{
 			--this->_pointer;
 			return (*this);
 		}
-		reference  operator--(int)
+		random_access_iterator  operator--(int)
 		{
-			reference tmp = *this;
+			random_access_iterator tmp = *this;
 			--this->_pointer;
 			return (tmp);
 		}
-		reference& operator-= (difference_type n)
+		random_access_iterator& operator-= (difference_type n)
 		{
 			this->_pointer -= n;
 			return (*this);
