@@ -71,6 +71,9 @@
 		"tuple": "cpp",
 		"typeinfo": "cpp",
 		"variant": "cpp",
-		"__functional_base": "cpp"
+		"__functional_base": "cpp",
+		"list": "cpp",
+		"set": "cpp",
+		"queue": "cpp"
 	}
 }
