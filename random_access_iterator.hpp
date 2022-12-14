@@ -22,10 +22,24 @@ namespace ft
 
 	public:
 		//copy ,default construct & copy assignable & destruct
-		random_access_iterator();
-		random_access_iterator(const random_access_iterator<T>& a);
-		~random_access_iterator();
-		random_access_iterator&	operator=(const random_access_iterator<T>& a);
+		random_access_iterator()
+		{
+			this->_pointer = NULL;
+		}
+		random_access_iterator(T* pointer)
+		{
+			this->_pointer = pointer;
+		}
+		random_access_iterator(const random_access_iterator<T>& a)
+		{
+			this->_pointer = a.base();
+		}
+		~random_access_iterator() {}
+		random_access_iterator&	operator=(const random_access_iterator<T>& a)
+		{
+			this->_pointer = a.base();
+			return (*this);
+		}
 		iterator_type base() const
 		{
 			return (this->_pointer);

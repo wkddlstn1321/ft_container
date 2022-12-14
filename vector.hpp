@@ -105,7 +105,7 @@ namespace ft
 		}
 		const_iterator end() const
 		{
-			return (const_iterator(end()));
+			return (const_iterator(this->_data + this->_size));
 		}
 		reverse_iterator rbegin()
 		{
