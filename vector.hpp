@@ -285,7 +285,9 @@ namespace ft
 		// }
 		void insert(iterator position, size_type n, const value_type &val)
 		{
-			size_type dis = position - this->_data;
+			// size_type dis = position - this->_data;
+			size_type copyDis = end() - position;
+			size_type tmpSize = this->_size;
 			this->_size += n;
 			if (this->_size > this->_capacity)
 			{
@@ -294,8 +296,14 @@ namespace ft
 				else
 					reserve(this->_capacity * 2);
 			}
-			std::copy(position, position + n, position + n);
-			for (size_type i = position - this->_data)
+			else
+			{
+				for ( ; tmpSize < this->_size ; tmpSize++)
+					this->_alloc.construct(this->_data + tmpSize, val);
+			}
+			std::copy_backward(position, position + copyDis, position + copyDis + n);
+			// for (size_type i = 0 ; i < n ; i++)
+			// 	this->_data + position + i = val;
 		}
 		// template <class InputIterator>
 		// void insert(iterator position, InputIterator first, InputIterator last,
