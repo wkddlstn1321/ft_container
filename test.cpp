@@ -7,32 +7,32 @@ int	main(void)
 {
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
-	ft::vector<int> newvec;
-	for (int i = 0 ; i < 10 ; i++)
+	// ft::vector<int> newvec;
+	for (int i = 0 ; i < 4 ; i++)
 	{
 		vec.push_back(i);
-		newvec.push_back(i);
+		// newvec.push_back(i);
 	}
-	newvec.assign(1,1);
-	cout << "newvec     " << newvec.empty() << endl;
+	vec.insert(vec.begin(), 5, 1);
+	// cout << "newvec     " << newvec.empty() << endl;
 	cout << "vec        " << vec.empty() << endl;
-	cout << "newvec.size     " << newvec.size() << endl;
+	// cout << "newvec.size     " << newvec.size() << endl;
 	cout << "vec.size        " << vec.size() << endl;
-	cout << "newvec.capacity " << newvec.capacity() << endl;
+	// cout << "newvec.capacity " << newvec.capacity() << endl;
 	cout << "vec.capacity    " << vec.capacity() << endl;
-	vector<int>::iterator vit;
-	vector<int>::iterator vits;
-	ft::vector<int>::iterator it;
-	ft::vector<int>::iterator its;
-	it = newvec.begin();
-	its = newvec.end();
-	vit = vec.begin();
-	vits = vec.end();
-	cout << *(it) << endl;
+	vector<int>::iterator vit = vec.begin();
+	vector<int>::iterator vits = vec.end();
+	// ft::vector<int>::iterator it;
+	// ft::vector<int>::iterator its;
+	// it = newvec.begin();
+	// its = newvec.end();
+	// vit = vec.begin();
+	// vits = vec.end();
+	// cout << *(it) << endl;
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
-	// for (; vit != vits ; vit++)
-	// 	cout << *vit << endl;
+	for (; vit != vits ; vit++)
+		cout << *vit << endl;
 	// for (int i = 0 ; i < 10 ; i++)
 	// {
 	// 	newvec.push_back(i);
@@ -86,4 +86,22 @@ void __destruct(pointer until)
 		__alloc.destroy(__end);
 	}
 }
+
+void reserve(size_type n) {
+	if (n <= size() || n <= capacity()) {
+	  return;
+	}
+	if (n < capacity() * 2) {
+	  n = capacity() * 2;
+	}
+	size_type pre_size = size();
+	size_type pre_capacity = capacity();
+	pointer begin = __alloc.allocate(n);
+	std::uninitialized_copy(__begin, __end, begin);
+	__destruct(__begin);
+	__alloc.deallocate(__begin, pre_capacity);
+	__begin = begin;
+	__end = __begin + pre_size;
+	__cap = __begin + n;
+  }
 */
