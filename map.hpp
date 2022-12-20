@@ -33,6 +33,7 @@ namespace ft
 
 		typedef typename allocator_type::template rebind<value_type>::other type_allocator;
 		// typedef std::allocator_traits<type_allocator> type_traits;
+		
 
 		//Member func
 		//construct
