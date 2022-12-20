@@ -8,31 +8,31 @@ int	main(void)
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
 	ft::vector<int> newvec;
-	for (int i = 0 ; i < 4 ; i++)
+	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);
 		newvec.push_back(i);
 	}
-	vec.insert(vec.begin(), 5, 1);
-	newvec.insert(newvec.begin(), 5, 1);
+	vec.insert(vec.begin(), vec.begin() + 2, vec.end());
+	newvec.insert(newvec.begin(), newvec.begin() + 2, newvec.end());
 	cout << "newvec     " << newvec.empty() << endl;
 	cout << "vec        " << vec.empty() << endl;
 	cout << "newvec.size     " << newvec.size() << endl;
 	cout << "vec.size        " << vec.size() << endl;
 	cout << "newvec.capacity " << newvec.capacity() << endl;
 	cout << "vec.capacity    " << vec.capacity() << endl;
-	// vec.resize(vec.size() + 5);
-	// newvec.resize(newvec.size() + 5);
 	vector<int>::iterator vit = vec.begin();
 	vector<int>::iterator vits = vec.end();
 	ft::vector<int>::iterator it = newvec.begin();
 	ft::vector<int>::iterator its = newvec.end();
 	// cout << vit + vit<< endl;
 	// cout << it + it << endl;
-	cout << "================vec===============" << endl;
+	cout << "================ft::vec===============" << endl;
+	// cout << *(newvec.insert(newvec.begin(), 40)) << endl;
 	for ( ; it != its ; it++)
 		cout << *it << endl;
-	cout << "============ft::vec===============" << endl;
+	cout << "====================vec===============" << endl;
+	// cout << *(vec.insert(vec.begin(), 40)) << endl;
 	for (; vit != vits ; vit++)
 		cout << *vit << endl;
 	// for (int i = 0 ; i < 10 ; i++)

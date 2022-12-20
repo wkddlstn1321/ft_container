@@ -31,7 +31,7 @@ namespace ft
 		typedef std::ptrdiff_t											difference_type;
 		typedef std::size_t												size_type;
 
-		// typedef typename allocator_type::template rebind<value_type>::other type_allocator;
+		typedef typename allocator_type::template rebind<value_type>::other type_allocator;
 		// typedef std::allocator_traits<type_allocator> type_traits;
 
 		//Member func

@@ -272,21 +272,15 @@ namespace ft
 			this->_size--;
 			this->_alloc.destroy(this->_data + this->_size);
 		}
-		// iterator insert(iterator position, const value_type &val)
-		// {
-		// 	size_type n = this->_size + 1;
-		// 	if (n > this->_capacity)
-		// 	{
-		// 		reserve(n);
-		// 		this->_capacity = n;
-		// 	}
-		// 	this->_size++;
-
-		// }
+		iterator insert(iterator position, const value_type &val)
+		{
+			size_type pos = position - begin();
+			insert(position, 1, val);
+			return (this->_data + pos);
+		}
 		void insert(iterator position, size_type n, const value_type &val)
 		{
-			// size_type dis = position - this->_data;
-			size_type copyDis = end() - position;
+			size_type pos = position - begin();
 			size_type tmpSize = this->_size;
 			this->_size += n;
 			if (this->_size > this->_capacity)
@@ -301,28 +295,53 @@ namespace ft
 				for ( ; tmpSize < this->_size ; tmpSize++)
 					this->_alloc.construct(this->_data + tmpSize, val);
 			}
-			std::copy_backward(position, position + copyDis, position + copyDis + n);
-			// for (size_type i = 0 ; i < n ; i++)
-			// 	this->_data + position + i = val;
+			iterator st = begin() + pos;
+			std::copy_backward(st , end() - n, end());
+			for (size_type i = 0 ; i < n ; i++)
+				*(st + i) = val;
 		}
-		// template <class InputIterator>
-		// void insert(iterator position, InputIterator first, InputIterator last,
-		// 		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
-		// {
-
-		// }
-		// iterator erase(iterator position)
-		// {
-		// 	if (position + 1 != end())
-		// 		std::copy(position + 1, end(), position);
-		// 	this->_size--;
-		// 	this->_alloc.destroy(this->_data[this->_size]);
-		// 	return (position);
-		// }
-		// iterator erase(iterator first, iterator last)
-		// {
-
-		// }
+		template <class InputIterator>
+		void insert(iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
+		{
+			size_type n = std::distance(first, last);
+			size_type pos = position - begin();
+			size_type tmpSize = this->_size;
+			this->_size += n;
+			if (this->_size > this->_capacity)
+			{
+				if (this->_size > this->_capacity * 2)
+					reserve(this->_size);
+				else
+					reserve(this->_capacity * 2);
+			}
+			else
+			{
+				for ( ; tmpSize < this->_size ; tmpSize++)
+					this->_alloc.construct(this->_data + tmpSize, 0);
+			}
+			iterator st = begin() + pos;
+			std::copy_backward(st , end() - n, end());
+			// std::copy(first, last, st);
+			std::copy_backward(first , last, position + n);
+		}
+		iterator erase(iterator position)
+		{
+			if (position + 1 != end())
+				std::copy(position + 1, end(), position);
+			this->_size--;
+			this->_alloc.destroy(this->_data + this->_size);
+			return (position);
+		}
+		iterator erase(iterator first, iterator last)
+		{
+			size_type n = std::distance(first, last);
+			std::copy(last, end(), first);
+			for (size_type i = 0; i < n ; i++)
+				this->_alloc.destroy(this->_data + this->_size - i - 1);
+			this->_size -= n;
+			return (first);
+		}
 		void swap(vector &x)
 		{
 			//swap 후에도 반복자는 유효
