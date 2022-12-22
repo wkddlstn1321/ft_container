@@ -65,17 +65,25 @@ namespace ft
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
 		{
-
 		}
-		map (const map& x)
+		map (const map& x) : _alloc(x._alloc), _comp(x._comp)
 		{
-			
+			insert(x.begin(), x.end());
 		}
 		//destructor
 		~map()
 		{
+			clear();
 		}
-		map& operator= (const map& x);
+		map& operator= (const map& x)
+		{
+			if (&x != this)
+			{
+				clear();
+				insert(x.begin(), x.end());
+			}
+			return (*this);
+		}
 
 		//iterator
 		iterator begin();
@@ -93,7 +101,9 @@ namespace ft
 		size_type max_size() const;
 
 		//Element access
-		mapped_type& operator[] (const key_type& k);
+		mapped_type& operator[] (const key_type& k)
+		{
+		}
 		mapped_type &at(const key_type &k);
 		const mapped_type &at(const key_type &k) const;
 
@@ -106,7 +116,10 @@ namespace ft
 		size_type erase (const key_type& k);
 		void erase (iterator first, iterator last);
 		void swap (map& x);
-		void clear();
+		void clear()
+		{
+			erase(begin(), end());
+		}
 
 		//Observers
 		key_compare key_comp() const;

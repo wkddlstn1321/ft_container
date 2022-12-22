@@ -1,13 +1,13 @@
 #ifndef RANDOM_ACCESS_ITERATOR_HPP
 #define RANDOM_ACCESS_ITERATOR_HPP
 
-#include<iterator>
+#include"iterator.hpp"
 #include"iterator_traits.hpp"
 
 namespace ft
 {
 	template <typename T>
-	class random_access_iterator : public std::iterator<std::random_access_iterator_tag, T>
+	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
 	{
 	public:
 		typedef T*																iterator_type;
