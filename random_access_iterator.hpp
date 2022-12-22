@@ -2,23 +2,24 @@
 #define RANDOM_ACCESS_ITERATOR_HPP
 
 #include"iterator.hpp"
-#include"iterator_traits.hpp"
 
 namespace ft
 {
 	template <typename T>
 	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
 	{
-	public:
-		typedef T*																iterator_type;
-		typedef typename ft::iterator_traits<iterator_type>::iterator_category	iterator_category;
-		typedef typename ft::iterator_traits<iterator_type>::value_type			value_type;
-		typedef typename ft::iterator_traits<iterator_type>::difference_type	difference_type;
-		typedef typename ft::iterator_traits<iterator_type>::pointer			pointer;
-		typedef typename ft::iterator_traits<iterator_type>::reference			reference;
-
 	protected:
-		pointer	_pointer;
+		T*											_pointer;
+		typedef	typename ft::iterator_traits<T*>	_trait_type;
+
+	public:
+		typedef T*										iterator_type;
+		typedef typename _trait_type::iterator_category	iterator_category;
+		typedef typename _trait_type::value_type		value_type;
+		typedef typename _trait_type::difference_type	difference_type;
+		typedef typename _trait_type::pointer			pointer;
+		typedef typename _trait_type::reference			reference;
+
 
 	public:
 		//copy ,default construct & copy assignable & destruct

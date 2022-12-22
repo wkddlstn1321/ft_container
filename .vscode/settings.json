@@ -74,6 +74,7 @@
 		"__functional_base": "cpp",
 		"list": "cpp",
 		"set": "cpp",
-		"queue": "cpp"
+		"queue": "cpp",
+		"filesystem": "cpp"
 	}
 }

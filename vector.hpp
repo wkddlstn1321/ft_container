@@ -7,9 +7,9 @@
 
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
-#include "iterator_traits.hpp"
 #include "type_traits.hpp"
 #include "algorithm.hpp"
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -39,13 +39,10 @@ namespace ft
 
 	public:
 		//construct
-		explicit vector(const allocator_type &alloc = allocator_type()) : _alloc(alloc)
-		{
-			this->_data = 0;
-			this->_capacity = 0;
-			this->_size = 0;
-		}
-		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _alloc(alloc)
+		explicit vector(const allocator_type &alloc = allocator_type())
+		: _alloc(alloc), _data(0), _capacity(0), _size(0) {}
+		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+		: _alloc(alloc)
 		{
 			//n 이 vector로 할당할 수 있는 최대크기보다 큰지 체크 해야됨
 			if (n > max_size())
@@ -60,9 +57,9 @@ namespace ft
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type = 0) : _alloc(alloc)
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0) : _alloc(alloc)
 		{
-			size_type n = std::distance(first, last);
+			size_type n = ft::distance(first, last);
 			this->_data = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < n ; i++)
 			{
@@ -241,7 +238,7 @@ namespace ft
 		{
 			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
 			this->clear();
-			size_type n = std::distance(first, last);
+			size_type n = ft::distance(first, last);
 			if (n > this->_capacity)
 				reserve(n);
 			std::copy(first, last, this->_data);
@@ -304,7 +301,7 @@ namespace ft
 		void insert(iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
 		{
-			size_type n = std::distance(first, last);
+			size_type n = ft::distance(first, last);
 			size_type pos = position - begin();
 			size_type tmpSize = this->_size;
 			this->_size += n;
@@ -335,7 +332,7 @@ namespace ft
 		}
 		iterator erase(iterator first, iterator last)
 		{
-			size_type n = std::distance(first, last);
+			size_type n = ft::distance(first, last);
 			std::copy(last, end(), first);
 			for (size_type i = 0; i < n ; i++)
 				this->_alloc.destroy(this->_data + this->_size - i - 1);
