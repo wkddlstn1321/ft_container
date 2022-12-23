@@ -10,21 +10,21 @@ namespace ft
 	{
 		protected:
 		Iterator _iter;
+		typedef	typename ft::iterator_traits<Iterator>	_trait_type;
 
 		public:
-		typedef Iterator												iterator_type;
-		typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
-		typedef typename iterator_traits<Iterator>::value_type			value_type;
-		typedef typename iterator_traits<Iterator>::difference_type		difference_type;
-		typedef typename iterator_traits<Iterator>::pointer				pointer;
-		typedef typename iterator_traits<Iterator>::reference			reference;
+		typedef Iterator								iterator_type;
+		typedef typename _trait_type::iterator_category	iterator_category;
+		typedef typename _trait_type::value_type		value_type;
+		typedef typename _trait_type::difference_type	difference_type;
+		typedef typename _trait_type::pointer			pointer;
+		typedef typename _trait_type::reference			reference;
 
 		//construct
-		reverse_iterator() {}
+		reverse_iterator() : _iter() {}
 		explicit reverse_iterator (iterator_type it) : _iter(it) {}
 		template <class Iter>
 		reverse_iterator (const reverse_iterator<Iter>& rev_it) : _iter(rev_it.base()) {}
-
 		//Member func
 		iterator_type base() const
 		{
