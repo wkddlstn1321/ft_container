@@ -63,7 +63,36 @@ namespace ft
 	struct is_integral<unsigned long int> : public true_type {};
 	template <>
 	struct is_integral<unsigned long long int> : public true_type {};
+
+	const class nullptr_t
+	{
+	private:
+		void operator&() const;
+	public:
+		template <typename T>
+		operator T*() const
+		{
+			return (0);
+		}
+		template <typename T, typename C>
+		operator T C::*() const
+		{
+			return (0);
+		}
+	} nullptr_t = {};
 }
 
-
 #endif
+
+// const class nullptr_t
+// {
+// private:
+// 	void operator&(void) const;
+
+// public:
+// 	template <typename T>
+// 	operator T *(void) const { return 0; }
+
+// 	template <typename T, typename U>
+// 	operator T U::*(void) const { return 0; }
+// } nil = {};

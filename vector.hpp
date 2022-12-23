@@ -57,7 +57,7 @@ namespace ft
 		}
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0) : _alloc(alloc)
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t) : _alloc(alloc)
 		{
 			size_type n = ft::distance(first, last);
 			this->_data = this->_alloc.allocate(n);
@@ -234,7 +234,7 @@ namespace ft
 		// Modifieres
 		template <class InputIterator>
 		void assign(InputIterator first, InputIterator last,
-				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
 		{
 			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
 			this->clear();
@@ -299,7 +299,7 @@ namespace ft
 		}
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last,
-				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = nullptr)
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
 		{
 			size_type n = ft::distance(first, last);
 			size_type pos = position - begin();

@@ -1,4 +1,5 @@
 #include<vector>
+#include<map>
 #include"vector.hpp"
 
 using namespace std;
@@ -8,6 +9,7 @@ int	main(void)
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
 	ft::vector<int> newvec;
+	std::map<int, int>::iterator a;
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);
