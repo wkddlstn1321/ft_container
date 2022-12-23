@@ -3,6 +3,8 @@
 
 #include<memory>
 #include<functional>
+
+#include"_tree.hpp"
 #include"utility.hpp"
 #include"reverse_iterator.hpp"
 #include"bidirectional_iterator.hpp"
@@ -42,8 +44,8 @@ namespace ft
 	public:
 		//value_compare class~
 		template <class Key, class T, class Compare, class Alloc>
-		class map<Key, T, Compare, Alloc>::value_compare
-		{ // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+		class map<Key, T, Compare, Alloc>::value_compare : std::binary_function<value_type, value_type, bool>
+		{
 			friend class map;
 		protected:
 			Compare comp;

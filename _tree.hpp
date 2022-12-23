@@ -14,11 +14,11 @@ namespace ft
 			_treeNode	*right;
 	};
 
-	// template <>
-	// class _tree
-	// {
+	template <>
+	class _tree
+	{
 
-	// };
+	};
 }
 
 #endif
