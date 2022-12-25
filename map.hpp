@@ -27,7 +27,7 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		typedef typename ft::_tree<value_type>::iterator					iterator;
+		typedef typename ft::_AvlTree<value_type>::iterator					iterator;
 		// typedef typename ft::_tree<const value_type>		const_iterator;
 		typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
@@ -44,7 +44,7 @@ namespace ft
 	public:
 		//value_compare class~
 		template <class Key, class T, class Compare, class Alloc>
-		class map<Key, T, Compare, Alloc>::value_compare : std::binary_function<value_type, value_type, bool>
+		class map<Key, T, Compare, Alloc>::value_compare : std::binary_function<value_type, value_type, gbool>
 		{
 			friend class map;
 		protected:
@@ -127,6 +127,9 @@ namespace ft
 		//Observers
 		key_compare key_comp() const;
 		value_compare value_comp() const;
+
+		//Operations
+
 
 		//Allocator
 		allocator_type get_allocator() const;
