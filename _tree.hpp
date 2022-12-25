@@ -32,11 +32,12 @@ namespace ft
 		~_treeNode() {}
 	};
 
+	// template <class _Tp, class _Compare, class _Allocator>
 	template <typename T, class Node = _treeNode<T>, class Alloc = std::allocator<T>>
 	class _AvlTree
 	{
 		public:
-		
+
 		private:
 			Node*	_root;
 			int	get_height(Node *nd)
@@ -54,8 +55,9 @@ namespace ft
 			{
 
 			}
-			void	Balancing()
+			void	Balancing(Node* root)
 			{
+				int	balance = get_balance_factor(root);
 
 			}
 			void	LL_rotate()

@@ -2,10 +2,10 @@
 #define MAP_HPP
 
 #include<memory>
-#include<functional>
 
 #include"_tree.hpp"
 #include"utility.hpp"
+#include"functional.hpp"
 #include"reverse_iterator.hpp"
 #include"bidirectional_iterator.hpp"
 
@@ -13,7 +13,7 @@ namespace ft
 {
 	template <class Key,											// map::key_type
 			  class T,												// map::mapped_type
-			  class Compare = std::less<Key>,						// map::key_compare
+			  class Compare = ft::less<Key>,						// map::key_compare
 			  class Alloc = std::allocator<ft::pair<const Key, T>> >// map::allocator_type
 	class map
 	{
@@ -44,7 +44,7 @@ namespace ft
 	public:
 		//value_compare class~
 		template <class Key, class T, class Compare, class Alloc>
-		class map<Key, T, Compare, Alloc>::value_compare : std::binary_function<value_type, value_type, gbool>
+		class map<Key, T, Compare, Alloc>::value_compare : ft::binary_function<value_type, value_type, gbool>
 		{
 			friend class map;
 		protected:
