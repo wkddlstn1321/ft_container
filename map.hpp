@@ -27,7 +27,7 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		typedef typename ft::_AvlTree<value_type>::iterator					iterator;
+		// typedef typename ft::_AvlTree<value_type>::iterator					iterator;
 		// typedef typename ft::_tree<const value_type>		const_iterator;
 		typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
@@ -38,9 +38,9 @@ namespace ft
 		typedef std::allocator_traits<type_allocator>						type_traits;
 
 	private:
-		key_compare		_comp;
-		allocator_type	_alloc;
-
+		key_compare				_comp;
+		allocator_type			_alloc;
+		_AvlTree<value_type>	_tree;
 	public:
 		//value_compare class~
 		template <class Key, class T, class Compare, class Alloc>
@@ -129,7 +129,15 @@ namespace ft
 		value_compare value_comp() const;
 
 		//Operations
-
+		iterator find (const key_type& k);
+		const_iterator find (const key_type& k) const;
+		size_type count (const key_type& k) const;
+		iterator lower_bound (const key_type& k);
+		const_iterator lower_bound (const key_type& k) const;
+		iterator upper_bound (const key_type& k);
+		const_iterator upper_bound (const key_type& k) const;
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+		pair<iterator,iterator> equal_range (const key_type& k);
 
 		//Allocator
 		allocator_type get_allocator() const;
