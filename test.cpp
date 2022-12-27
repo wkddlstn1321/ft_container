@@ -9,7 +9,9 @@ int	main(void)
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
 	ft::vector<int> newvec;
-	std::map<int, int>::iterator a;
+	std::map<int, int> newMap;
+	newMap.insert(1, 213);
+	std::map<int, int>::iterator a = newMap.begin();
 	for (int i = 0 ; i < 10 ; i++)
 	{
 		vec.push_back(i);

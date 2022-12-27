@@ -1,13 +1,10 @@
 #ifndef TREE_ITERATOR_HPP
 # define TREE_ITERATOR_HPP
 
+#include"iterator.hpp"
+
 namespace ft
 {
-	template <class _Tp, class _NodePtr, class _DiffType>
-	class tree_iterator
-	{
-
-	};
 
 	// template <typename _Tp>
 	// struct _Rb_tree_iterator

@@ -43,33 +43,44 @@ namespace ft
 		_AvlTree<value_type>	_tree;
 	public:
 		//value_compare class~
-		template <class Key, class T, class Compare, class Alloc>
-		class map<Key, T, Compare, Alloc>::value_compare : ft::binary_function<value_type, value_type, gbool>
+		class value_compare : public ft::binary_function<value_type, value_type, bool>
 		{
-			friend class map;
-		protected:
-			Compare comp;
-			value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
-		public:
-			typedef bool		result_type;
-			typedef value_type	first_argument_type;
-			typedef value_type	second_argument_type;
-			bool operator()(const value_type &x, const value_type &y) const
-			{
-				return comp(x.first, y.first);
-			}
+			friend class map<Key, T, Compare, Alloc>;
+			protected:
+				Compare comp;
+				value_compare(Compare c) : comp(c) {}
+			public:
+				bool operator()(const value_type &x, const value_type &y) const
+				{
+					return (comp(x.first, y.first));
+				}
 		};
+		// template <class Key, class T, class Compare, class Alloc>
+		// class map<Key, T, Compare, Alloc>::value_compare : ft::binary_function<value_type, value_type, gbool>
+		// {
+		// 	friend class map;
+		// protected:
+		// 	Compare comp;
+		// 	value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
+		// public:
+		// 	typedef bool		result_type;
+		// 	typedef value_type	first_argument_type;
+		// 	typedef value_type	second_argument_type;
+		// 	bool operator()(const value_type &x, const value_type &y) const
+		// 	{
+		// 		return comp(x.first, y.first);
+		// 	}
+		// };
+
 		// Member func
 		// construct
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
-		: _comp(comp), _alloc(alloc)
-		{
-		}
+		: _comp(comp), _alloc(alloc), _tree() {}
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
 		{
 		}
-		map (const map& x) : _alloc(x._alloc), _comp(x._comp)
+		map (const map& x) : _alloc(x._alloc), _comp(x._comp), _tree(x._tree)
 		{
 			insert(x.begin(), x.end());
 		}
@@ -89,19 +100,52 @@ namespace ft
 		}
 
 		//iterator
-		iterator begin();
-		const_iterator begin() const;
-		iterator end();
-		const_iterator end() const;
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		iterator begin()
+		{
+			return (_tree.begin());
+		}
+		const_iterator begin() const
+		{
+			return (_tree.begin());
+		}
+		iterator end()
+		{
+			return (_tree.end());
+		}
+		const_iterator end() const
+		{
+			return (_tree.end());
+		}
+		reverse_iterator rbegin()
+		{
+			reverse_iterator(begin());
+		}
+		const_reverse_iterator rbegin() const
+		{
+			reverse_iterator(begin())
+		}
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(end));
+		}
+		const_reverse_iterator rend() const
+		{
+			return (reverse_iterator(end));
+		}
 
 		//capacity
-		bool empty() const;
-		size_type size() const;
-		size_type max_size() const;
+		bool empty() const
+		{
+			return (_tree.empty());
+		}
+		size_type size() const
+		{
+			return (_tree.size());
+		}
+		size_type max_size() const
+		{
+			return (_tree.max_size());
+		}
 
 		//Element access
 		mapped_type& operator[] (const key_type& k)

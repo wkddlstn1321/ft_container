@@ -6,7 +6,7 @@
 namespace ft
 {
 	template <typename T>
-	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, T>
+	class random_access_iterator// : public ft::iterator<ft::random_access_iterator_tag, T>
 	{
 	protected:
 		T*											_pointer;
@@ -38,7 +38,8 @@ namespace ft
 		~random_access_iterator() {}
 		random_access_iterator&	operator=(const random_access_iterator<T>& a)
 		{
-			this->_pointer = a.base();
+			if (this != &a)
+				this->_pointer = a.base();
 			return (*this);
 		}
 		iterator_type base() const
