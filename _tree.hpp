@@ -253,9 +253,10 @@ namespace ft
 			// mapped_type &at(const key_type &k);
 			// const mapped_type &at(const key_type &k) const;
 
-			// Modifiers
+			// Modifiers 
 			pair<iterator, bool> insert(const value_type &val)
 			{
+				Node_pointer *new_nd = _alloc.allocate(1);
 				Balancing();
 				return (ft::make_pair(iterator(val), true));
 			}

@@ -117,4 +117,19 @@ void reserve(size_type n) {
 	__end = __begin + pre_size;
 	__cap = __begin + n;
   }
+
+  node_pointer __search_parent(const value_type& value, node_pointer position = ft::nil) {
+    if (position && position != __end) {
+      if (__comp(value, position->__value) && position->__left == __nil) {
+        iterator prev = iterator(position, __nil);
+        if (prev == begin() || __comp(*--prev, value)) {
+          return position;
+        }
+      } else if (position->__right == __nil) {
+        iterator next = iterator(position, __nil);
+        if (next == end() || __comp(value, *++next)) {
+          return position;
+        }
+      }
+    }
 */
