@@ -10,42 +10,49 @@ int	main(void)
 	std::vector<int> vec;
 	ft::vector<int> newvec;
 	std::map<int, int> newMap;
-	newMap.insert(1, 213);
-	std::map<int, int>::iterator a = newMap.begin();
-	for (int i = 0 ; i < 10 ; i++)
-	{
-		vec.push_back(i);
-		newvec.push_back(i);
-	}
-	ft::vector<int> newvec2(3);
-	std::vector<int> vec2(3);
+	newMap[1] = 1;
+	newMap[2] = 2;
+	newMap[3] = 3;
+	newMap[4] = 4;
+	// newMap.insert(1, 1);
+	// newMap.insert(2, 2);
+	std::map<int, int>::iterator a = newMap.end();
+	a--;
+	cout << a->first << endl;
+	// for (int i = 0 ; i < 10 ; i++)
+	// {
+	// 	vec.push_back(i);
+	// 	newvec.push_back(i);
+	// }
+	// ft::vector<int> newvec2(3);
+	// std::vector<int> vec2(3);
 	// newvec2.assign(1,2);
 	// newvec.assign(15,0);
 	// vec.assign(15,0);
-	vec2.assign(vec.begin(), vec.end());
-	newvec2.assign(newvec.begin(), newvec.end());
+	// vec2.assign(vec.begin(), vec.end());
+	// newvec2.assign(newvec.begin(), newvec.end());
 	// newvec.insert(newvec.begin(), newvec.begin() + 2, newvec.end());
 	// std::vector<int>vec2(vec.begin(), vec.end());
 	// cout << "newvec     " << newvec.empty() << endl;
 	// cout << "vec        " << vec.empty() << endl;
-	cout << "newvec.size     " << newvec.size() << endl;
-	cout << "vec.size        " << vec.size() << endl;
-	cout << "newvec.capacity " << newvec.capacity() << endl;
-	cout << "vec.capacity    " << vec.capacity() << endl;
-	vector<int>::iterator vit = vec.begin();
-	vector<int>::iterator vits = vec.end();
-	ft::vector<int>::iterator it = newvec2.begin();
-	ft::vector<int>::iterator its = newvec2.end();
+	// cout << "newvec.size     " << newvec.size() << endl;
+	// cout << "vec.size        " << vec.size() << endl;
+	// cout << "newvec.capacity " << newvec.capacity() << endl;
+	// cout << "vec.capacity    " << vec.capacity() << endl;
+	// vector<int>::iterator vit = vec.begin();
+	// vector<int>::iterator vits = vec.end();
+	// ft::vector<int>::iterator it = newvec2.begin();
+	// ft::vector<int>::iterator its = newvec2.end();
 	// cout << vit + vit<< endl;
 	// cout << it + it << endl;
-	cout << "================ft::vec===============" << endl;
+	// cout << "================ft::vec===============" << endl;
 	// cout << *(newvec.insert(newvec.begin(), 40)) << endl;
-	for ( ; it != its ; it++)
-		cout << *it << endl;
-	cout << "====================vec===============" << endl;
+	// for ( ; it != its ; it++)
+	// 	cout << *it << endl;
+	// cout << "====================vec===============" << endl;
 	// cout << *(vec.insert(vec.begin(), 40)) << endl;
-	for (; vit != vits ; vit++)
-		cout << *vit << endl;
+	// for (; vit != vits ; vit++)
+	// 	cout << *vit << endl;
 	// for (int i = 0 ; i < 10 ; i++)
 	// {
 	// 	newvec.push_back(i);

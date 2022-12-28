@@ -155,14 +155,35 @@ namespace ft
 		const mapped_type &at(const key_type &k) const;
 
 		//Modifiers
-		pair<iterator,bool> insert (const value_type& val);
-		iterator insert (iterator position, const value_type& val);
+		pair<iterator,bool> insert (const value_type& val)
+		{
+			return (_tree.insert(val));
+		}
+		iterator insert (iterator position, const value_type& val)
+		{
+			return (_tree.insert(position, val));
+		}
 		template <class InputIterator>
-		void insert(InputIterator first, InputIterator last);
-		void erase (iterator position);
-		size_type erase (const key_type& k);
-		void erase (iterator first, iterator last);
-		void swap (map& x);
+		void insert(InputIterator first, InputIterator last)
+		{
+			return (_tree.insert(first, last));
+		}
+		void erase (iterator position)
+		{
+			_tree.erase();
+		}
+		size_type erase (const key_type& k)
+		{
+			return (_tree.erase(k));
+		}
+		void erase (iterator first, iterator last)
+		{
+			return (_tree.erase(first, last));
+		}
+		void swap (map& x)
+		{
+			_tree.swap(x);
+		}
 		void clear()
 		{
 			erase(begin(), end());

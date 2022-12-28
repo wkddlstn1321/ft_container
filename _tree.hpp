@@ -40,6 +40,7 @@ namespace ft
 		~_treeNode() {}
 	};
 
+	//T == _treeNode<>
 	template <class T>
 	class tree_iterator : public ft::iterator<ft::bidirection_iterator_tag, T>
 	{
@@ -49,7 +50,9 @@ namespace ft
 		typedef typename iterator::difference_type		difference_type;
 		typedef typename iterator::reference			reference;
 		typedef typename iterator::pointer				Node_pointer;
+
 	private:
+		// typedef _treeNode<value_type>*					Node_pointer;
 		Node_pointer	_pointer;
 	public:
 		tree_iterator() : _pointer(ft::nullptr_t);
@@ -202,18 +205,40 @@ namespace ft
 			node_allocator	_alloc;
 			Node_pointer	_begin;
 			Node_pointer	_end;
+			Node_pointer	_root;
 			size_type		_size;
 		// 	__iter_pointer __begin_node_;
 		// 	__compressed_pair<__end_node_t, __node_allocator> __pair1_;
 		// 	__compressed_pair<size_type, value_compare> __pair3_;
 		
 		public:
-			_AvlTree(const allocator_type& alloc = allocator_type())
-			:_alloc(alloc) _begin(ft::nullptr_t), _end(ft::nullptr_t), _size(0) {}
-			_AvlTree(const _AvlTree& a)
-			: _begin(a._begin), _end(a._end), _size(a._size), _alloc(a._alloc) {}
-			_AvlTree& operator=(const _AvlTree& a);
-			~_AvlTree();
+			_AvlTree(const allocator_type& alloc = allocator_type()) :_alloc(alloc)
+			{
+				this->_size = 0;
+				this->_end = this->_alloc.allocate(1);
+				this->_alloc.construct(this->_end, value_type());
+				this->_begin = this->_end;
+			}
+			_AvlTree(const _AvlTree& a) : _alloc(alloc), _size(a._size)
+			{
+				this->_end = this->_alloc.allocate(1);
+				this->_alloc.construct(this->_end, value_type());
+				this->_begin = this->_end;
+				insert(a.begin(), a.end());
+			}
+			_AvlTree& operator=(const _AvlTree& a)
+			{
+				if (this != &a)
+				{
+					_AvlTree tmp(a);
+					swap(tmp);
+				}
+				return (*this);
+			}
+			~_AvlTree()
+			{
+				// this->_alloc.destroy()
+			}
 			// iterator
 			iterator begin()
 			{
@@ -256,9 +281,31 @@ namespace ft
 			// Modifiers 
 			pair<iterator, bool> insert(const value_type &val)
 			{
-				Node_pointer *new_nd = _alloc.allocate(1);
+				Node_pointer *start = this->_begin;
+				Node_pointer *last = this->_end;
+				if (start == last)
+				{
+					Node_pointer *new_node = this->_alloc.allocate(1);
+					this->_alloc.construct(new_node, Node_type(val));
+					this->_begin = new_node;
+					return (ft::make_pair(iterator(this->_begin), true));
+				}
+				while(start != last)
+				{
+					if (start->_data.first == val.first)
+						return (ft::make_pair(iterator(start), false));
+					if (start->_data.first > val.first)
+						break ;
+					start = start->_right;
+				}
+				Node_pointer *new_node = this->_alloc.allocate(1);
+				this->_alloc.construct(new_node, Node_type(val));
+				if (start == last)
+				{
+					start->_left->_right = new_node;
+				}
 				Balancing();
-				return (ft::make_pair(iterator(val), true));
+				return (ft::make_pair(iterator(start), true));
 			}
 			iterator insert(iterator position, const value_type &val);
 			template <class InputIterator>
@@ -288,10 +335,47 @@ namespace ft
 			pair<iterator, iterator> equal_range(const key_type &k);
 
 			// Allocator
-			allocator_type get_allocator() const;
+			allocator_type get_allocator() const
+			{
+				return (this->_alloc);
+			}
 
 			// avl manage func
 		private:
+			Node_pointer next_node(Node_pointer nd)
+			{
+				Node_pointer *next_nd = nd;
+				if (next_nd->_right != ft::nullptr_t)
+				{
+					next_nd = next_nd->right;
+					while (next_nd->_left != ft::nullptr_t)
+						next_nd = next_nd->_left;
+				}
+				else
+				{
+					Node_pointer y = next_nd->_parent;
+					while (next_nd == y->_right)
+					{
+						next_nd = y;
+						y = y->_parent;
+					}
+					if (next_nd->_right != y)
+						next_nd = y;
+				}
+				return (next_nd);
+			}
+			Node_pointer find_parent_node()
+			{
+				Node_pointer *start = this->_begin;
+				Node_pointer *last = this->_end;
+				while (start != last)
+				{
+					if (start->_parent == ft::nullptr_t)
+						break ;
+					start = start->_right;
+				}
+				return (start);
+			}
 			int	get_height(Node_pointer nd)
 			{
 				if (nd == ft::nullptr_t)
