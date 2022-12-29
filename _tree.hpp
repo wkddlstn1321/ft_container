@@ -16,15 +16,16 @@ namespace ft
 		_treeNode	*_parent;
 		_treeNode	*_left;
 		_treeNode	*_right;
+		size_t		depth;
 
 		_treeNode()
-		: _data(), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
+		: _data(value_type()), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
 
 		_treeNode(const value_type& val)
-		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
+		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
 		
 		_treeNode(const _treeNode& node)
-		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right) {}
+		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right), depth(node.depth) {}
 		
 		_treeNode& operator=(const _treeNode& node)
 		{
@@ -34,6 +35,7 @@ namespace ft
 				this->_left = node._left;
 				this->_right = node._right;
 				this->_parent = node._parent;
+				this->depth = node.depth;
 			}
 			return (*this);
 		}
@@ -281,30 +283,49 @@ namespace ft
 			// Modifiers 
 			pair<iterator, bool> insert(const value_type &val)
 			{
-				Node_pointer *start = this->_begin;
-				Node_pointer *last = this->_end;
-				if (start == last)
+				if (this->_size == 0)
 				{
 					Node_pointer *new_node = this->_alloc.allocate(1);
 					this->_alloc.construct(new_node, Node_type(val));
 					this->_begin = new_node;
+					new_node->_right = this->_end;
+					this->_end->_right = new_node;
+					new_node->_left = ft::nullptr_t;
+					new_node->_parent = ft::nullptr_t;
+					new_node->_depth = get_height(new_node);
+					this->_size++;
 					return (ft::make_pair(iterator(this->_begin), true));
 				}
-				while(start != last)
+				Node_pointer *start = this->_end->_right;
+				Node_pointer *last = this->_end;
+				Node_pointer *save_node;
+				int flag = 0;
+				while(start != last || start != ft::nullptr_t)
 				{
 					if (start->_data.first == val.first)
 						return (ft::make_pair(iterator(start), false));
+					save_node = start;
 					if (start->_data.first > val.first)
-						break ;
-					start = start->_right;
+					{
+						start = start->_left;
+						flag = 0;
+					}
+					else
+					{
+						start = start->_right;
+						flag = 1;
+					}
 				}
 				Node_pointer *new_node = this->_alloc.allocate(1);
 				this->_alloc.construct(new_node, Node_type(val));
-				if (start == last)
-				{
-					start->_left->_right = new_node;
-				}
-				Balancing();
+				if (flag == 0)
+					save_node->_left = new_node;
+				else
+					save_node->_right = new_node;
+				new_node->_parent = save_node;
+				new_node->_right = ft::nullptr_t;
+				new_node->_left = ft::nullptr_t;
+				Balancing(new_node);
 				return (ft::make_pair(iterator(start), true));
 			}
 			iterator insert(iterator position, const value_type &val);
@@ -376,7 +397,7 @@ namespace ft
 				}
 				return (start);
 			}
-			int	get_height(Node_pointer nd)
+			size_type	get_height(Node_pointer nd)
 			{
 				if (nd == ft::nullptr_t)
 					return (0);
@@ -385,30 +406,33 @@ namespace ft
 				int right = get_height(nb->_right);
 				return (left > right ? left + 1 : right + 1);
 			}
-			int	get_balance_factor(Node_pointer nb)
+			int	get_balance_factor(Node_pointer nd)
 			{
-				return (get_height(nb->_left) - get_height(nb->_right));
+				return (get_height(nd->_left) - get_height(nd->_right));
 			}
-			Node_pointer	Balancing(Node_pointer nd)
+			void	Balancing(Node_pointer nd)
 			{
-				int	balance = get_balance_factor(nd);
-				if (balance >= 2)
+				while (nd->_parent != ft::nullptr_t)
 				{
-					balance = get_balance_factor(nd->_left);
-					if (balance >= 1)
-						nd = LL_rotate(nd);
-					else
-						nd = LR_rotate(nd);
+					nd = nd->_parent;
+					int	balance = get_balance_factor(nd);
+					if (balance >= 2)
+					{
+						balance = get_balance_factor(nd->_left);
+						if (balance >= 1)
+							nd = LL_rotate(nd);
+						else
+							nd = LR_rotate(nd);
+					}
+					else if (balance <= -2)
+					{
+						get_balance_factor(nd->_right);
+						if (balance <= -1)
+							nd = RR_rotate(nd);
+						else
+							nd = RL_rotate(nd);
+					}
 				}
-				else if (balance <= -2)
-				{
-					get_balance_factor(nd->_right);
-					if (balance <= -1)
-						nb = RR_rotate(nd);
-					else
-						nb = RL_rotate(nd);
-				}
-				return (nb);
 			}
 			Node_pointer	LL_rotate(Node_pointer nd)
 			{

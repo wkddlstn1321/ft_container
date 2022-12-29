@@ -16,8 +16,14 @@ int	main(void)
 	newMap[4] = 4;
 	// newMap.insert(1, 1);
 	// newMap.insert(2, 2);
-	std::map<int, int>::iterator a = newMap.end();
-	a--;
+	std::map<int, int>::iterator a = newMap.begin();
+	std::map<int, int>::iterator b = newMap.end();
+	// a++;
+	// (void)a;
+	// a--;
+	// a--;
+	if (a == b)
+		cout << "?" << endl;
 	cout << a->first << endl;
 	// for (int i = 0 ; i < 10 ; i++)
 	// {
