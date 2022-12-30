@@ -16,16 +16,15 @@ namespace ft
 		_treeNode	*_parent;
 		_treeNode	*_left;
 		_treeNode	*_right;
-		size_t		depth;
 
 		_treeNode()
-		: _data(value_type()), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
+		: _data(value_type()), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
 
 		_treeNode(const value_type& val)
-		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
+		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
 		
 		_treeNode(const _treeNode& node)
-		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right), depth(node.depth) {}
+		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right), {}
 		
 		_treeNode& operator=(const _treeNode& node)
 		{
@@ -35,7 +34,6 @@ namespace ft
 				this->_left = node._left;
 				this->_right = node._right;
 				this->_parent = node._parent;
-				this->depth = node.depth;
 			}
 			return (*this);
 		}
@@ -170,6 +168,7 @@ namespace ft
 			return (&(this->_pointer->_data));
 		}
 	};
+
 	template <class T>
 	bool operator==(const tree_iterator<T>& a, const tree_iterator<T>& b)
 	{
@@ -207,7 +206,6 @@ namespace ft
 			node_allocator	_alloc;
 			Node_pointer	_begin;
 			Node_pointer	_end;
-			Node_pointer	_root;
 			size_type		_size;
 		// 	__iter_pointer __begin_node_;
 		// 	__compressed_pair<__end_node_t, __node_allocator> __pair1_;
@@ -226,6 +224,7 @@ namespace ft
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
 				this->_begin = this->_end;
+				this->_size = a._size;
 				insert(a.begin(), a.end());
 			}
 			_AvlTree& operator=(const _AvlTree& a)
@@ -290,9 +289,9 @@ namespace ft
 					this->_begin = new_node;
 					new_node->_right = this->_end;
 					this->_end->_right = new_node;
+					this->_end->_left = new_node;
 					new_node->_left = ft::nullptr_t;
 					new_node->_parent = ft::nullptr_t;
-					new_node->_depth = get_height(new_node);
 					this->_size++;
 					return (ft::make_pair(iterator(this->_begin), true));
 				}
@@ -318,14 +317,20 @@ namespace ft
 				}
 				Node_pointer *new_node = this->_alloc.allocate(1);
 				this->_alloc.construct(new_node, Node_type(val));
+					
 				if (flag == 0)
 					save_node->_left = new_node;
 				else
 					save_node->_right = new_node;
+				if (start == last)
+				{
+					this->_end->_right = new_node;
+				}
 				new_node->_parent = save_node;
 				new_node->_right = ft::nullptr_t;
 				new_node->_left = ft::nullptr_t;
 				Balancing(new_node);
+				this->_end->_right = find_root_node(this->_end->_right);
 				return (ft::make_pair(iterator(start), true));
 			}
 			iterator insert(iterator position, const value_type &val);
@@ -385,17 +390,23 @@ namespace ft
 				}
 				return (next_nd);
 			}
-			Node_pointer find_parent_node()
+			Node_pointer find_min_node(Node_pointer root)
 			{
-				Node_pointer *start = this->_begin;
-				Node_pointer *last = this->_end;
-				while (start != last)
-				{
-					if (start->_parent == ft::nullptr_t)
-						break ;
-					start = start->_right;
-				}
-				return (start);
+				while (root->_left != ft::nullptr_t)
+					root = root->_left;
+				return (root);
+			}
+			Node_pointer find_max_node(Node_pointer root)
+			{
+				while (root->_right != ft::nullptr_t)
+					root = root->_right;
+				return (root);
+			}
+			Node_pointer find_root_node(Node_pointer nd)
+			{
+				while (nd->_parent != ft::nullptr_t)
+					nd = nd->_parent;
+				return (nd);
 			}
 			size_type	get_height(Node_pointer nd)
 			{
