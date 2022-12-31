@@ -168,7 +168,7 @@ namespace ft
 			return (&(this->_pointer->_data));
 		}
 	};
-
+	
 	template <class T>
 	bool operator==(const tree_iterator<T>& a, const tree_iterator<T>& b)
 	{
@@ -204,7 +204,6 @@ namespace ft
 		//member var
 		private:
 			node_allocator	_alloc;
-			Node_pointer	_begin;
 			Node_pointer	_end;
 			size_type		_size;
 		// 	__iter_pointer __begin_node_;
@@ -217,13 +216,11 @@ namespace ft
 				this->_size = 0;
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
-				this->_begin = this->_end;
 			}
-			_AvlTree(const _AvlTree& a) : _alloc(alloc), _size(a._size)
+			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(a._size)
 			{
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
-				this->_begin = this->_end;
 				this->_size = a._size;
 				insert(a.begin(), a.end());
 			}
@@ -243,11 +240,11 @@ namespace ft
 			// iterator
 			iterator begin()
 			{
-				return (iterator(_begin));
+				return (iterator(find_min_node(_end->_right)));
 			}
 			const_iterator begin() const
 			{
-				return (iterator(_begin));
+				return (iterator(find_min_node(_end->_right)));
 			}
 			iterator end()
 			{
@@ -286,14 +283,13 @@ namespace ft
 				{
 					Node_pointer *new_node = this->_alloc.allocate(1);
 					this->_alloc.construct(new_node, Node_type(val));
-					this->_begin = new_node;
 					new_node->_right = this->_end;
 					this->_end->_right = new_node;
 					this->_end->_left = new_node;
 					new_node->_left = ft::nullptr_t;
 					new_node->_parent = ft::nullptr_t;
 					this->_size++;
-					return (ft::make_pair(iterator(this->_begin), true));
+					return (ft::make_pair(iterator(new_node), true));
 				}
 				Node_pointer *start = this->_end->_right;
 				Node_pointer *last = this->_end;
@@ -317,18 +313,18 @@ namespace ft
 				}
 				Node_pointer *new_node = this->_alloc.allocate(1);
 				this->_alloc.construct(new_node, Node_type(val));
-					
 				if (flag == 0)
 					save_node->_left = new_node;
 				else
 					save_node->_right = new_node;
-				if (start == last)
-				{
-					this->_end->_right = new_node;
-				}
 				new_node->_parent = save_node;
 				new_node->_right = ft::nullptr_t;
 				new_node->_left = ft::nullptr_t;
+				if (start == last)
+				{
+					new_node->_right = this->_end;
+					this->_end->_left = new_node;
+				}
 				Balancing(new_node);
 				this->_end->_right = find_root_node(this->_end->_right);
 				return (ft::make_pair(iterator(start), true));
@@ -425,6 +421,7 @@ namespace ft
 			{
 				while (nd->_parent != ft::nullptr_t)
 				{
+					//?? 효율 garbage
 					nd = nd->_parent;
 					int	balance = get_balance_factor(nd);
 					if (balance >= 2)
