@@ -295,7 +295,7 @@ namespace ft
 				Node_pointer *last = this->_end;
 				Node_pointer *save_node;
 				int flag = 0;
-				while(start != last || start != ft::nullptr_t)
+				while(start != last && start != ft::nullptr_t)
 				{
 					if (start->_data.first == val.first)
 						return (ft::make_pair(iterator(start), false));
@@ -313,6 +313,7 @@ namespace ft
 				}
 				Node_pointer *new_node = this->_alloc.allocate(1);
 				this->_alloc.construct(new_node, Node_type(val));
+				this->_size++;
 				if (flag == 0)
 					save_node->_left = new_node;
 				else

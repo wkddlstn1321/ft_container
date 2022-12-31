@@ -9,22 +9,18 @@ int	main(void)
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
 	ft::vector<int> newvec;
-	std::map<int, int> newMap;
-	newMap[1] = 1;
-	newMap[2] = 2;
-	newMap[3] = 3;
-	newMap[4] = 4;
+	// std::map<int, int> newMap;
 	// newMap.insert(1, 1);
 	// newMap.insert(2, 2);
-	std::map<int, int>::iterator a = newMap.begin();
-	std::map<int, int>::iterator b = newMap.end();
+	// std::map<int, int>::iterator a = newMap.begin();
+	// std::map<int, int>::iterator b = newMap.end();
 	// a++;
 	// (void)a;
 	// a--;
 	// a--;
-	if (a == b)
-		cout << "?" << endl;
-	cout << a->first << endl;
+	// if (a == b)
+	// 	cout << "?" << endl;
+	// cout << a->first << endl;
 	// for (int i = 0 ; i < 10 ; i++)
 	// {
 	// 	vec.push_back(i);
