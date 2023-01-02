@@ -8,7 +8,9 @@ int	main(void)
 {
 	// std::vector<int> vec(3, 2);
 	std::vector<int> vec;
-	ft::vector<int> newvec;
+	ft::vector<int> newvec(3, 10);
+	ft::vector<int> newvec2;
+	newvec2 = newvec;
 	// std::map<int, int> newMap;
 	// newMap.insert(1, 1);
 	// newMap.insert(2, 2);
@@ -43,14 +45,14 @@ int	main(void)
 	// cout << "vec.capacity    " << vec.capacity() << endl;
 	// vector<int>::iterator vit = vec.begin();
 	// vector<int>::iterator vits = vec.end();
-	// ft::vector<int>::iterator it = newvec2.begin();
-	// ft::vector<int>::iterator its = newvec2.end();
+	ft::vector<int>::iterator it = newvec2.begin();
+	ft::vector<int>::iterator its = newvec2.end();
 	// cout << vit + vit<< endl;
 	// cout << it + it << endl;
 	// cout << "================ft::vec===============" << endl;
 	// cout << *(newvec.insert(newvec.begin(), 40)) << endl;
-	// for ( ; it != its ; it++)
-	// 	cout << *it << endl;
+	for ( ; it != its ; it++)
+		cout << *it << endl;
 	// cout << "====================vec===============" << endl;
 	// cout << *(vec.insert(vec.begin(), 40)) << endl;
 	// for (; vit != vits ; vit++)

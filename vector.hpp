@@ -80,6 +80,15 @@ namespace ft
 			std::copy(x.begin(), x.end(), this->_data);
 		}
 
+		vector& operator= (const vector& x)
+		{
+			if (this != &x)
+			{
+				vector tmp(x);
+				swap(tmp);
+			}
+			return (*this);
+		}
 		//destructor
 		~vector()
 		{

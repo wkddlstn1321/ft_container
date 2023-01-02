@@ -16,20 +16,21 @@ namespace ft
 		_treeNode	*_parent;
 		_treeNode	*_left;
 		_treeNode	*_right;
-
+		size_t		depth;
 		_treeNode()
-		: _data(value_type()), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
+		: _data(value_type()), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
 
 		_treeNode(const value_type& val)
-		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t) {}
+		: _data(val), _parent(ft::nullptr_t), _left(ft::nullptr_t), _right(ft::nullptr_t), depth(0) {}
 		
 		_treeNode(const _treeNode& node)
-		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right), {}
+		: _data(node._data), _parent(node._parent), _left(node._parent), _right(node._right), depth(node.depth){}
 		
 		_treeNode& operator=(const _treeNode& node)
 		{
 			if (*this != node)
 			{
+				this->depth = node.depth;
 				this->_data = node._data;
 				this->_left = node._left;
 				this->_right = node._right;
@@ -288,6 +289,7 @@ namespace ft
 					this->_end->_left = new_node;
 					new_node->_left = ft::nullptr_t;
 					new_node->_parent = ft::nullptr_t;
+					new_node->depth = 0;
 					this->_size++;
 					return (ft::make_pair(iterator(new_node), true));
 				}
@@ -326,6 +328,7 @@ namespace ft
 					new_node->_right = this->_end;
 					this->_end->_left = new_node;
 				}
+				depth_update(new_node, 1);
 				Balancing(new_node);
 				this->_end->_right = find_root_node(this->_end->_right);
 				return (ft::make_pair(iterator(start), true));
@@ -365,6 +368,12 @@ namespace ft
 
 			// avl manage func
 		private:
+			void	depth_update(Node_pointer nd, size_type depth)
+			{
+				nd->depth = depth;
+				if (nd->_parent != ft::nullptr_t)
+					depth_update(nd->_parent, depth + 1);
+			}
 			Node_pointer next_node(Node_pointer nd)
 			{
 				Node_pointer *next_nd = nd;
@@ -409,21 +418,17 @@ namespace ft
 			{
 				if (nd == ft::nullptr_t)
 					return (0);
-				int	h = 0;
-				int	left = get_height(nb->_left);
-				int right = get_height(nb->_right);
-				return (left > right ? left + 1 : right + 1);
+				return (nd->depth);
 			}
-			int	get_balance_factor(Node_pointer nd)
+			size_type	get_balance_factor(Node_pointer nd)
 			{
-				return (get_height(nd->_left) - get_height(nd->_right));
+				return (nb->_left->depth - nd->_right->depth);
 			}
 			void	Balancing(Node_pointer nd)
 			{
+				// 균형이 깨진 노드를 찾아야 됨
 				while (nd->_parent != ft::nullptr_t)
 				{
-					//?? 효율 garbage
-					nd = nd->_parent;
 					int	balance = get_balance_factor(nd);
 					if (balance >= 2)
 					{
@@ -441,6 +446,7 @@ namespace ft
 						else
 							nd = RL_rotate(nd);
 					}
+					nd = nd->_parent;
 				}
 			}
 			Node_pointer	LL_rotate(Node_pointer nd)
@@ -452,6 +458,8 @@ namespace ft
 				child_nd->_right = nd;
 				child_nd->_parent = nd->_parent;
 				nd->_parent = child_nd;
+				nd->depth = max(nd->_left->depth, nd->_right->depth) + 1;
+				child_nd->depth = max(child_nd->_left->depth, child_nd->_right->depth) + 1;
 				return (child_nd);
 			}
 			Node_pointer	LR_rotate(Node_pointer nd)
@@ -468,6 +476,8 @@ namespace ft
 				child_nd->_left = nd;
 				child_nd->_parent = nd->_parent;
 				nd->_parent = child_nd;
+				nd->depth = max(nd->_left->depth, nd->_right->depth) + 1;
+				child_nd->depth = max(child_nd->_left->depth, child_nd->_right->depth) + 1;
 				return (child_nd);
 			}
 			Node_pointer	RL_rotate(Node_pointer nd)
