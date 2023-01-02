@@ -188,7 +188,7 @@ namespace ft
 		//define
 		public:
 			typedef T						value_type;
-			typedef _Compare				value_compare;
+			typedef _Compare				key_compare;
 			typedef Alloc					allocator_type;
 
 			typedef _treeNode<value_type>	Node_type;
@@ -207,18 +207,21 @@ namespace ft
 			node_allocator	_alloc;
 			Node_pointer	_end;
 			size_type		_size;
+			key_compare		_comp;
+
 		// 	__iter_pointer __begin_node_;
 		// 	__compressed_pair<__end_node_t, __node_allocator> __pair1_;
 		// 	__compressed_pair<size_type, value_compare> __pair3_;
 		
 		public:
-			_AvlTree(const allocator_type& alloc = allocator_type()) :_alloc(alloc)
+			_AvlTree(const allocator_type& alloc = allocator_type(), const key_compare &comp = key_compare())
+			:_alloc(alloc), _comp(comp)
 			{
 				this->_size = 0;
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
 			}
-			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(a._size)
+			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(a._size), _comp(a._comp)
 			{
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
@@ -302,7 +305,7 @@ namespace ft
 					if (start->_data.first == val.first)
 						return (ft::make_pair(iterator(start), false));
 					save_node = start;
-					if (start->_data.first > val.first)
+					if (_comp(start->_data.first, val.first))
 					{
 						start = start->_left;
 						flag = 0;
@@ -323,6 +326,7 @@ namespace ft
 				new_node->_parent = save_node;
 				new_node->_right = ft::nullptr_t;
 				new_node->_left = ft::nullptr_t;
+				new_node->depth = 0;
 				if (start == last)
 				{
 					new_node->_right = this->_end;
@@ -331,11 +335,21 @@ namespace ft
 				depth_update(new_node, 1);
 				Balancing(new_node);
 				this->_end->_right = find_root_node(this->_end->_right);
-				return (ft::make_pair(iterator(start), true));
+				return (ft::make_pair(iterator(new_node), true));
 			}
-			iterator insert(iterator position, const value_type &val);
+			iterator insert(iterator position, const value_type &val)
+			{
+
+			}
 			template <class InputIterator>
-			void insert(InputIterator first, InputIterator last);
+			void insert(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
+			}
 			void erase(iterator position);
 			size_type erase(const key_type &k);
 			void erase(iterator first, iterator last);
@@ -370,7 +384,7 @@ namespace ft
 		private:
 			void	depth_update(Node_pointer nd, size_type depth)
 			{
-				nd->depth = depth;
+				nd->depth = max(depth, get_height(nd));
 				if (nd->_parent != ft::nullptr_t)
 					depth_update(nd->_parent, depth + 1);
 			}

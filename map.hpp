@@ -40,7 +40,7 @@ namespace ft
 	private:
 		key_compare				_comp;
 		allocator_type			_alloc;
-		_AvlTree<value_type>	_tree;
+		_AvlTree<value_type, _comp>	_tree;
 	public:
 		//value_compare class~
 		class value_compare : public ft::binary_function<value_type, value_type, bool>
@@ -190,8 +190,14 @@ namespace ft
 		}
 
 		//Observers
-		key_compare key_comp() const;
-		value_compare value_comp() const;
+		key_compare key_comp() const
+		{
+			return (_comp);
+		}
+		value_compare value_comp() const
+		{
+			return (value_compare(_comp));
+		}
 
 		//Operations
 		iterator find (const key_type& k);

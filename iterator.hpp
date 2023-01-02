@@ -38,7 +38,7 @@ namespace ft
 		typedef T								value_type;
 		typedef const T*						pointer;
 		typedef const T&						reference;
-		typedef std::random_access_iterator_tag	iterator_category;
+		typedef ft::random_access_iterator_tag	iterator_category;
 	};
 
 	template <class Category,              // iterator::iterator_category
