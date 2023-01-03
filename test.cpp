@@ -7,18 +7,18 @@ using namespace std;
 int	main(void)
 {
 	// std::vector<int> vec(3, 2);
-	ft::vector<int> vec(5, 5);
-	ft::vector<int>::iterator it = vec.begin();
-	ft::vector<int>::iterator its = vec.end();
+	// ft::vector<int> vec(5, 5);
+	// ft::vector<int>::iterator it = vec.begin();
+	// ft::vector<int>::iterator its = vec.end();
 	// ft::vector<int> vec2(it, its);
-	for (; it != its ; it++ )
-		cout << *it << endl;
+	// for (; it != its ; it++ )
+	// 	cout << *it << endl;
 	// ft::vector<int> newvec(3, 10);
 	// ft::vector<int> newvec2;
 	// newvec2 = newvec;
-	// std::map<int, int> newMap;
-	// newMap.insert(1, 1);
-	// newMap.insert(2, 2);
+	std::map<int, int> newMap;
+	newMap.erase(newMap.begin());
+	// newMap.erase(newMap.begin());
 	// std::map<int, int>::iterator a = newMap.begin();
 	// std::map<int, int>::iterator b = newMap.end();
 	// a++;

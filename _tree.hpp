@@ -350,18 +350,26 @@ namespace ft
 					first++;
 				}
 			}
-			void erase(iterator position);
+			void erase(iterator position)
+			{
+				this->_size--;
+				Node_pointer del_node = position.base();
+				del_node->_left->_parent = del_node->_parent;
+			}
 			size_type erase(const key_type &k);
-			void erase(iterator first, iterator last);
+			void erase(iterator first, iterator last)
+			{
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
+			}
 			void swap(map &x);
 			void clear()
 			{
 				erase(begin(), end());
 			}
-
-			// Observers
-			key_compare key_comp() const;
-			value_compare value_comp() const;
 
 			// Operations
 			iterator find(const key_type &k);
