@@ -3,9 +3,9 @@ CC		= c++
 CFLAGS	= -Wall -Wextra -Werror
 SRC		= test.cpp
 OBJ		= $(SRC:.cpp=.o)
-HEAD	= vector.hpp algorithm.hpp iterator.hpp functional.hpp\
-		  random_access_iterator.hpp reverse_iterator.hpp stack.hpp \
-		  type_traits.hpp utility.hpp bidirectional_iterator.hpp
+HEAD	= vector.hpp map.hpp stack.hpp _tree.hpp \
+		  iterator.hpp random_access_iterator.hpp reverse_iterator.hpp tree_iterator.hpp \
+		  functional.hpp type_traits.hpp utility.hpp algorithm.hpp
 
 %.o : %.cpp $(HEAD)
 	$(CC) $(CFLAGS) -c $(SRC)
