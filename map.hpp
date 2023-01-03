@@ -14,7 +14,7 @@ namespace ft
 	template <class Key,											// map::key_type
 			  class T,												// map::mapped_type
 			  class Compare = ft::less<Key>,						// map::key_compare
-			  class Alloc = std::allocator<ft::pair<const Key, T>> >// map::allocator_type
+			  class Alloc = std::allocator<ft::pair<const Key, T> > >// map::allocator_type
 	class map
 	{
 	public:
@@ -27,16 +27,15 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		typedef typename ft::_AvlTree<value_type>::iterator					iterator;
-		typedef typename ft::_AvlTree<const value_type>::const_iterator		const_iterator;
-		typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
-		typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef std::ptrdiff_t												difference_type;
 		typedef std::size_t													size_type;
-
 		typedef typename allocator_type::template rebind<value_type>::other	type_allocator;
 		typedef std::allocator_traits<type_allocator>						type_traits;
 
+		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::iterator					iterator;
+		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::const_iterator		const_iterator;
+		typedef typename ft::reverse_iterator<iterator>												reverse_iterator;
+		typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
 	private:
 		key_compare								_comp;
 		allocator_type							_alloc;
@@ -77,9 +76,9 @@ namespace ft
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
 		: _comp(comp), _alloc(alloc), _tree() {}
 		template <class InputIterator>
-		map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
-		{
-		}
+		// map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
+		// {
+		// }
 		map (const map& x) : _alloc(x._alloc), _comp(x._comp), _tree(x._tree)
 		{
 			insert(x.begin(), x.end());
@@ -116,22 +115,22 @@ namespace ft
 		{
 			return (_tree.end());
 		}
-		reverse_iterator rbegin()
-		{
-			reverse_iterator(begin());
-		}
-		const_reverse_iterator rbegin() const
-		{
-			reverse_iterator(begin());
-		}
-		reverse_iterator rend()
-		{
-			return (reverse_iterator(end));
-		}
-		const_reverse_iterator rend() const
-		{
-			return (reverse_iterator(end));
-		}
+		// reverse_iterator rbegin()
+		// {
+		// 	reverse_iterator(begin());
+		// }
+		// const_reverse_iterator rbegin() const
+		// {
+		// 	reverse_iterator(begin());
+		// }
+		// reverse_iterator rend()
+		// {
+		// 	return (reverse_iterator(end));
+		// }
+		// const_reverse_iterator rend() const
+		// {
+		// 	return (reverse_iterator(end));
+		// }
 
 		//capacity
 		bool empty() const
