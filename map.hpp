@@ -27,8 +27,8 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		// typedef typename ft::_AvlTree<value_type>::iterator					iterator;
-		// typedef typename ft::_tree<const value_type>		const_iterator;
+		typedef typename ft::_AvlTree<value_type>::iterator					iterator;
+		typedef typename ft::_AvlTree<const value_type>::const_iterator		const_iterator;
 		typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 		typedef std::ptrdiff_t												difference_type;
@@ -38,9 +38,9 @@ namespace ft
 		typedef std::allocator_traits<type_allocator>						type_traits;
 
 	private:
-		key_compare				_comp;
-		allocator_type			_alloc;
-		_AvlTree<value_type, _comp>	_tree;
+		key_compare								_comp;
+		allocator_type							_alloc;
+		_AvlTree<value_type, key_type, key_compare>	_tree;
 	public:
 		//value_compare class~
 		class value_compare : public ft::binary_function<value_type, value_type, bool>
@@ -122,7 +122,7 @@ namespace ft
 		}
 		const_reverse_iterator rbegin() const
 		{
-			reverse_iterator(begin())
+			reverse_iterator(begin());
 		}
 		reverse_iterator rend()
 		{
@@ -150,6 +150,7 @@ namespace ft
 		//Element access
 		mapped_type& operator[] (const key_type& k)
 		{
+			(void)k;
 		}
 		mapped_type &at(const key_type &k);
 		const mapped_type &at(const key_type &k) const;
@@ -170,7 +171,7 @@ namespace ft
 		}
 		void erase (iterator position)
 		{
-			_tree.erase();
+			_tree.erase(position);
 		}
 		size_type erase (const key_type& k)
 		{
@@ -202,15 +203,15 @@ namespace ft
 		//Operations
 		iterator find (const key_type& k)
 		{
-			return (this->_tree.find());
+			return (this->_tree.find(k));
 		}
 		const_iterator find (const key_type& k) const
 		{
-			return (this->_tree.find());
+			return (this->_tree.find(k));
 		}
 		size_type count (const key_type& k) const
 		{
-			return (this->_tree.count())
+			return (this->_tree.count(k));
 		}
 		iterator lower_bound (const key_type& k)
 		{
@@ -228,8 +229,14 @@ namespace ft
 		{
 			return (this->_tree.upper_bound(k));
 		}
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-		pair<iterator,iterator> equal_range (const key_type& k);
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+		{
+			return (this->_tree.equal_range(k));
+		}
+		pair<iterator,iterator> equal_range (const key_type& k)
+		{
+			return (this->_tree.equal_range(k));
+		}
 
 		//Allocator
 		allocator_type get_allocator() const;

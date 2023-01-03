@@ -1,5 +1,6 @@
 #include<vector>
 #include<map>
+#include"map.hpp"
 #include"vector.hpp"
 
 using namespace std;

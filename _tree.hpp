@@ -5,6 +5,7 @@
 #include "iterator.hpp"
 #include "functional.hpp"
 #include "type_traits.hpp"
+#include "utility.hpp"
 
 namespace ft
 {
@@ -43,21 +44,23 @@ namespace ft
 
 	//T == _treeNode<>
 	template <class T>
-	class tree_iterator : public ft::iterator<ft::bidirection_iterator_tag, T>
+	class tree_iterator //: public ft::iterator<ft::bidirection_iterator_tag, T>
 	{
+	private:
+		typedef typename ft::iterator<ft::bidirection_iterator_tag, T> _Iterator;
 	public:
-		typedef typename iterator::iterator_category	iterator_category;
-		typedef typename iterator::value_type			value_type;
-		typedef typename iterator::difference_type		difference_type;
-		typedef typename iterator::reference			reference;
-		typedef typename iterator::pointer				Node_pointer;
+		typedef typename _Iterator::iterator_category	iterator_category;
+		typedef typename _Iterator::value_type			value_type;
+		typedef typename _Iterator::difference_type		difference_type;
+		typedef typename _Iterator::reference			reference;
+		typedef typename _Iterator::pointer				Node_pointer;
 
 	private:
 		// typedef _treeNode<value_type>*					Node_pointer;
 		Node_pointer	_pointer;
 	public:
-		tree_iterator() : _pointer(ft::nullptr_t);
-		tree_iterator(Node_pointer node) : _pointer(node);
+		tree_iterator() : _pointer(ft::nullptr_t) {}
+		tree_iterator(Node_pointer node) : _pointer(node) {}
 		tree_iterator(const tree_iterator& a)
 		{
 			this->_pointer = a.base();
@@ -182,15 +185,15 @@ namespace ft
 	}
 
 	// template <class _Tp, class _Compare, class _Allocator>
-	template <typename T, class _Compare = ft::less<T>, class Alloc = std::allocator<T> >
+	template <typename T, typename Key, class _Compare = ft::less<T>, class Alloc = std::allocator<T> >
 	class _AvlTree
 	{
 		//define
 		public:
-			typedef T						value_type;
 			typedef _Compare				key_compare;
+			typedef T						value_type;
 			typedef Alloc					allocator_type;
-
+			typedef Key						key_type;
 			typedef _treeNode<value_type>	Node_type;
 			typedef _treeNode<value_type>*	Node_pointer;
 
@@ -199,8 +202,8 @@ namespace ft
 
 			typedef typename allocator_type::template rebind<Node_type>::other	node_allocator;
 
-			typedef tree_iterator<T>			iterator;
-			typedef tree_iterator<const T>		const_iterator;
+			typedef tree_iterator<Node_type>			iterator;
+			typedef tree_iterator<const Node_type>		const_iterator;
 		
 		//member var
 		private:
@@ -281,7 +284,7 @@ namespace ft
 			// const mapped_type &at(const key_type &k) const;
 
 			// Modifiers 
-			pair<iterator, bool> insert(const value_type &val)
+			ft::pair<iterator, bool> insert(const value_type &val)
 			{
 				if (this->_size == 0)
 				{
@@ -367,7 +370,7 @@ namespace ft
 				if (tmp == ft::nullptr_t)
 				{
 					if (del_node->_parent != ft::nullptr_t)
-						del_node
+						del_node;
 					tmp = del_node->_right;
 					tmp->_left = del_node->_left;
 				}
@@ -514,11 +517,11 @@ namespace ft
 				}
 				return (end());
 			}
-			pair<const_iterator, const_iterator> equal_range(const key_type &k) const;
+			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
 				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
-			pair<iterator, iterator> equal_range(const key_type &k)
+			ft::pair<iterator, iterator> equal_range(const key_type &k)
 			{
 				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
@@ -588,7 +591,7 @@ namespace ft
 			}
 			size_type	get_balance_factor(Node_pointer nd)
 			{
-				return (nb->_left->depth - nd->_right->depth);
+				return (nd->_left->depth - nd->_right->depth);
 			}
 			void	Balancing(Node_pointer nd)
 			{
@@ -633,9 +636,9 @@ namespace ft
 				nd->_left = RR_rotate(nd->_left);
 				return (LL_rotate(nd));
 			}
-			Node_pointer	RR_rotate(Node_pointer nb)
+			Node_pointer	RR_rotate(Node_pointer nd)
 			{
-				Node_pointer child_nd = nb->_right;
+				Node_pointer child_nd = nd->_right;
 				nd->_left = child_nd->_left;
 				if (child_nd->_left != nullptr_t)
 					child_nd->_left->_parent = nd;

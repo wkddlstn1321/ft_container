@@ -11,6 +11,20 @@ namespace ft
 	struct bidirection_iterator_tag : public forward_iterator_tag {};
 	struct random_access_iterator_tag : public bidirection_iterator_tag {};
 
+	template <class Category,              // iterator::iterator_category
+			  class T,                     // iterator::value_type
+			  class Distance = ptrdiff_t,  // iterator::difference_type
+			  class Pointer = T*,          // iterator::pointer
+			  class Reference = T& > class iterator        // iterator::reference
+	{
+	public:
+		typedef T value_type;
+		typedef Distance difference_type;
+		typedef Pointer pointer;
+		typedef Reference reference;
+		typedef Category iterator_category;
+	};
+	
 	template <class Iterator>
 	struct iterator_traits
 	{
@@ -41,20 +55,6 @@ namespace ft
 		typedef ft::random_access_iterator_tag	iterator_category;
 	};
 
-	template <class Category,              // iterator::iterator_category
-			  class T,                     // iterator::value_type
-			  class Distance = ptrdiff_t,  // iterator::difference_type
-			  class Pointer = T*,          // iterator::pointer
-			  class Reference = T&         // iterator::reference
-			  > class iterator
-	{
-	public:
-		typedef T value_type;
-		typedef Distance difference_type;
-		typedef Pointer pointer;
-		typedef Reference reference;
-		typedef Category iterator_category;
-	};
 
 	template <class InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type
