@@ -354,9 +354,47 @@ namespace ft
 			{
 				this->_size--;
 				Node_pointer del_node = position.base();
-				del_node->_left->_parent = del_node->_parent;
+				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
+				{
+					Node_pointer tmp = del_node->_parent;
+					this->_alloc.destroy(del_node);
+					this->_alloc.deallocator(del_node, 1);
+					Balancing(tmp);
+					this->_end->_right = find_root_node(this->_end->_right);
+					return ;
+				}
+				Node_pointer tmp = del_node->_left;
+				if (tmp == ft::nullptr_t)
+				{
+					if (del_node->_parent != ft::nullptr_t)
+						del_node
+					tmp = del_node->_right;
+					tmp->_left = del_node->_left;
+				}
+				else
+				{
+					while (tmp->_right != ft::nullptr_t)
+						tmp = tmp->_right;
+					tmp->_right = del_node->_right;
+					tmp->_left = del_node->_left;
+				}
+				if (tmp != ft::nullptr_t)
+				{
+					tmp->_parent = del_node->_parent;
+					tmp->_right = del_node->_right;
+					tmp->depth = del_node->depth;
+					if (del_node->_left != tmp)
+						tmp->_left = del_node->_left;
+					if (del_node->_right == _end)
+						_end->_left = tmp;
+				}
+				Balancing(bal);
+				this->_end->_right = find_root_node(this->_end->_right);
 			}
-			size_type erase(const key_type &k);
+			size_type erase(const key_type &k)
+			{
+				
+			}
 			void erase(iterator first, iterator last)
 			{
 				while (first != last)
@@ -372,16 +410,118 @@ namespace ft
 			}
 
 			// Operations
-			iterator find(const key_type &k);
-			const_iterator find(const key_type &k) const;
-			size_type count(const key_type &k) const;
-			iterator lower_bound(const key_type &k);
-			const_iterator lower_bound(const key_type &k) const;
-			iterator upper_bound(const key_type &k);
-			const_iterator upper_bound(const key_type &k) const;
+			iterator find(const key_type &k)
+			{
+				Node_pointer tmp = this->_end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (tmp->_data.first == k)
+						return (iterator(tmp));
+					else if (this->_comp(tmp->_data.first, k))
+						tmp = tmp->_right;
+					else
+						tmp = tmp->_left;
+				}
+				return (end());
+			}
+			const_iterator find(const key_type &k) const
+			{
+				Node_pointer tmp = this->_end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (tmp->_data.first == k)
+						return (iterator(tmp));
+					else if (this->_comp(tmp->_data.first, k))
+						tmp = tmp->_right;
+					else
+						tmp = tmp->_left;
+				}
+				return (end());
+			}
+			size_type count(const key_type &k) const
+			{
+				if (end() == find(k))
+					return (0);
+				return (1);
+			}
+			//k 보다 크거나 같은 원소
+			iterator lower_bound(const key_type &k)
+			{
+				Node_pointer tmp = this->end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (tmp->_data.first == k)
+						return (iterator(tmp));
+					else if (this->_comp(tmp->_data.first, k))
+						tmp = tmp->_right;
+					else
+					{
+						while (tmp->_left != ft::nullptr_t)
+							tmp = tmp->_left;
+						return (iterator(tmp));
+					}
+				}
+				return (end());
+			}
+			const_iterator lower_bound(const key_type &k) const
+			{
+				Node_pointer tmp = this->end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (tmp->_data.first == k)
+						return (iterator(tmp));
+					else if (this->_comp(tmp->_data.first, k))
+						tmp = tmp->_right;
+					else
+					{
+						while (tmp->_left != ft::nullptr_t)
+							tmp = tmp->_left;
+						return (iterator(tmp));
+					}
+				}
+				return (end());
+			}
+			//k 보다 큰 원소
+			iterator upper_bound(const key_type &k)
+			{
+				Node_pointer tmp = this->end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (this->_comp(k, tmp->_data.first))
+					{
+						while (tmp->_left != ft::nullptr_t)
+							tmp = tmp->_left;
+						return (iterator(tmp));
+					}
+					else
+						tmp = tmp->_right;
+				}
+				return (end());
+			}
+			const_iterator upper_bound(const key_type &k) const
+			{
+				Node_pointer tmp = this->end->_right;
+				while (tmp != ft::nullptr_t)
+				{
+					if (this->_comp(k, tmp->_data.first))
+					{
+						while (tmp->_left != ft::nullptr_t)
+							tmp = tmp->_left;
+						return (iterator(tmp));
+					}
+					else
+						tmp = tmp->_right;
+				}
+				return (end());
+			}
 			pair<const_iterator, const_iterator> equal_range(const key_type &k) const;
-			pair<iterator, iterator> equal_range(const key_type &k);
-
+			{
+				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
+			}
+			pair<iterator, iterator> equal_range(const key_type &k)
+			{
+				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
+			}
 			// Allocator
 			allocator_type get_allocator() const
 			{
@@ -420,12 +560,16 @@ namespace ft
 			}
 			Node_pointer find_min_node(Node_pointer root)
 			{
+				if (root == ft::nullptr_t)
+					return (ft::nullptr_t);
 				while (root->_left != ft::nullptr_t)
 					root = root->_left;
 				return (root);
 			}
 			Node_pointer find_max_node(Node_pointer root)
 			{
+				if (root == ft::nullptr_t)
+					return (ft::nullptr_t);
 				while (root->_right != ft::nullptr_t)
 					root = root->_right;
 				return (root);

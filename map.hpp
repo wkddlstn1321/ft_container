@@ -200,13 +200,34 @@ namespace ft
 		}
 
 		//Operations
-		iterator find (const key_type& k);
-		const_iterator find (const key_type& k) const;
-		size_type count (const key_type& k) const;
-		iterator lower_bound (const key_type& k);
-		const_iterator lower_bound (const key_type& k) const;
-		iterator upper_bound (const key_type& k);
-		const_iterator upper_bound (const key_type& k) const;
+		iterator find (const key_type& k)
+		{
+			return (this->_tree.find());
+		}
+		const_iterator find (const key_type& k) const
+		{
+			return (this->_tree.find());
+		}
+		size_type count (const key_type& k) const
+		{
+			return (this->_tree.count())
+		}
+		iterator lower_bound (const key_type& k)
+		{
+			return (this->_tree.lower_bound(k));
+		}
+		const_iterator lower_bound (const key_type& k) const
+		{
+			return (this->_tree.lower_bound(k));
+		}
+		iterator upper_bound (const key_type& k)
+		{
+			return (this->_tree.upper_bound(k));
+		}
+		const_iterator upper_bound (const key_type& k) const
+		{
+			return (this->_tree.upper_bound(k));
+		}
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 		pair<iterator,iterator> equal_range (const key_type& k);
 
