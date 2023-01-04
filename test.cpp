@@ -7,8 +7,30 @@ using namespace std;
 
 int	main(void)
 {
+	ft::map<int, int> newmap;
+	// cout << newmap.empty() << endl;
+	// newmap.insert(ft::make_pair(2,3));
+	newmap.insert(ft::make_pair(3,3));
+	newmap.insert(ft::make_pair(6,3));
+	newmap.insert(ft::make_pair(5,4));
+	newmap.insert(ft::make_pair(2,4));
+	// newmap.insert(ft::make_pair(1,4));
+	// newmap.insert(ft::make_pair(7,4));
+	// newmap.insert(ft::make_pair(0,4));
+	// newmap.insert(ft::make_pair(8,4));
+	// newmap.insert(ft::make_pair(9,4));
+	// newmap.insert(ft::make_pair(12,3));
+	// cout << newmap.size() << endl;
 	// std::vector<int> vec(3, 2);
-	// ft::vector<int> vec(5, 5);
+	// std::vector<int> nv = vec;
+	// std::vector<int>::iterator it = vec.begin();
+	// std::vector<int> vec2(5, 5);
+	// vec.swap(vec2);
+	// std::vector<int>::iterator its = vec2.end();
+	// for ( ; it != its ; it++)
+	// {
+	// 	cout << *it << endl;
+	// }
 	// ft::vector<int>::iterator it = vec.begin();
 	// ft::vector<int>::iterator its = vec.end();
 	// ft::vector<int> vec2(it, its);
@@ -17,8 +39,6 @@ int	main(void)
 	// ft::vector<int> newvec(3, 10);
 	// ft::vector<int> newvec2;
 	// newvec2 = newvec;
-	std::map<int, int> newMap;
-	newMap.erase(newMap.begin());
 	// newMap.erase(newMap.begin());
 	// std::map<int, int>::iterator a = newMap.begin();
 	// std::map<int, int>::iterator b = newMap.end();

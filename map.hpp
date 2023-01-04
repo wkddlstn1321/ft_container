@@ -36,9 +36,9 @@ namespace ft
 		typedef typename ft::reverse_iterator<iterator>												reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
 	private:
-		key_compare								_comp;
-		allocator_type							_alloc;
-		_AvlTree<value_type, key_type, key_compare>	_tree;
+		key_compare													_comp;
+		allocator_type												_alloc;
+		_AvlTree<value_type, key_type, key_compare, allocator_type>	_tree;
 	public:
 		//value_compare class~
 		class value_compare : public ft::binary_function<value_type, value_type, bool>
@@ -53,45 +53,32 @@ namespace ft
 					return (comp(x.first, y.first));
 				}
 		};
-		// template <class Key, class T, class Compare, class Alloc>
-		// class map<Key, T, Compare, Alloc>::value_compare : ft::binary_function<value_type, value_type, gbool>
-		// {
-		// 	friend class map;
-		// protected:
-		// 	Compare comp;
-		// 	value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
-		// public:
-		// 	typedef bool		result_type;
-		// 	typedef value_type	first_argument_type;
-		// 	typedef value_type	second_argument_type;
-		// 	bool operator()(const value_type &x, const value_type &y) const
-		// 	{
-		// 		return comp(x.first, y.first);
-		// 	}
-		// };
 
 		// Member func
 		// construct
 		explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
-		: _comp(comp), _alloc(alloc), _tree() {}
+		: _comp(comp), _alloc(alloc), _tree(_alloc, _comp) {}
 		template <class InputIterator>
-		// map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type())
-		// {
-		// }
+		map(InputIterator first, InputIterator last, const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
+		:_comp(comp), _alloc(alloc) ,_tree(_alloc, _comp)
+		{
+			insert(first, last);
+		}
 		map (const map& x) : _alloc(x._alloc), _comp(x._comp), _tree(x._tree)
 		{
 			insert(x.begin(), x.end());
 		}
 		//destructor
-		~map()
-		{
-			clear();
-		}
+		// ~map()
+		// {
+		// 	clear();
+		// }
 		map& operator= (const map& x)
 		{
 			if (&x != this)
 			{
-				clear();
+				// clear();
 				insert(x.begin(), x.end());
 			}
 			return (*this);
@@ -146,47 +133,47 @@ namespace ft
 		}
 
 		//Element access
-		mapped_type& operator[] (const key_type& k)
-		{
-			(void)k;
-		}
-		mapped_type &at(const key_type &k);
-		const mapped_type &at(const key_type &k) const;
+		// mapped_type& operator[] (const key_type& k)
+		// {
+		// 	(void)k;
+		// }
+		// mapped_type &at(const key_type &k);
+		// const mapped_type &at(const key_type &k) const;
 
 		//Modifiers
 		pair<iterator,bool> insert (const value_type& val)
 		{
 			return (_tree.insert(val));
 		}
-		iterator insert (iterator position, const value_type& val)
-		{
-			return (_tree.insert(position, val));
-		}
-		template <class InputIterator>
-		void insert(InputIterator first, InputIterator last)
-		{
-			return (_tree.insert(first, last));
-		}
-		void erase (iterator position)
-		{
-			_tree.erase(position);
-		}
-		size_type erase (const key_type& k)
-		{
-			return (_tree.erase(k));
-		}
-		void erase (iterator first, iterator last)
-		{
-			return (_tree.erase(first, last));
-		}
+		// iterator insert (iterator position, const value_type& val)
+		// {
+		// 	return (_tree.insert(position, val));
+		// }
+		// template <class InputIterator>
+		// void insert(InputIterator first, InputIterator last)
+		// {
+		// 	return (_tree.insert(first, last));
+		// }
+		// void erase (iterator position)
+		// {
+		// 	_tree.erase(position);
+		// }
+		// size_type erase (const key_type& k)
+		// {
+		// 	return (_tree.erase(k));
+		// }
+		// void erase (iterator first, iterator last)
+		// {
+		// 	_tree.erase(first, last);
+		// }
 		void swap (map& x)
 		{
-			_tree.swap(x);
+			_tree.swap(x._tree);
 		}
-		void clear()
-		{
-			erase(begin(), end());
-		}
+		// void clear()
+		// {
+		// 	erase(begin(), end());
+		// }
 
 		//Observers
 		key_compare key_comp() const
@@ -237,7 +224,10 @@ namespace ft
 		}
 
 		//Allocator
-		allocator_type get_allocator() const;
+		allocator_type get_allocator() const
+		{
+			return (_tree.get_allocator());
+		}
 	};
 }
 

@@ -1,6 +1,8 @@
 #ifndef _TREE_HPP
 # define _TREE_HPP
 
+#include<iostream>
+
 #include<memory>
 #include "iterator.hpp"
 #include "functional.hpp"
@@ -185,7 +187,7 @@ namespace ft
 	}
 
 	// template <class _Tp, class _Compare, class _Allocator>
-	template <typename T, typename Key, class _Compare = ft::less<T>, class Alloc = std::allocator<T> >
+	template <typename T, typename Key, class _Compare, class Alloc = std::allocator<T> >
 	class _AvlTree
 	{
 		//define
@@ -288,7 +290,7 @@ namespace ft
 			{
 				if (this->_size == 0)
 				{
-					Node_pointer *new_node = this->_alloc.allocate(1);
+					Node_pointer new_node = this->_alloc.allocate(1);
 					this->_alloc.construct(new_node, Node_type(val));
 					new_node->_right = this->_end;
 					this->_end->_right = new_node;
@@ -299,9 +301,9 @@ namespace ft
 					this->_size++;
 					return (ft::make_pair(iterator(new_node), true));
 				}
-				Node_pointer *start = this->_end->_right;
-				Node_pointer *last = this->_end;
-				Node_pointer *save_node;
+				Node_pointer start = this->_end->_right;
+				Node_pointer last = this->_end;
+				Node_pointer save_node;
 				int flag = 0;
 				while(start != last && start != ft::nullptr_t)
 				{
@@ -310,103 +312,121 @@ namespace ft
 					save_node = start;
 					if (_comp(start->_data.first, val.first))
 					{
-						start = start->_left;
+						start = start->_right;
 						flag = 0;
 					}
 					else
 					{
-						start = start->_right;
+						start = start->_left;
 						flag = 1;
 					}
 				}
-				Node_pointer *new_node = this->_alloc.allocate(1);
+				Node_pointer new_node = this->_alloc.allocate(1);
 				this->_alloc.construct(new_node, Node_type(val));
 				this->_size++;
-				if (flag == 0)
+				if (flag == 1)
 					save_node->_left = new_node;
 				else
 					save_node->_right = new_node;
 				new_node->_parent = save_node;
 				new_node->_right = ft::nullptr_t;
 				new_node->_left = ft::nullptr_t;
-				new_node->depth = 0;
 				if (start == last)
 				{
 					new_node->_right = this->_end;
 					this->_end->_left = new_node;
 				}
 				depth_update(new_node, 1);
+				std::cout << std::endl;
 				Balancing(new_node);
 				this->_end->_right = find_root_node(this->_end->_right);
 				return (ft::make_pair(iterator(new_node), true));
 			}
-			iterator insert(iterator position, const value_type &val)
-			{
-
-			}
-			template <class InputIterator>
-			void insert(InputIterator first, InputIterator last)
-			{
-				while (first != last)
-				{
-					insert(*first);
-					first++;
-				}
-			}
-			void erase(iterator position)
-			{
-				this->_size--;
-				Node_pointer del_node = position.base();
-				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
-				{
-					Node_pointer tmp = del_node->_parent;
-					this->_alloc.destroy(del_node);
-					this->_alloc.deallocator(del_node, 1);
-					Balancing(tmp);
-					this->_end->_right = find_root_node(this->_end->_right);
-					return ;
-				}
-				Node_pointer tmp = del_node->_left;
-				if (tmp == ft::nullptr_t)
-				{
-					if (del_node->_parent != ft::nullptr_t)
-						del_node;
-					tmp = del_node->_right;
-					tmp->_left = del_node->_left;
-				}
-				else
-				{
-					while (tmp->_right != ft::nullptr_t)
-						tmp = tmp->_right;
-					tmp->_right = del_node->_right;
-					tmp->_left = del_node->_left;
-				}
-				if (tmp != ft::nullptr_t)
-				{
-					tmp->_parent = del_node->_parent;
-					tmp->_right = del_node->_right;
-					tmp->depth = del_node->depth;
-					if (del_node->_left != tmp)
-						tmp->_left = del_node->_left;
-					if (del_node->_right == _end)
-						_end->_left = tmp;
-				}
-				Balancing(bal);
-				this->_end->_right = find_root_node(this->_end->_right);
-			}
-			size_type erase(const key_type &k)
-			{
+			// iterator insert(iterator position, const value_type &val)
+			// {
+			// 	if (this->_size == 0)
+			// 	{
+			// 		insert(val);
+			// 		return (begin());
+			// 	}
+			// }
+			// template <class InputIterator>
+			// void insert(InputIterator first, InputIterator last)
+			// {
+			// 	while (first != last)
+			// 	{
+			// 		insert(*first);
+			// 		first++;
+			// 	}
+			// }
+			// void erase(iterator position)
+			// {
+			// 	this->_size--;
+			// 	Node_pointer del_node = position.base();
+			// 	if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
+			// 	{
+			// 		Node_pointer tmp = del_node->_parent;
+			// 		this->_alloc.destroy(del_node);
+			// 		this->_alloc.deallocator(del_node, 1);
+			// 		Balancing(tmp);
+			// 		this->_end->_right = find_root_node(this->_end->_right);
+			// 		return ;
+			// 	}
+			// 	Node_pointer tmp = del_node->_left;
+			// 	if (tmp == ft::nullptr_t)
+			// 	{
+			// 		if (del_node->_parent != ft::nullptr_t)
+			// 			del_node;
+			// 		tmp = del_node->_right;
+			// 		tmp->_left = del_node->_left;
+			// 	}
+			// 	else
+			// 	{
+			// 		while (tmp->_right != ft::nullptr_t)
+			// 			tmp = tmp->_right;
+			// 		tmp->_right = del_node->_right;
+			// 		tmp->_left = del_node->_left;
+			// 	}
+			// 	if (tmp != ft::nullptr_t)
+			// 	{
+			// 		tmp->_parent = del_node->_parent;
+			// 		tmp->_right = del_node->_right;
+			// 		tmp->depth = del_node->depth;
+			// 		if (del_node->_left != tmp)
+			// 			tmp->_left = del_node->_left;
+			// 		if (del_node->_right == _end)
+			// 			_end->_left = tmp;
+			// 	}
+			// 	Balancing(bal);
+			// 	this->_end->_right = find_root_node(this->_end->_right);
+			// }
+			// size_type erase(const key_type &k)
+			// {
 				
-			}
-			void erase(iterator first, iterator last)
+			// }
+			// void erase(iterator first, iterator last)
+			// {
+			// 	while (first != last)
+			// 	{
+			// 		erase(first);
+			// 		first++;
+			// 	}
+			// }
+			void swap(_AvlTree &x)
 			{
-				while (first != last)
-				{
-					erase(first);
-					first++;
-				}
+				node_allocator tmp_alloc = this->_alloc;
+				Node_pointer tmp = this->_end;
+				size_type tmp_size = this->_size;
+				key_compare tmp_compare = this->_comp;
+				this->_alloc = x._alloc;
+				this->_end = x._end;
+				this->_size = x._size;
+				this->_comp = x._comp;
+				x._alloc = tmp_alloc;
+				x._end = tmp;
+				x._size = tmp_size;
+				x._comp = tmp_compare;
 			}
-			void swap(map &x);
 			void clear()
 			{
 				erase(begin(), end());
@@ -535,9 +555,10 @@ namespace ft
 		private:
 			void	depth_update(Node_pointer nd, size_type depth)
 			{
-				nd->depth = max(depth, get_height(nd));
+				nd->depth = depth > get_height(nd) ? depth : get_height(nd);
 				if (nd->_parent != ft::nullptr_t)
 					depth_update(nd->_parent, depth + 1);
+				std::cout << " key : " << nd->_data.first << " depth : " << nd->depth << std::endl;
 			}
 			Node_pointer next_node(Node_pointer nd)
 			{
@@ -589,31 +610,58 @@ namespace ft
 					return (0);
 				return (nd->depth);
 			}
-			size_type	get_balance_factor(Node_pointer nd)
+			int	get_balance_factor(Node_pointer nd)
 			{
-				return (nd->_left->depth - nd->_right->depth);
+				size_type left_depth;
+				size_type right_depth;
+				if (nd->_left == ft::nullptr_t)
+					left_depth = 0;
+				else
+					left_depth = nd->_left->depth;
+				if (nd->_right == ft::nullptr_t)
+					right_depth = 0;
+				else
+					right_depth = nd->_right->depth;
+				return (left_depth - right_depth);
 			}
 			void	Balancing(Node_pointer nd)
 			{
 				// 균형이 깨진 노드를 찾아야 됨
-				while (nd->_parent != ft::nullptr_t)
+				while (nd != ft::nullptr_t)
 				{
 					int	balance = get_balance_factor(nd);
+					// std::cout << "key : " << nd->_data.first << " balance : " << balance << std::endl;
 					if (balance >= 2)
 					{
+						std::cout << nd->_data.first << std::endl;
 						balance = get_balance_factor(nd->_left);
 						if (balance >= 1)
+						{
+							std::cout << "LL rotatate" << std::endl;
 							nd = LL_rotate(nd);
+						}
 						else
+						{
+							std::cout << "LR rotatate" << std::endl;
 							nd = LR_rotate(nd);
+						}
 					}
 					else if (balance <= -2)
 					{
-						get_balance_factor(nd->_right);
+						std::cout << nd->_data.first << std::endl;
+						balance = get_balance_factor(nd->_right);
 						if (balance <= -1)
+						{
+							std::cout << balance;
+							std::cout << " RR rotatate" << std::endl;
 							nd = RR_rotate(nd);
+						}
 						else
+						{
+							std::cout << balance;
+							std::cout << " RL rotatate" << std::endl;
 							nd = RL_rotate(nd);
+						}
 					}
 					nd = nd->_parent;
 				}
@@ -626,9 +674,16 @@ namespace ft
 					child_nd->_right->_parent = nd;
 				child_nd->_right = nd;
 				child_nd->_parent = nd->_parent;
+				if (nd->_parent != ft::nullptr_t)
+				{
+					if (_comp(nd->_parent->_data.first, nd->_data.first))
+						nd->_parent->_right = child_nd;
+					else
+						nd->_parent->_left = child_nd;
+				}
 				nd->_parent = child_nd;
-				nd->depth = max(nd->_left->depth, nd->_right->depth) + 1;
-				child_nd->depth = max(child_nd->_left->depth, child_nd->_right->depth) + 1;
+				nd->depth = child_nd->depth;
+				child_nd->depth = nd->depth > get_height(child_nd->_left) ? nd->depth + 1 : get_height(child_nd->_left) + 1;
 				return (child_nd);
 			}
 			Node_pointer	LR_rotate(Node_pointer nd)
@@ -644,9 +699,16 @@ namespace ft
 					child_nd->_left->_parent = nd;
 				child_nd->_left = nd;
 				child_nd->_parent = nd->_parent;
+				if (nd->_parent != ft::nullptr_t)
+				{
+					if (_comp(nd->_parent->_data.first, nd->_data.first))
+						nd->_parent->_right = child_nd;
+					else
+						nd->_parent->_left = child_nd;
+				}
 				nd->_parent = child_nd;
-				nd->depth = max(nd->_left->depth, nd->_right->depth) + 1;
-				child_nd->depth = max(child_nd->_left->depth, child_nd->_right->depth) + 1;
+				nd->depth = child_nd->depth;
+				child_nd->depth = nd->depth > get_height(child_nd->_right) ? nd->depth + 1 : get_height(child_nd->_right) + 1;
 				return (child_nd);
 			}
 			Node_pointer	RL_rotate(Node_pointer nd)
