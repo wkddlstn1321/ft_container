@@ -630,7 +630,11 @@ namespace ft
 				while (nd != ft::nullptr_t)
 				{
 					int	balance = get_balance_factor(nd);
-					// std::cout << "key : " << nd->_data.first << " balance : " << balance << std::endl;
+					// if (balance >= 2 || balance <= -2)
+					// {
+					// 	std::cout << "key : " << nd->_data.first << " balance : " << balance << std::endl;
+					// 	std::cout << "nd right : " << nd->_right->_data.first << std::endl;;
+					// }
 					if (balance >= 2)
 					{
 						std::cout << nd->_data.first << std::endl;
@@ -682,19 +686,19 @@ namespace ft
 						nd->_parent->_left = child_nd;
 				}
 				nd->_parent = child_nd;
-				nd->depth = child_nd->depth;
+				nd->depth = child_nd->depth - 1 > 1 ? child_nd->depth - 1 : 1;
 				child_nd->depth = nd->depth > get_height(child_nd->_left) ? nd->depth + 1 : get_height(child_nd->_left) + 1;
 				return (child_nd);
 			}
 			Node_pointer	LR_rotate(Node_pointer nd)
 			{
-				nd->_left = RR_rotate(nd->_left);
+				RR_rotate(nd->_left);
 				return (LL_rotate(nd));
 			}
 			Node_pointer	RR_rotate(Node_pointer nd)
 			{
 				Node_pointer child_nd = nd->_right;
-				nd->_left = child_nd->_left;
+				nd->_right = child_nd->_right;
 				if (child_nd->_left != nullptr_t)
 					child_nd->_left->_parent = nd;
 				child_nd->_left = nd;
@@ -707,13 +711,13 @@ namespace ft
 						nd->_parent->_left = child_nd;
 				}
 				nd->_parent = child_nd;
-				nd->depth = child_nd->depth;
+				nd->depth = child_nd->depth - 1 > 1 ? child_nd->depth - 1 : 1;
 				child_nd->depth = nd->depth > get_height(child_nd->_right) ? nd->depth + 1 : get_height(child_nd->_right) + 1;
 				return (child_nd);
 			}
 			Node_pointer	RL_rotate(Node_pointer nd)
 			{
-				nd->_right = LL_rotate(nd->_right);
+				LL_rotate(nd->_right);
 				return (RR_rotate(nd));
 			}
 	};

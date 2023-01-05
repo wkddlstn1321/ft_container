@@ -14,7 +14,7 @@ int	main(void)
 	newmap.insert(ft::make_pair(6,3));
 	newmap.insert(ft::make_pair(5,4));
 	newmap.insert(ft::make_pair(2,4));
-	// newmap.insert(ft::make_pair(1,4));
+	newmap.insert(ft::make_pair(1,4));
 	// newmap.insert(ft::make_pair(7,4));
 	// newmap.insert(ft::make_pair(0,4));
 	// newmap.insert(ft::make_pair(8,4));
