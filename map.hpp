@@ -228,6 +228,10 @@ namespace ft
 		{
 			return (_tree.get_allocator());
 		}
+		void show_me_the_depth()
+		{
+			_tree.show_me_the_depth();
+		}
 	};
 }
 
