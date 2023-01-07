@@ -323,11 +323,11 @@ namespace ft
 			}
 			else
 			{
-				for ( ; tmpSize < this->_size ; tmpSize++)
-					this->_alloc.construct(this->_data + tmpSize, 0);
+				for (size_type tmp = tmpSize ; tmp < this->_size ; tmp++)
+					this->_alloc.construct(this->_data + tmp, 0);
 			}
 			iterator st = begin() + pos;
-			std::copy_backward(st , end() - n, end());
+			std::copy_backward(st , begin() + tmpSize, end());
 			// std::copy(first, last, st);
 			std::copy_backward(first , last, position + n);
 		}

@@ -48,14 +48,17 @@ namespace ft
 	template <class T>
 	class tree_iterator //: public ft::iterator<ft::bidirection_iterator_tag, T>
 	{
+	//_value == ft::pair<key, value>
 	private:
-		typedef typename ft::iterator<ft::bidirection_iterator_tag, T> _Iterator;
+		typedef T* Node_pointer;
+		typedef typename T::value_type _value_type;
+		typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
 	public:
 		typedef typename _Iterator::iterator_category	iterator_category;
 		typedef typename _Iterator::value_type			value_type;
 		typedef typename _Iterator::difference_type		difference_type;
 		typedef typename _Iterator::reference			reference;
-		typedef typename _Iterator::pointer				Node_pointer;
+		typedef typename _Iterator::pointer				pointer;
 
 	private:
 		// typedef _treeNode<value_type>*					Node_pointer;
@@ -99,12 +102,12 @@ namespace ft
 			}
 			return (*this);
 		}
-		tree_iterator& operator++(int)
+		tree_iterator operator++(int)
 		{
 			tree_iterator tmp = *this;
 			if (_pointer->_right != ft::nullptr_t)
 			{
-				_pointer = _pointer->right;
+				_pointer = _pointer->_right;
 				while (_pointer->_left != ft::nullptr_t)
 					_pointer = _pointer->_left;
 			}
@@ -142,7 +145,7 @@ namespace ft
 			}
 			return (*this);
 		}
-		tree_iterator& operator--(int)
+		tree_iterator operator--(int)
 		{
 			tree_iterator tmp = *this;
 			if (_pointer->_left != ft::nullptr_t)
@@ -178,7 +181,7 @@ namespace ft
 	template <class T>
 	bool operator==(const tree_iterator<T>& a, const tree_iterator<T>& b)
 	{
-		return (a._pointer == b._pointer);
+		return (a.base() == b.base());
 	}
 	template <class T>
 	bool operator!=(const tree_iterator<T>& a, const tree_iterator<T>& b)
@@ -349,15 +352,15 @@ namespace ft
 			// 		return (begin());
 			// 	}
 			// }
-			// template <class InputIterator>
-			// void insert(InputIterator first, InputIterator last)
-			// {
-			// 	while (first != last)
-			// 	{
-			// 		insert(*first);
-			// 		first++;
-			// 	}
-			// }
+			template <class InputIterator>
+			void insert(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
+			}
 			// void erase(iterator position)
 			// {
 			// 	this->_size--;
@@ -757,7 +760,7 @@ namespace ft
 					return ;
 				show_show(root->_right);
 				show_show(root->_left);
-				std::cout << root->_data.first << " : depth = " << root->depth << std::endl;
+					std::cout << root->_data.first << " : depth = " << root->depth << std::endl;
 			}
 		public:
 			void	show_me_the_depth()

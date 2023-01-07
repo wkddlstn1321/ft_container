@@ -60,13 +60,13 @@ namespace ft
 	typename ft::iterator_traits<InputIterator>::difference_type
 	distance(InputIterator first, InputIterator last)
 	{
-		typename ft::iterator_traits<InputIterator>::difference_type rtn = 0;
+		typename ft::iterator_traits<InputIterator>::difference_type result = 0;
 		while (first != last)
 		{
 			first++;
-			rtn++;
+			result++;
 		}
-		return (rtn);
+		return (result);
 	}
 }
 

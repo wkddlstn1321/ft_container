@@ -149,11 +149,11 @@ namespace ft
 		// {
 		// 	return (_tree.insert(position, val));
 		// }
-		// template <class InputIterator>
-		// void insert(InputIterator first, InputIterator last)
-		// {
-		// 	return (_tree.insert(first, last));
-		// }
+		template <class InputIterator>
+		void insert(InputIterator first, InputIterator last)
+		{
+			return (_tree.insert(first, last));
+		}
 		// void erase (iterator position)
 		// {
 		// 	_tree.erase(position);
