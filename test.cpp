@@ -7,18 +7,18 @@ using namespace std;
 
 int	main(void)
 {
-	// ft::vector<int> newvec(6, 10);
-	// newvec.insert(newvec.end(), newvec.begin(), newvec.end());
-	// ft::vector<int>::iterator it = newvec.begin();
-	// ft::vector<int>::iterator its = newvec.end();
-	// for ( ; it != its ; it++)
-	// 	cout << *it << endl;
-	ft::map<int, int> newmap;
-	newmap.insert(ft::make_pair(18,3));
-	newmap.insert(ft::make_pair(16,3));
-	newmap.insert(ft::make_pair(17,3));
-	ft::map<int, int> map2;
-	map2.insert(newmap.begin(), newmap.end());
+	ft::vector<int> newvec(1, 1);
+	newvec.insert(newvec.end(), newvec.begin(), newvec.end());
+	ft::vector<int>::iterator it = newvec.begin();
+	ft::vector<int>::iterator its = newvec.end();
+	for ( ; it != its ; it++)
+		cout << *it << endl;
+	// ft::map<int, int> newmap;
+	// newmap.insert(ft::make_pair(18,3));
+	// newmap.insert(ft::make_pair(16,3));
+	// newmap.insert(ft::make_pair(17,3));
+	// ft::map<int, int> map2;
+	// map2.insert(newmap.begin(), newmap.end());
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(15,3));
 	// newmap.insert(ft::make_pair(14,3));

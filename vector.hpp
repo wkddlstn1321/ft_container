@@ -311,7 +311,7 @@ namespace ft
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
 		{
 			size_type n = ft::distance(first, last);
-			size_type pos = position - begin();
+			size_type pos = end() - position;
 			size_type tmpSize = this->_size;
 			this->_size += n;
 			if (this->_size > this->_capacity)
@@ -326,8 +326,9 @@ namespace ft
 				for (size_type tmp = tmpSize ; tmp < this->_size ; tmp++)
 					this->_alloc.construct(this->_data + tmp, 0);
 			}
-			iterator st = begin() + pos;
-			std::copy_backward(st , begin() + tmpSize, end());
+			// iterator st = begin() + pos;
+			if (position != position + pos)
+				std::copy_backward(position , position + pos, end());
 			// std::copy(first, last, st);
 			std::copy_backward(first , last, position + n);
 		}
