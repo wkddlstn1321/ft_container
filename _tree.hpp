@@ -190,7 +190,7 @@ namespace ft
 			return (this->_pointer->_data);
 		}
 
-		Node_pointer operator->() const
+		pointer operator->() const
 		{
 			return (&(this->_pointer->_data));
 		}

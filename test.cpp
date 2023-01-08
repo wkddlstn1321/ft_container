@@ -34,6 +34,7 @@ int	main(void)
 	its--;
 	for ( ; its != it ; its--)
 		std::cout << (*its).first << endl;
+	std::cout << it->first << std::endl;
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(11,3));
 	// newmap.insert(ft::make_pair(10,3));
