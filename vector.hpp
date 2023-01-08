@@ -184,8 +184,8 @@ namespace ft
 			temp = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < this->_size ; i++)
 			{
-				this->_alloc.construct(temp + i, *(this->_data + i));
-				this->_alloc.destroy(this->_data + i);
+					this->_alloc.construct(temp + i, *(this->_data + i));
+					this->_alloc.destroy(this->_data + i);
 			}
 			this->_alloc.deallocate(this->_data, this->_capacity);
 			this->_data = temp;
@@ -312,25 +312,33 @@ namespace ft
 		{
 			size_type n = ft::distance(first, last);
 			size_type pos = end() - position;
-			size_type tmpSize = this->_size;
-			this->_size += n;
-			if (this->_size > this->_capacity)
+			std::cout << "n : " << n << "\n" << "pos : " << pos << "\n" << std::endl;
+			// this->_size += n;
+			if (this->_size + n > this->_capacity)
 			{
-				if (this->_size > this->_capacity * 2)
-					reserve(this->_size);
+				if (this->_size + n > this->_capacity * 2)
+				{
+					reserve(this->_size + n);
+				}
 				else
 					reserve(this->_capacity * 2);
+				for (size_type i = this->_size ; i < this->_capacity ; i ++)
+					this->_alloc.construct(this->_data + i, 0);
 			}
 			else
 			{
-				for (size_type tmp = tmpSize ; tmp < this->_size ; tmp++)
-					this->_alloc.construct(this->_data + tmp, 0);
+				for (size_type i = this->_size ; i < this->_size + n ; i++)
+					this->_alloc.construct(this->_data + i, 0);
 			}
+			std::cout << "???" << std::endl;
+			std::cout << this->_size << std::endl;
+			this->_size += n;
 			// iterator st = begin() + pos;
 			if (position != position + pos)
 				std::copy_backward(position , position + pos, end());
 			// std::copy(first, last, st);
-			std::copy_backward(first , last, position + n);
+			std::copy_backward(first, last, position + n);
+			// std::copy_backward(first , last, position + n);
 		}
 		iterator erase(iterator position)
 		{

@@ -7,8 +7,11 @@ using namespace std;
 
 int	main(void)
 {
-	ft::vector<int> newvec(1, 1);
-	newvec.insert(newvec.end(), newvec.begin(), newvec.end());
+	ft::vector<int> newvec;
+	ft::vector<int> newvec2;
+	for (int i = 0 ; i < 4 ; i++)
+		newvec2.push_back(i);
+	newvec.insert(newvec.begin(), newvec2.begin(), newvec2.end());
 	ft::vector<int>::iterator it = newvec.begin();
 	ft::vector<int>::iterator its = newvec.end();
 	for ( ; it != its ; it++)
