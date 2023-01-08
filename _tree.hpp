@@ -140,7 +140,11 @@ namespace ft
 			{
 				_pointer = _pointer->_left;
 				while (_pointer->_right != ft::nullptr_t)
+				{
+					if (_pointer->_right->_left == _pointer)
+						break ;
 					_pointer = _pointer->_right;
+				}
 			}
 			else
 			{
@@ -162,7 +166,11 @@ namespace ft
 			{
 				_pointer = _pointer->_left;
 				while (_pointer->_right != ft::nullptr_t)
+				{
+					if (_pointer->_right->_left == _pointer)
+						break ;
 					_pointer = _pointer->_right;
+				}
 			}
 			else
 			{

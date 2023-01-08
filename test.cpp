@@ -31,8 +31,9 @@ int	main(void)
 	map2.insert(newmap.begin(), newmap.end());
 	ft::map<int, int>::iterator it = map2.begin();
 	ft::map<int, int>::iterator its = map2.end();
-	for ( ; it != its ; ++it)
-		std::cout << (*it).first << endl;
+	its--;
+	for ( ; its != it ; its--)
+		std::cout << (*its).first << endl;
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(11,3));
 	// newmap.insert(ft::make_pair(10,3));
