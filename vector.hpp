@@ -310,10 +310,10 @@ namespace ft
 		void insert(iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
 		{
+			vector<T> tmp(first, last);
 			size_type n = ft::distance(first, last);
 			size_type pos = end() - position;
-			std::cout << "n : " << n << "\n" << "pos : " << pos << "\n" << std::endl;
-			// this->_size += n;
+			size_type st = position - begin();
 			if (this->_size + n > this->_capacity)
 			{
 				if (this->_size + n > this->_capacity * 2)
@@ -322,7 +322,7 @@ namespace ft
 				}
 				else
 					reserve(this->_capacity * 2);
-				for (size_type i = this->_size ; i < this->_capacity ; i ++)
+				for (size_type i = this->_size ; i < this->_capacity ; i++)
 					this->_alloc.construct(this->_data + i, 0);
 			}
 			else
@@ -330,15 +330,11 @@ namespace ft
 				for (size_type i = this->_size ; i < this->_size + n ; i++)
 					this->_alloc.construct(this->_data + i, 0);
 			}
-			std::cout << "???" << std::endl;
-			std::cout << this->_size << std::endl;
 			this->_size += n;
-			// iterator st = begin() + pos;
+			position = begin() + st;
 			if (position != position + pos)
 				std::copy_backward(position , position + pos, end());
-			// std::copy(first, last, st);
-			std::copy_backward(first, last, position + n);
-			// std::copy_backward(first , last, position + n);
+			std::copy_backward(tmp.begin(), tmp.end(), position + n);
 		}
 		iterator erase(iterator position)
 		{

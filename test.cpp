@@ -8,10 +8,10 @@ using namespace std;
 int	main(void)
 {
 	ft::vector<int> newvec;
-	ft::vector<int> newvec2;
-	for (int i = 0 ; i < 4 ; i++)
-		newvec2.push_back(i);
-	newvec.insert(newvec.begin(), newvec2.begin(), newvec2.end());
+	// ft::vector<int> newvec2;
+	for (int i = 0 ; i < 10 ; i++)
+		newvec.push_back(i);
+	newvec.insert(newvec.end()- 4, newvec.begin(), newvec.end());
 	ft::vector<int>::iterator it = newvec.begin();
 	ft::vector<int>::iterator its = newvec.end();
 	for ( ; it != its ; it++)
