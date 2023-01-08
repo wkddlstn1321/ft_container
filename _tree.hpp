@@ -85,9 +85,13 @@ namespace ft
 		{
 			if (_pointer->_right != ft::nullptr_t)
 			{
-				_pointer = _pointer->right;
+				_pointer = _pointer->_right;
 				while (_pointer->_left != ft::nullptr_t)
+				{
+					if (_pointer->_left->_right == _pointer)
+						break ;
 					_pointer = _pointer->_left;
+				}
 			}
 			else
 			{
@@ -109,11 +113,17 @@ namespace ft
 			{
 				_pointer = _pointer->_right;
 				while (_pointer->_left != ft::nullptr_t)
+				{
+					if (_pointer->_left->_right == _pointer)
+						break;
 					_pointer = _pointer->_left;
+				}
 			}
 			else
 			{
 				Node_pointer y = _pointer->_parent;
+				if (y == ft::nullptr_t)
+					return (*this);
 				while (_pointer == y->_right)
 				{
 					_pointer = y;
@@ -228,11 +238,17 @@ namespace ft
 				this->_size = 0;
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
+				this->_end->_parent = ft::nullptr_t;
+				this->_end->_right = ft::nullptr_t;
+				this->_end->_left = ft::nullptr_t;
 			}
 			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(a._size), _comp(a._comp)
 			{
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
+				this->_end->_parent = ft::nullptr_t;
+				this->_end->_right = ft::nullptr_t;
+				this->_end->_left = ft::nullptr_t;
 				this->_size = a._size;
 				insert(a.begin(), a.end());
 			}
@@ -252,11 +268,11 @@ namespace ft
 			// iterator
 			iterator begin()
 			{
-				return (iterator(find_min_node(_end->_right)));
+				return (iterator(find_min_node(_end->_parent)));
 			}
 			const_iterator begin() const
 			{
-				return (iterator(find_min_node(_end->_right)));
+				return (iterator(find_min_node(_end->_parent)));
 			}
 			iterator end()
 			{
@@ -296,7 +312,7 @@ namespace ft
 					Node_pointer new_node = this->_alloc.allocate(1);
 					this->_alloc.construct(new_node, Node_type(val));
 					new_node->_right = this->_end;
-					this->_end->_right = new_node;
+					this->_end->_parent = new_node;
 					this->_end->_left = new_node;
 					new_node->_left = ft::nullptr_t;
 					new_node->_parent = ft::nullptr_t;
@@ -304,7 +320,7 @@ namespace ft
 					this->_size++;
 					return (ft::make_pair(iterator(new_node), true));
 				}
-				Node_pointer start = this->_end->_right;
+				Node_pointer start = this->_end->_parent;
 				Node_pointer last = this->_end;
 				Node_pointer save_node;
 				int flag = 0;
@@ -341,7 +357,7 @@ namespace ft
 				}
 				depth_update(new_node, 1);
 				Balancing(new_node);
-				this->_end->_right = find_root_node(this->_end->_right);
+				this->_end->_parent = find_root_node(this->_end->_parent);
 				return (ft::make_pair(iterator(new_node), true));
 			}
 			// iterator insert(iterator position, const value_type &val)
@@ -358,8 +374,7 @@ namespace ft
 				while (first != last)
 				{
 					insert(*first);
-					first++;
-					std::cout << *first.first << std::endl;
+					++first;
 				}
 			}
 			// void erase(iterator position)
@@ -372,7 +387,7 @@ namespace ft
 			// 		this->_alloc.destroy(del_node);
 			// 		this->_alloc.deallocator(del_node, 1);
 			// 		Balancing(tmp);
-			// 		this->_end->_right = find_root_node(this->_end->_right);
+			// 		this->_end->_parent = find_root_node(this->_end->_parent);
 			// 		return ;
 			// 	}
 			// 	Node_pointer tmp = del_node->_left;
@@ -401,7 +416,7 @@ namespace ft
 			// 			_end->_left = tmp;
 			// 	}
 			// 	Balancing(bal);
-			// 	this->_end->_right = find_root_node(this->_end->_right);
+			// 	this->_end->_parent = find_root_node(this->_end->_parent);
 			// }
 			// size_type erase(const key_type &k)
 			// {
@@ -438,7 +453,7 @@ namespace ft
 			// Operations
 			iterator find(const key_type &k)
 			{
-				Node_pointer tmp = this->_end->_right;
+				Node_pointer tmp = this->_end->_parent;
 				while (tmp != ft::nullptr_t)
 				{
 					if (tmp->_data.first == k)
@@ -452,7 +467,7 @@ namespace ft
 			}
 			const_iterator find(const key_type &k) const
 			{
-				Node_pointer tmp = this->_end->_right;
+				Node_pointer tmp = this->_end->_parent;
 				while (tmp != ft::nullptr_t)
 				{
 					if (tmp->_data.first == k)
@@ -766,7 +781,7 @@ namespace ft
 		public:
 			void	show_me_the_depth()
 			{
-				Node_pointer root = find_root_node(this->_end->_right);
+				Node_pointer root = find_root_node(this->_end->_parent);
 				show_show(root);
 			}
 	};
