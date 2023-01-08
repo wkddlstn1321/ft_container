@@ -5,23 +5,25 @@
 
 using namespace std;
 
+void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
-	ft::vector<int> newvec;
+    // atexit(leaks);
+	// ft::vector<int> newvec;
 	// ft::vector<int> newvec2;
-	for (int i = 0 ; i < 10 ; i++)
-		newvec.push_back(i);
-	newvec.insert(newvec.end()- 4, newvec.begin(), newvec.end());
-	ft::vector<int>::iterator it = newvec.begin();
-	ft::vector<int>::iterator its = newvec.end();
-	for ( ; it != its ; it++)
-		cout << *it << endl;
-	// ft::map<int, int> newmap;
-	// newmap.insert(ft::make_pair(18,3));
-	// newmap.insert(ft::make_pair(16,3));
-	// newmap.insert(ft::make_pair(17,3));
-	// ft::map<int, int> map2;
-	// map2.insert(newmap.begin(), newmap.end());
+	// for (int i = 0 ; i < 10 ; i++)
+	// 	newvec.push_back(i);
+	// newvec.insert(newvec.begin(), newvec.begin(), newvec.end() - 5);
+	// ft::vector<int>::iterator it = newvec.begin();
+	// ft::vector<int>::iterator its = newvec.end();
+	// for ( ; it != its ; it++)
+	// 	cout << *it << endl;
+	ft::map<int, int> newmap;
+	newmap.insert(ft::make_pair(18,3));
+	newmap.insert(ft::make_pair(16,3));
+	newmap.insert(ft::make_pair(17,3));
+	ft::map<int, int> map2;
+	map2.insert(newmap.begin(), newmap.end());
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(15,3));
 	// newmap.insert(ft::make_pair(14,3));

@@ -359,6 +359,7 @@ namespace ft
 				{
 					insert(*first);
 					first++;
+					std::cout << *first.first << std::endl;
 				}
 			}
 			// void erase(iterator position)
