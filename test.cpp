@@ -22,19 +22,25 @@ int	main(void)
 	newmap.insert(ft::make_pair(18,3));
 	newmap.insert(ft::make_pair(16,3));
 	newmap.insert(ft::make_pair(17,3));
-	newmap.insert(ft::make_pair(15,3));
+	newmap.insert(ft::make_pair(15,13));
 	newmap.insert(ft::make_pair(14,3));
 	newmap.insert(ft::make_pair(13,3));
 	newmap.insert(ft::make_pair(12,3));
+	newmap[1] = 3123;
+	newmap[2] = 3;
+	newmap[3] = 3;
+	newmap[4] = 3;
+	newmap[5] = 3;
+
+	// newmap[1] = 24;
+
 	ft::map<int, int> map2;
 	std::cout << "insert start~~~~~~~~~~~" << std::endl;
 	map2.insert(newmap.begin(), newmap.end());
-	ft::map<int, int>::iterator it = map2.begin();
-	ft::map<int, int>::iterator its = map2.end();
-	its--;
-	for ( ; its != it ; its--)
-		std::cout << (*its).first << endl;
-	std::cout << it->first << std::endl;
+	ft::map<int, int>::iterator it = map2.find(1);
+	std::cout << "map2 : size  = "<< map2.size() << std::endl;
+	std::cout << it->second << std::endl;
+	// map2.show_me_the_depth();
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(11,3));
 	// newmap.insert(ft::make_pair(10,3));

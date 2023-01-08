@@ -368,14 +368,11 @@ namespace ft
 				this->_end->_parent = find_root_node(this->_end->_parent);
 				return (ft::make_pair(iterator(new_node), true));
 			}
-			// iterator insert(iterator position, const value_type &val)
-			// {
-			// 	if (this->_size == 0)
-			// 	{
-			// 		insert(val);
-			// 		return (begin());
-			// 	}
-			// }
+			iterator insert(iterator position, const value_type &val)
+			{
+				(void)position;
+				insert(val);
+			}
 			template <class InputIterator>
 			void insert(InputIterator first, InputIterator last)
 			{
@@ -759,18 +756,6 @@ namespace ft
 				nd->_parent = child_nd;
 				nd->depth = child_nd->depth - 1 > 1 ? child_nd->depth - 1 : 1;
 				child_nd->depth = nd->depth > get_height(child_nd->_right) ? nd->depth + 1 : get_height(child_nd->_right) + 1;
-				// Node_pointer tmp = nd;
-				// while (tmp->_left != ft::nullptr_t)
-				// {
-				// 	tmp->_left->depth = tmp->depth - 1;
-				// 	tmp = tmp->_left;
-				// }
-				// tmp = nd;
-				// while (tmp->_right != ft::nullptr_t)
-				// {
-				// 	tmp->_right->depth = tmp->depth - 1;
-				// 	tmp = tmp->_right;
-				// }
 				return (child_nd);
 			}
 			Node_pointer	RL_rotate(Node_pointer nd)

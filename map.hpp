@@ -133,12 +133,27 @@ namespace ft
 		}
 
 		//Element access
-		// mapped_type& operator[] (const key_type& k)
-		// {
-		// 	(void)k;
-		// }
-		// mapped_type &at(const key_type &k);
-		// const mapped_type &at(const key_type &k) const;
+		mapped_type& operator[] (const key_type& k)
+		{
+			//find(k) == _tree.end() 면? 없는경우
+			//거짓이면 이미 있는 경우
+			if (find(k) == this->_tree.end())
+				return (insert(ft::make_pair<key_type, mapped_type>(k, 0)).first->second);
+			else
+				return find(k)->second;
+		}
+		mapped_type &at(const key_type &k)
+		{
+			if (find(k) == this->_tree.end())
+				throw std::out_of_range("out_of_range");
+			return (find(k)->second);
+		}
+		const mapped_type &at(const key_type &k) const
+		{
+			if (find(k) == this->_tree.end())
+				throw std::out_of_range("out_of_range");
+			return (find(k)->second);
+		}
 
 		//Modifiers
 		pair<iterator,bool> insert (const value_type& val)
