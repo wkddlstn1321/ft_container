@@ -392,7 +392,7 @@ namespace ft
 			// 		this->_alloc.destroy(del_node);
 			// 		this->_alloc.deallocator(del_node, 1);
 			// 		Balancing(tmp);
-			// 		this->_end->_parent = find_root_node(this->_end->_parent);
+			// 		this->_end->_parent = find_root_node(this->_end);
 			// 		return ;
 			// 	}
 			// 	Node_pointer tmp = del_node->_left;
@@ -421,7 +421,7 @@ namespace ft
 			// 			_end->_left = tmp;
 			// 	}
 			// 	Balancing(bal);
-			// 	this->_end->_parent = find_root_node(this->_end->_parent);
+			// 	this->_end->_parent = find_root_node(this->_end);
 			// }
 			// size_type erase(const key_type &k)
 			// {
@@ -493,7 +493,7 @@ namespace ft
 			//k 보다 크거나 같은 원소
 			iterator lower_bound(const key_type &k)
 			{
-				Node_pointer tmp = this->end->_right;
+				Node_pointer tmp = this->_end->_right;
 				while (tmp != ft::nullptr_t)
 				{
 					if (tmp->_data.first == k)
@@ -530,7 +530,7 @@ namespace ft
 			//k 보다 큰 원소
 			iterator upper_bound(const key_type &k)
 			{
-				Node_pointer tmp = this->end->_right;
+				Node_pointer tmp = this->_end->_right;
 				while (tmp != ft::nullptr_t)
 				{
 					if (this->_comp(k, tmp->_data.first))

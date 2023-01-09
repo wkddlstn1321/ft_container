@@ -31,7 +31,6 @@ int	main(void)
 	newmap[3] = 3;
 	newmap[4] = 3;
 	newmap[5] = 3;
-
 	// newmap[1] = 24;
 
 	ft::map<int, int> map2;
@@ -41,6 +40,9 @@ int	main(void)
 	std::cout << "map2 : size  = "<< map2.size() << std::endl;
 	std::cout << it->second << std::endl;
 	// map2.show_me_the_depth();
+	cout << newmap.upper_bound(1)->first << endl;
+	cout << newmap.lower_bound(1)->first << endl;
+
 	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(11,3));
 	// newmap.insert(ft::make_pair(10,3));
