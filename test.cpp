@@ -9,41 +9,43 @@ void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
     // atexit(leaks);
-	// ft::vector<int> newvec;
-	// ft::vector<int> newvec2;
+	std::vector<int> newvec(10, 5);
+	// std::vector<int> newvec2;
 	// for (int i = 0 ; i < 10 ; i++)
 	// 	newvec.push_back(i);
 	// newvec.insert(newvec.begin(), newvec.begin(), newvec.end() - 5);
-	// ft::vector<int>::iterator it = newvec.begin();
-	// ft::vector<int>::iterator its = newvec.end();
+	std::vector<int>::iterator it = newvec.begin();
+	std::vector<int>::const_iterator its = it;
+	if (it == its)
+		cout << "same same" << endl;
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
-	ft::map<int, int> newmap;
-	newmap.insert(ft::make_pair(18,3));
-	newmap.insert(ft::make_pair(16,3));
-	newmap.insert(ft::make_pair(17,3));
-	newmap.insert(ft::make_pair(15,13));
-	newmap.insert(ft::make_pair(14,3));
-	newmap.insert(ft::make_pair(13,3));
-	newmap.insert(ft::make_pair(12,3));
-	newmap[1] = 3123;
-	newmap[2] = 3;
-	newmap[3] = 3;
-	newmap[4] = 3;
-	newmap[5] = 3;
+	// ft::map<int, int> newmap;
+	// newmap.insert(ft::make_pair(18,3));
+	// newmap.insert(ft::make_pair(16,3));
+	// newmap.insert(ft::make_pair(17,3));
+	// newmap.insert(ft::make_pair(15,13));
+	// newmap.insert(ft::make_pair(14,3));
+	// newmap.insert(ft::make_pair(13,3));
+	// newmap.insert(ft::make_pair(12,3));
+	// newmap[5] = 2;
+	// newmap[1] = 3123;
+	// newmap[2] = 3;
+	// cout << "=======================================" << endl;
+	// newmap[3] = 3;
+	// newmap[4] = 3;
+	// newmap[5] = 3;
+	// newmap.show_me_the_depth();
+	// cout << newmap.upper_bound(5)->first << endl;
+	// cout << newmap.lower_bound(5)->first << endl;
 	// newmap[1] = 24;
 
-	ft::map<int, int> map2;
-	std::cout << "insert start~~~~~~~~~~~" << std::endl;
-	map2.insert(newmap.begin(), newmap.end());
-	ft::map<int, int>::iterator it = map2.find(1);
-	std::cout << "map2 : size  = "<< map2.size() << std::endl;
-	std::cout << it->second << std::endl;
-	// map2.show_me_the_depth();
-	cout << newmap.upper_bound(1)->first << endl;
-	cout << newmap.lower_bound(1)->first << endl;
+	// ft::map<int, int> map2;
+	// std::cout << "insert start~~~~~~~~~~~" << std::endl;
+	// map2.insert(newmap.begin(), newmap.end());
+	// ft::map<int, int>::iterator it = map2.find(1);
+	// std::cout << "map2 : size  = "<< map2.size() << std::endl;
 
-	// map2.show_me_the_depth();
 	// newmap.insert(ft::make_pair(11,3));
 	// newmap.insert(ft::make_pair(10,3));
 	// newmap.insert(ft::make_pair(9,3));

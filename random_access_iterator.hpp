@@ -31,7 +31,8 @@ namespace ft
 		{
 			this->_pointer = pointer;
 		}
-		random_access_iterator(const random_access_iterator<T>& a)
+		template<typename _Iter>
+		random_access_iterator(const random_access_iterator<_Iter>& a)
 		{
 			this->_pointer = a.base();
 		}
