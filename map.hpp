@@ -101,22 +101,22 @@ namespace ft
 		{
 			return (_tree.end());
 		}
-		// reverse_iterator rbegin()
-		// {
-		// 	reverse_iterator(begin());
-		// }
-		// const_reverse_iterator rbegin() const
-		// {
-		// 	reverse_iterator(begin());
-		// }
-		// reverse_iterator rend()
-		// {
-		// 	return (reverse_iterator(end));
-		// }
-		// const_reverse_iterator rend() const
-		// {
-		// 	return (reverse_iterator(end));
-		// }
+		reverse_iterator rbegin()
+		{
+			reverse_iterator(begin());
+		}
+		const_reverse_iterator rbegin() const
+		{
+			reverse_iterator(begin());
+		}
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(end));
+		}
+		const_reverse_iterator rend() const
+		{
+			return (reverse_iterator(end));
+		}
 
 		//capacity
 		bool empty() const

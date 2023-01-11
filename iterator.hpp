@@ -55,21 +55,6 @@ namespace ft
 		typedef ft::random_access_iterator_tag	iterator_category;
 	};
 
-	template <bool flag, class IsTrue, class IsFalse>
-	struct choose;
-
-	template <class IsTrue, class IsFalse>
-	struct choose<true, IsTrue, IsFalse>
-	{
-		typedef IsTrue type;
-	};
-
-	template <class IsTrue, class IsFalse>
-	struct choose<false, IsTrue, IsFalse>
-	{
-		typedef IsFalse type;
-	};
-
 	template <class InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type
 	distance(InputIterator first, InputIterator last)
