@@ -532,6 +532,35 @@ namespace ft
 			//k 보다 큰 원소
 			iterator upper_bound(const key_type &k)
 			{
+
+				Node_pointer	root = find_root_node(this->_end->_parent);
+				iterator		result = end();
+				while (root != ft::nullptr_t)
+				{
+					if (this->_comp(k, root->_data.first))
+					{
+						result = static_cast<iterator>(root);
+						root = root->_left;
+					}
+					else
+						root = root->_right;
+				}
+				return (result);
+				// const _Key& __v,
+				//  __node_pointer __root,
+				//  __iter_pointer __result)
+
+				// while (__root != nullptr)
+				// {
+				// 	if (value_comp()(__v, __root->__value_))
+				// 	{
+				// 		__result = static_cast<__iter_pointer>(__root);
+				// 		__root = static_cast<__node_pointer>(__root->__left_);
+				// 	}
+				// 	else
+				// 		__root = static_cast<__node_pointer>(__root->__right_);
+				// }
+				
 				Node_pointer tmp = this->_end->_parent;
 				while (tmp != ft::nullptr_t)
 				{
