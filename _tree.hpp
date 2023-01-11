@@ -382,59 +382,63 @@ namespace ft
 					++first;
 				}
 			}
-			// void erase(iterator position)
-			// {
-			// 	this->_size--;
-			// 	Node_pointer del_node = position.base();
-			// 	if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
-			// 	{
-			// 		Node_pointer tmp = del_node->_parent;
-			// 		this->_alloc.destroy(del_node);
-			// 		this->_alloc.deallocator(del_node, 1);
-			// 		Balancing(tmp);
-			// 		this->_end->_parent = find_root_node(this->_end);
-			// 		return ;
-			// 	}
-			// 	Node_pointer tmp = del_node->_left;
-			// 	if (tmp == ft::nullptr_t)
-			// 	{
-			// 		if (del_node->_parent != ft::nullptr_t)
-			// 			del_node;
-			// 		tmp = del_node->_right;
-			// 		tmp->_left = del_node->_left;
-			// 	}
-			// 	else
-			// 	{
-			// 		while (tmp->_right != ft::nullptr_t)
-			// 			tmp = tmp->_right;
-			// 		tmp->_right = del_node->_right;
-			// 		tmp->_left = del_node->_left;
-			// 	}
-			// 	if (tmp != ft::nullptr_t)
-			// 	{
-			// 		tmp->_parent = del_node->_parent;
-			// 		tmp->_right = del_node->_right;
-			// 		tmp->depth = del_node->depth;
-			// 		if (del_node->_left != tmp)
-			// 			tmp->_left = del_node->_left;
-			// 		if (del_node->_right == _end)
-			// 			_end->_left = tmp;
-			// 	}
-			// 	Balancing(bal);
-			// 	this->_end->_parent = find_root_node(this->_end);
-			// }
-			// size_type erase(const key_type &k)
-			// {
-				
-			// }
-			// void erase(iterator first, iterator last)
-			// {
-			// 	while (first != last)
-			// 	{
-			// 		erase(first);
-			// 		first++;
-			// 	}
-			// }
+			void erase(iterator position)
+			{
+				this->_size--;
+				Node_pointer del_node = position.base();
+				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
+				{
+					Node_pointer tmp = del_node->_parent;
+					this->_alloc.destroy(del_node);
+					this->_alloc.deallocator(del_node, 1);
+					Balancing(tmp);
+					this->_end->_parent = find_root_node(this->_end);
+					return ;
+				}
+				Node_pointer tmp = del_node->_left;
+				if (tmp == ft::nullptr_t)
+				{
+					if (del_node->_parent != ft::nullptr_t)
+						del_node;
+					tmp = del_node->_right;
+					tmp->_left = del_node->_left;
+				}
+				else
+				{
+					while (tmp->_right != ft::nullptr_t)
+						tmp = tmp->_right;
+					tmp->_right = del_node->_right;
+					tmp->_left = del_node->_left;
+				}
+				if (tmp != ft::nullptr_t)
+				{
+					tmp->_parent = del_node->_parent;
+					tmp->_right = del_node->_right;
+					tmp->depth = del_node->depth;
+					if (del_node->_left != tmp)
+						tmp->_left = del_node->_left;
+					if (del_node->_right == _end)
+						_end->_left = tmp;
+				}
+				Balancing(bal);
+				this->_end->_parent = find_root_node(this->_end);
+			}
+			size_type erase(const key_type &k)
+			{
+				iterator iter = find(k);
+				if (iter == end())
+					return (0);
+				erase(iter);
+				return (1);
+			}
+			void erase(iterator first, iterator last)
+			{
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
+			}
 			void swap(_AvlTree &x)
 			{
 				node_allocator tmp_alloc = this->_alloc;
@@ -493,103 +497,68 @@ namespace ft
 			//k 보다 크거나 같은 원소
 			iterator lower_bound(const key_type &k)
 			{
-				Node_pointer tmp = this->_end->_parent;
-				while (tmp != ft::nullptr_t)
-				{
-					if (tmp->_data.first == k)
-						return (iterator(tmp));
-					else if (this->_comp(tmp->_data.first, k))
-						tmp = tmp->_right;
-					else
-					{
-						while (tmp->_left != ft::nullptr_t && !this->_comp(tmp->_left->_data.first, k))
-						{
-							tmp = tmp->_left;
-						}
-						return (iterator(tmp));
-					}
-				}
-				return (end());
-			}
-			const_iterator lower_bound(const key_type &k) const
-			{
-				Node_pointer tmp = this->end->_right;
-				while (tmp != ft::nullptr_t)
-				{
-					if (tmp->_data.first == k)
-						return (iterator(tmp));
-					else if (this->_comp(tmp->_data.first, k))
-						tmp = tmp->_right;
-					else
-					{
-						while (tmp->_left != ft::nullptr_t && !this->_comp(tmp->_left->_data.first, k))
-							tmp = tmp->_left;
-						return (iterator(tmp));
-					}
-				}
-				return (end());
-			}
-			//k 보다 큰 원소
-			iterator upper_bound(const key_type &k)
-			{
-
 				Node_pointer	root = find_root_node(this->_end->_parent);
 				iterator		result = end();
 				while (root != ft::nullptr_t)
 				{
-					if (this->_comp(k, root->_data.first))
+					if (!this->_comp(root->_data.first, k))
 					{
-						result = static_cast<iterator>(root);
+						result = (iterator)root;
 						root = root->_left;
 					}
 					else
 						root = root->_right;
 				}
 				return (result);
-				// const _Key& __v,
-				//  __node_pointer __root,
-				//  __iter_pointer __result)
-
-				// while (__root != nullptr)
-				// {
-				// 	if (value_comp()(__v, __root->__value_))
-				// 	{
-				// 		__result = static_cast<__iter_pointer>(__root);
-				// 		__root = static_cast<__node_pointer>(__root->__left_);
-				// 	}
-				// 	else
-				// 		__root = static_cast<__node_pointer>(__root->__right_);
-				// }
-				
-				Node_pointer tmp = this->_end->_parent;
-				while (tmp != ft::nullptr_t)
+			}
+			const_iterator lower_bound(const key_type &k) const
+			{
+				Node_pointer	root = find_root_node(this->_end->_parent);
+				const_iterator	result = end();
+				while (root != ft::nullptr_t)
 				{
-					if (this->_comp(k, tmp->_data.first))
+					if (!this->_comp(root->_data.first, k))
 					{
-						while (tmp->_left != ft::nullptr_t && this->_comp(k, tmp->_left->_data.first))
-							tmp = tmp->_left;
-						return (iterator(tmp));
+						result = (const_iterator)root;
+						root = root->_left;
 					}
 					else
-						tmp = tmp->_right;
+						root = root->_right;
 				}
-				return (end());
+				return (result);
+			}
+			//k 보다 큰 원소
+			iterator upper_bound(const key_type &k)
+			{
+				Node_pointer	root = find_root_node(this->_end->_parent);
+				iterator		result = end();
+				while (root != ft::nullptr_t)
+				{
+					if (this->_comp(k, root->_data.first))
+					{
+						result = (iterator)root;
+						root = root->_left;
+					}
+					else
+						root = root->_right;
+				}
+				return (result);
 			}
 			const_iterator upper_bound(const key_type &k) const
 			{
-				Node_pointer tmp = this->_end->_parent;
-				while (tmp != ft::nullptr_t)
+				Node_pointer	root = find_root_node(this->_end->_parent);
+				const_iterator	result = end();
+				while (root != ft::nullptr_t)
 				{
-					if (this->_comp(k, tmp->_data.first))
+					if (this->_comp(k, root->_data.first))
 					{
-						while (tmp->_left != ft::nullptr_t && this->_comp(k, tmp->_left->_data.first))
-							tmp = tmp->_left;
-						return (iterator(tmp));
+						result = (const_iterator)root;
+						root = root->_left;
 					}
 					else
-						tmp = tmp->_right;
+						root = root->_right;
 				}
-				return (end());
+				return (result);
 			}
 			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{

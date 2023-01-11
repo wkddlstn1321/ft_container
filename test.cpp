@@ -34,8 +34,8 @@ int	main(void)
 	// newmap[4] = 3;
 	// newmap[5] = 3;
 	// newmap.show_me_the_depth();
-	cout << newmap.upper_bound(5)->first << endl;
-	cout << newmap.lower_bound(5)->first << endl;
+	cout << newmap.upper_bound(18)->first << endl;
+	cout << newmap.lower_bound(18)->first << endl;
 	// newmap[1] = 24;
 
 	// ft::map<int, int> map2;
