@@ -286,25 +286,35 @@ namespace ft
 		}
 		void insert(iterator position, size_type n, const value_type &val)
 		{
-			size_type pos = position - begin();
-			size_type tmpSize = this->_size;
-			this->_size += n;
-			if (this->_size > this->_capacity)
+			size_type st = position - begin();
+			size_type pos = end() - position;
+			if (this->_size + n > this->_capacity)
 			{
-				if (this->_size > this->_capacity * 2)
-					reserve(this->_size);
+				if (this->_size + n > this->_capacity * 2)
+				{
+					reserve(this->_size + n);
+				}
 				else
 					reserve(this->_capacity * 2);
+				for (size_type i = this->_size ; i < this->_capacity ; i++)
+					this->_alloc.construct(this->_data + i, 0);
 			}
 			else
 			{
-				for ( ; tmpSize < this->_size ; tmpSize++)
-					this->_alloc.construct(this->_data + tmpSize, val);
+				for (size_type i = this->_size ; i < this->_size + n ; i++)
+					this->_alloc.construct(this->_data + i, 0);
 			}
-			iterator st = begin() + pos;
-			std::copy_backward(st , end() - n, end());
-			for (size_type i = 0 ; i < n ; i++)
-				*(st + i) = val;
+			this->_size += n;
+			position = begin() + st;
+			if (position != position + pos)
+				std::copy_backward(position, position + pos, end());
+			// for (iterator tmp = begin(); tmp != end(); tmp++)
+			// 	std::cout << *tmp << std::endl;
+			// if (position == begin())
+			// 	st = 1;
+			// std::copy_backward(position , position + st, end());
+			for (size_type i = 0; i < n ; i++)
+				*(this->_data + st + i) = val;
 		}
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last,
