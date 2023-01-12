@@ -390,38 +390,46 @@ namespace ft
 				{
 					Node_pointer tmp = del_node->_parent;
 					this->_alloc.destroy(del_node);
-					this->_alloc.deallocator(del_node, 1);
-					Balancing(tmp);
-					this->_end->_parent = find_root_node(this->_end);
+					this->_alloc.deallocate(del_node, 1);
+					if (tmp != ft::nullptr_t)
+					{
+						depth_update(tmp, 1);
+						Balancing(tmp);
+						this->_end->_parent = find_root_node(this->_end->_left);
+					}
+					else
+						this->_end->_parent = ft::nullptr_t;
 					return ;
 				}
 				Node_pointer tmp = del_node->_left;
 				if (tmp == ft::nullptr_t)
 				{
-					if (del_node->_parent != ft::nullptr_t)
-						del_node;
 					tmp = del_node->_right;
-					tmp->_left = del_node->_left;
+					if (del_node->_parent != ft::nullptr_t)
+					{
+						tmp->_parent = del_node->_parent;
+						if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
+							del_node->_parent->_left = tmp;
+						else
+							del_node->_parent->_right = tmp;
+					}
 				}
 				else
 				{
 					while (tmp->_right != ft::nullptr_t)
 						tmp = tmp->_right;
 					tmp->_right = del_node->_right;
-					tmp->_left = del_node->_left;
-				}
-				if (tmp != ft::nullptr_t)
-				{
-					tmp->_parent = del_node->_parent;
-					tmp->_right = del_node->_right;
-					tmp->depth = del_node->depth;
-					if (del_node->_left != tmp)
+					if (tmp->_parent != del_node)
+					{
 						tmp->_left = del_node->_left;
-					if (del_node->_right == _end)
-						_end->_left = tmp;
+						tmp->_parent->_right = ft::nullptr_t;
+					}
 				}
-				Balancing(bal);
-				this->_end->_parent = find_root_node(this->_end);
+				this->_alloc.destroy(del_node);
+				this->_alloc.deallocate(del_node, 1);
+				depth_update(tmp, 1);
+				Balancing(tmp);
+				this->_end->_parent = find_root_node(tmp);
 			}
 			size_type erase(const key_type &k)
 			{

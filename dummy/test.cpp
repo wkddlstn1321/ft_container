@@ -29,13 +29,16 @@ int	main(void)
 	newmap[5] = 2;
 	newmap[1] = 3123;
 	newmap[2] = 3;
-	cout << "=======================================" << endl;
 	newmap[3] = 3;
 	// newmap[4] = 3;
 	// newmap[5] = 3;
-	// newmap.show_me_the_depth();
-	cout << newmap.upper_bound(18)->first << endl;
-	cout << newmap.lower_bound(18)->first << endl;
+	cout << "size = " << newmap.size() << endl;
+	cout << newmap.erase(1) << endl;
+	cout << "size = " << newmap.size() << endl;
+	cout << "=======================================" << endl;
+	newmap.show_me_the_depth();
+	// cout << newmap.upper_bound(18)->first << endl;
+	// cout << newmap.lower_bound(18)->first << endl;
 	// newmap[1] = 24;
 
 	// ft::map<int, int> map2;
@@ -213,3 +216,4 @@ void reserve(size_type n) {
       }
     }
 */
+

@@ -69,11 +69,11 @@ namespace ft
 		{
 			insert(x.begin(), x.end());
 		}
-		//destructor
-		// ~map()
-		// {
-		// 	clear();
-		// }
+		// destructor
+		~map()
+		{
+			clear();
+		}
 		map& operator= (const map& x)
 		{
 			if (&x != this)
@@ -169,26 +169,26 @@ namespace ft
 		{
 			return (_tree.insert(first, last));
 		}
-		// void erase (iterator position)
-		// {
-		// 	_tree.erase(position);
-		// }
-		// size_type erase (const key_type& k)
-		// {
-		// 	return (_tree.erase(k));
-		// }
-		// void erase (iterator first, iterator last)
-		// {
-		// 	_tree.erase(first, last);
-		// }
+		void erase (iterator position)
+		{
+			_tree.erase(position);
+		}
+		size_type erase (const key_type& k)
+		{
+			return (_tree.erase(k));
+		}
+		void erase (iterator first, iterator last)
+		{
+			_tree.erase(first, last);
+		}
 		void swap (map& x)
 		{
 			_tree.swap(x._tree);
 		}
-		// void clear()
-		// {
-		// 	erase(begin(), end());
-		// }
+		void clear()
+		{
+			erase(begin(), end());
+		}
 
 		//Observers
 		key_compare key_comp() const
