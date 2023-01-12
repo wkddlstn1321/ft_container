@@ -9,7 +9,14 @@ void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
     // atexit(leaks);
-	// ft::vector<int> newvec;
+	ft::vector<int> newvec(7);
+	cout << newvec.size() << endl;
+	for (unsigned long int i = 0; i < newvec.size(); ++i)
+	{
+		newvec[i] = (newvec.size() - i) * 3;
+		std::cout << "newvec.at(): " << newvec[i] << " | ";
+		std::cout << "newvec[]: " << newvec[i] << std::endl;
+	}
 	// std::vector<int> newvec2;
 	// for (int i = 0 ; i < 10 ; i++)
 	// 	newvec.push_back(i);
@@ -18,25 +25,25 @@ int	main(void)
 	// ft::vector<int>::const_iterator its = it;
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
-	ft::map<int, int> newmap;
-	newmap.insert(ft::make_pair(18,3));
-	newmap.insert(ft::make_pair(16,3));
-	newmap.insert(ft::make_pair(17,3));
-	newmap.insert(ft::make_pair(15,13));
-	newmap.insert(ft::make_pair(14,3));
-	newmap.insert(ft::make_pair(13,3));
-	newmap.insert(ft::make_pair(12,3));
-	newmap[5] = 2;
-	newmap[1] = 3123;
-	newmap[2] = 3;
-	newmap[3] = 3;
+	// ft::map<int, int> newmap;
+	// newmap.insert(ft::make_pair(18,3));
+	// newmap.insert(ft::make_pair(16,3));
+	// newmap.insert(ft::make_pair(17,3));
+	// newmap.insert(ft::make_pair(15,13));
+	// newmap.insert(ft::make_pair(14,3));
+	// newmap.insert(ft::make_pair(13,3));
+	// newmap.insert(ft::make_pair(12,3));
+	// newmap[5] = 2;
+	// newmap[1] = 3123;
+	// newmap[2] = 3;
+	// newmap[3] = 3;
 	// newmap[4] = 3;
 	// newmap[5] = 3;
-	cout << "size = " << newmap.size() << endl;
-	cout << newmap.erase(1) << endl;
-	cout << "size = " << newmap.size() << endl;
-	cout << "=======================================" << endl;
-	newmap.show_me_the_depth();
+	// cout << "size = " << newmap.size() << endl;
+	// cout << newmap.erase(1) << endl;
+	// cout << "size = " << newmap.size() << endl;
+	// cout << "=======================================" << endl;
+	// newmap.show_me_the_depth();
 	// cout << newmap.upper_bound(18)->first << endl;
 	// cout << newmap.lower_bound(18)->first << endl;
 	// newmap[1] = 24;

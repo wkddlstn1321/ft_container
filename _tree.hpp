@@ -574,7 +574,7 @@ namespace ft
 			}
 			ft::pair<iterator, iterator> equal_range(const key_type &k)
 			{
-				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
+				return (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
 			// Allocator
 			allocator_type get_allocator() const

@@ -203,14 +203,14 @@ namespace ft
 		}
 		reference at(size_type n)
 		{
-			if (n > 0 && n < this->_size)
+			if (n >= 0 && n < this->_size)
 				return (this->_data[n]);
 			else
 				throw std::out_of_range("ft::vector");
 		}
 		const_reference at(size_type n) const
 		{
-			if (n > 0 && n < this->_size)
+			if (n >= 0 && n < this->_size)
 				return (this->_data[n]);
 			else
 				throw std::out_of_range("out_of_range");
