@@ -115,19 +115,19 @@ namespace ft
 		}
 		reverse_iterator rbegin()
 		{
-			return (end());
+			return (reverse_iterator(end()));
 		}
 		const_reverse_iterator rbegin() const
 		{
-			return(end());
+			return(const_reverse_iterator(end()));
 		}
 		reverse_iterator rend()
 		{
-			return(begin());
+			return(reverse_iterator(begin()));
 		}
 		const_reverse_iterator rend() const
 		{
-			return(begin());
+			return(const_reverse_iterator(begin()));
 		}
 
 		//Capacity
@@ -428,7 +428,7 @@ namespace ft
 	template <class T, class Alloc>
 	bool operator>=(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
 	{
-		return (!(rhs < lhs));
+		return (!(lhs < rhs));
 	}
 	template <class T, class Alloc>
 	void swap(ft::vector<T, Alloc> &x, ft::vector<T, Alloc> &y)

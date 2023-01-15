@@ -66,7 +66,7 @@ namespace ft
 			++this->_pointer;
 			return (tmp);
 		}
-		reference& operator+= (difference_type n)
+		random_access_iterator& operator+= (difference_type n)
 		{
 			this->_pointer += n;
 			return (*this);
@@ -114,7 +114,7 @@ namespace ft
 	template <class Iterator1, class Iterator2>
 	bool operator<(const random_access_iterator<Iterator1> &lhs, const random_access_iterator<Iterator2> &rhs)
 	{
-		return (rhs.base() < lhs.base());
+		return (lhs.base() < rhs.base());
 	}
 	template <class Iterator1, class Iterator2>
 	bool operator<=(const random_access_iterator<Iterator1> &lhs, const random_access_iterator<Iterator2> &rhs)
@@ -131,6 +131,7 @@ namespace ft
 	{
 		return (!(lhs < rhs));
 	}
+
 	template <class Iterator>
 	random_access_iterator<Iterator> operator+(typename random_access_iterator<Iterator>::difference_type n, const random_access_iterator<Iterator> &rev_it)
 	{
@@ -141,7 +142,6 @@ namespace ft
 	{
 		return (lhs.base() - rhs.base());
 	}
-
 }
 
 #endif
