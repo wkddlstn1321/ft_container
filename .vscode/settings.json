@@ -78,6 +78,7 @@
 		"filesystem": "cpp",
 		"fstream": "cpp",
 		"iomanip": "cpp",
-		"__memory": "cpp"
+		"__memory": "cpp",
+		"__availability": "cpp"
 	}
 }

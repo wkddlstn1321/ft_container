@@ -1,69 +1,104 @@
 #include<vector>
+#include<stack>
 #include<map>
 #include"map.hpp"
+#include"stack.hpp"
 #include"vector.hpp"
 
-#define TESTED_TYPE int
-
 template <typename T>
-std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
-{
-	o << "key: " << iterator->first << " | value: " << iterator->second;
-	if (nl)
-		o << std::endl;
-	return ("");
-}
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+
+#define TESTED_TYPE foo<int>
+#define t_stack_ ft::stack<TESTED_TYPE>
+typedef t_stack_::container_type container_type;
 
 #define T_SIZE_TYPE typename ft::vector<T>::size_type
 
-template <typename T>
-void	printSize(ft::vector<T> const &vct, bool print_content = true)
+template <typename T_STACK>
+void	printSize(T_STACK &stck, bool print_content = 1)
 {
-	const T_SIZE_TYPE size = vct.size();
-	const T_SIZE_TYPE capacity = vct.capacity();
-	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
-	// Cannot limit capacity's max value because it's implementation dependent
-
-	std::cout << "size: " << size << std::endl;
-	std::cout << "capacity: " << isCapacityOk << std::endl;
-	std::cout << "max_size: " << vct.max_size() << std::endl;
+	std::cout << "size: " << stck.size() << std::endl;
 	if (print_content)
 	{
-		typename ft::vector<T>::const_iterator it = vct.begin();
-		typename ft::vector<T>::const_iterator ite = vct.end();
-		std::cout << std::endl << "Content is:" << std::endl;
-		for (; it != ite; ++it)
-			std::cout << "- " << *it << std::endl;
+		std::cout << std::endl << "Content was:" << std::endl;
+		while (stck.size() != 0) {
+			std::cout << "- " << stck.top() << std::endl;
+			stck.pop();
+		}
 	}
 	std::cout << "###############################################" << std::endl;
 }
 
+template <class T_STACK>
+void	cmp(const T_STACK &lhs, const T_STACK &rhs)
+{
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+}
 
 int		main(void)
 {
-	const int size = 5;
-	ft::vector<TESTED_TYPE> vct(size);
-	ft::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
-	ft::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
+	container_type	ctnr;
 
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
+	ctnr.push_back(21);
+	ctnr.push_back(42);
+	ctnr.push_back(1337);
+	ctnr.push_back(19);
+	ctnr.push_back(0);
+	ctnr.push_back(183792);
 
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
+	t_stack_	stck(ctnr);
+	t_stack_	stck2(ctnr);
 
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
+	cmp(stck, stck);  // 0
+	cmp(stck, stck2); // 1
 
-	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+	stck2.push(60);
+	stck2.push(61);
+	stck2.push(62);
 
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+	cmp(stck, stck2); // 2
+	cmp(stck2, stck); // 3
 
-	printSize(vct, true);
+	stck.push(42);
+
+	cmp(stck, stck2); // 4
+	cmp(stck2, stck); // 5
+
+	stck.push(100);
+
+	cmp(stck, stck2); // 6
+	cmp(stck2, stck); // 7
 	return (0);
 }
