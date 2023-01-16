@@ -31,10 +31,10 @@ namespace ft
 		typedef typename allocator_type::template rebind<value_type>::other	type_allocator;
 		typedef std::allocator_traits<type_allocator>						type_traits;
 
-		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::iterator					iterator;
-		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::const_iterator		const_iterator;
-		typedef typename ft::reverse_iterator<iterator>												reverse_iterator;
-		typedef typename ft::reverse_iterator<const_iterator>										const_reverse_iterator;
+		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::iterator						iterator;
+		typedef typename ft::_AvlTree<value_type, key_type, key_compare>::const_iterator				const_iterator;
+		typedef typename ft::reverse_iterator<iterator>													reverse_iterator;
+		typedef typename ft::reverse_iterator<const_iterator>											const_reverse_iterator;
 	private:
 		key_compare													_comp;
 		allocator_type												_alloc;
@@ -87,19 +87,19 @@ namespace ft
 		//iterator
 		iterator begin()
 		{
-			return (_tree.begin());
+			return (iterator(_tree.begin()));
 		}
 		const_iterator begin() const
 		{
-			return (_tree.begin());
+			return (const_iterator(_tree.begin()));
 		}
 		iterator end()
 		{
-			return (_tree.end());
+			return (iterator(_tree.end()));
 		}
 		const_iterator end() const
 		{
-			return (_tree.end());
+			return (const_iterator(_tree.end()));
 		}
 		reverse_iterator rbegin()
 		{
@@ -107,7 +107,7 @@ namespace ft
 		}
 		const_reverse_iterator rbegin() const
 		{
-			reverse_iterator(begin());
+			const_reverse_iterator(begin());
 		}
 		reverse_iterator rend()
 		{
@@ -115,7 +115,7 @@ namespace ft
 		}
 		const_reverse_iterator rend() const
 		{
-			return (reverse_iterator(end));
+			return (const_reverse_iterator(end));
 		}
 
 		//capacity
