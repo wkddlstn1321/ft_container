@@ -616,8 +616,6 @@ namespace ft
 				nd->depth = depth > get_height(nd) ? depth : get_height(nd);
 				if (nd->_parent != ft::nullptr_t)
 					depth_update(nd->_parent, depth + 1);
-				std::cout << " key : " << nd->_data.first << " depth : " << nd->depth << std::endl;
-				// std::cout << std::endl;
 			}
 			Node_pointer next_node(Node_pointer nd)
 			{
@@ -700,20 +698,15 @@ namespace ft
 				while (nd != ft::nullptr_t)
 				{
 					int	balance = get_balance_factor(nd);
-					std::cout << "key : " << nd->_data.first << " balance : " << balance << std::endl;
 					if (balance >= 2)
 					{
 						balance = get_balance_factor(nd->_left);
 						if (balance >= 1)
 						{
-							std::cout << nd->_data.first;
-							std::cout << " LL rotatate" << std::endl;
 							nd = LL_rotate(nd);
 						}
 						else
 						{
-							std::cout << nd->_data.first;
-							std::cout << " LR rotatate" << std::endl;
 							nd = LR_rotate(nd);
 						}
 					}
@@ -722,14 +715,10 @@ namespace ft
 						balance = get_balance_factor(nd->_right);
 						if (balance <= -1)
 						{
-							std::cout << nd->_data.first;
-							std::cout << " RR rotatate" << std::endl;
 							nd = RR_rotate(nd);
 						}
 						else
 						{
-							std::cout << nd->_data.first;
-							std::cout << " RL rotatate" << std::endl;
 							nd = RL_rotate(nd);
 						}
 					}
@@ -738,15 +727,6 @@ namespace ft
 			}
 			Node_pointer	LL_rotate(Node_pointer nd)
 			{
-				std::cout << "Key & nd dep : " << nd->_data.first << " " << nd->depth << std::endl;
-				if (nd->_right != ft::nullptr_t)
-				{
-					std::cout << "Key & rt dep : " << nd->_right->_data.first << " " << nd->_right->depth << std::endl;
-					// if (nd->_right->_right != ft::nullptr_t)
-					// 	std::cout << "rt dep : " << nd->_left->_dat.first << " " << nd->_right->_right->_data.first << std::endl;
-				}
-				if (nd->_left != ft::nullptr_t)
-					std::cout << "Key & lt dep : " << nd->_left->_data.first << " " << nd->_left->depth << std::endl;
 				Node_pointer child_nd = nd->_left;
 				nd->_left = child_nd->_right;
 				if (child_nd->_right != nullptr_t)
@@ -773,15 +753,6 @@ namespace ft
 			}
 			Node_pointer	RR_rotate(Node_pointer nd)
 			{
-				std::cout << "Key & nd dep : " << nd->_data.first << " " << nd->depth << std::endl;
-				if (nd->_right != ft::nullptr_t)
-				{
-					std::cout << "Key & rt dep : " << nd->_right->_data.first << " " << nd->_right->depth << std::endl;
-					// if (nd->_right->_right != ft::nullptr_t)
-					// 	std::cout << "rt dep : " << nd->_left->_data.first << " " << nd->_right->_right->_data.first << std::endl;
-				}
-				if (nd->_left != ft::nullptr_t)
-					std::cout << "Key & lt dep : " << nd->_left->_data.first << " " << nd->_left->depth << std::endl;
 				Node_pointer child_nd = nd->_right;
 				nd->_right = child_nd->_left;
 				if (child_nd->_left != nullptr_t)
