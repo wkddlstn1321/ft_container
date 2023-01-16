@@ -16,8 +16,8 @@ int	main(void)
 	// ft::vector<int>::const_iterator its = it;
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
-	// ft::map<int, int> newmap;
-	// newmap.insert(ft::make_pair(18,3));
+	ft::map<int, int> newmap;
+	newmap.insert(ft::make_pair(18,3));
 	// newmap.insert(ft::make_pair(16,3));
 	// newmap.insert(ft::make_pair(17,3));
 	// newmap.insert(ft::make_pair(15,13));

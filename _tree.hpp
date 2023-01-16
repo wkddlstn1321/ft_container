@@ -14,7 +14,7 @@ namespace ft
 	template <typename T>
 	struct _treeNode
 	{
-		typedef T value_type;
+		typedef T			value_type;
 		value_type	_data;
 		_treeNode	*_parent;
 		_treeNode	*_left;
@@ -45,20 +45,28 @@ namespace ft
 	};
 
 	//T == _treeNode<>
-	template <class T>
+	template <class T, class ref, class ptr>
 	class tree_iterator //: public ft::iterator<ft::bidirection_iterator_tag, T>
 	{
 	//_value == ft::pair<key, value>
+	// private:
+	// 	typedef T* Node_pointer;
+	// 	typedef typename T::value_type _value_type;
+	// 	typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
 	private:
-		typedef T* Node_pointer;
-		typedef typename T::value_type _value_type;
-		typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
+		typedef _treeNode<T>*	Node_pointer;
+	// public:
+	// 	typedef typename _Iterator::iterator_category	iterator_category;
+	// 	typedef typename _Iterator::value_type			value_type;
+	// 	typedef typename _Iterator::difference_type		difference_type;
+	// 	typedef typename _Iterator::reference			reference;
+	// 	typedef typename _Iterator::pointer				pointer;
 	public:
-		typedef typename _Iterator::iterator_category	iterator_category;
-		typedef typename _Iterator::value_type			value_type;
-		typedef typename _Iterator::difference_type		difference_type;
-		typedef typename _Iterator::reference			reference;
-		typedef typename _Iterator::pointer				pointer;
+		typedef bidirection_iterator_tag	iterator_category;
+		typedef T							value_type;
+		typedef ptrdiff_t					difference_type;
+		typedef ref							reference;
+		typedef ptr							pointer;
 
 	private:
 		// typedef _treeNode<value_type>*					Node_pointer;
@@ -195,168 +203,36 @@ namespace ft
 			return (&(this->_pointer->_data));
 		}
 	};
-	
-template <class T>
-	class tree_const_iterator //: public ft::iterator<ft::bidirection_iterator_tag, T>
-	{
-	//_value == ft::pair<key, value>
-	private:
-		typedef T* Node_pointer;
-		typedef typename T::value_type _value_type;
-		typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
-	public:
-		typedef typename _Iterator::iterator_category	iterator_category;
-		typedef typename _Iterator::value_type			value_type;
-		typedef typename _Iterator::difference_type		difference_type;
-		typedef typename _Iterator::reference			reference;
-		typedef typename _Iterator::pointer				pointer;
 
-	private:
-		// typedef _treeNode<value_type>*					Node_pointer;
-		Node_pointer	_pointer;
-	public:
-		tree_const_iterator() : _pointer(ft::nullptr_t) {}
-		tree_const_iterator(Node_pointer node) : _pointer(node) {}
-		tree_const_iterator(const tree_const_iterator& a)
-		{
-			this->_pointer = a.base();
-		}
-		tree_const_iterator& operator=(const tree_const_iterator& a)
-		{
-			if (this != &a)
-				this->_pointer = a.base();
-			return (*this);
-		}
-		~tree_const_iterator() {}
-		Node_pointer base() const
-		{
-			return (this->_pointer);
-		}
-		tree_const_iterator& operator++()
-		{
-			if (_pointer->_right != ft::nullptr_t)
-			{
-				_pointer = _pointer->_right;
-				while (_pointer->_left != ft::nullptr_t)
-				{
-					if (_pointer->_left->_right == _pointer)
-						break ;
-					_pointer = _pointer->_left;
-				}
-			}
-			else
-			{
-				Node_pointer y = _pointer->_parent;
-				while (_pointer == y->_right)
-				{
-					_pointer = y;
-					y = y->_parent;
-				}
-				if (_pointer->_right != y)
-					_pointer = y;
-			}
-			return (*this);
-		}
-		tree_const_iterator operator++(int)
-		{
-			tree_const_iterator tmp = *this;
-			if (_pointer->_right != ft::nullptr_t)
-			{
-				_pointer = _pointer->_right;
-				while (_pointer->_left != ft::nullptr_t)
-				{
-					if (_pointer->_left->_right == _pointer)
-						break;
-					_pointer = _pointer->_left;
-				}
-			}
-			else
-			{
-				Node_pointer y = _pointer->_parent;
-				if (y == ft::nullptr_t)
-					return (*this);
-				while (_pointer == y->_right)
-				{
-					_pointer = y;
-					y = y->_parent;
-				}
-				if (_pointer->_right != y)
-					_pointer = y;
-			}
-			return (tmp);
-		}
-		tree_const_iterator& operator--()
-		{
-			if (_pointer->_left != ft::nullptr_t)
-			{
-				_pointer = _pointer->_left;
-				while (_pointer->_right != ft::nullptr_t)
-				{
-					if (_pointer->_right->_left == _pointer)
-						break ;
-					_pointer = _pointer->_right;
-				}
-			}
-			else
-			{
-				Node_pointer y = _pointer->_parent;
-				while (_pointer == y->_left)
-				{
-					_pointer = y;
-					y = y->_parent;
-				}
-				if (_pointer->_left != y)
-					_pointer = y;
-			}
-			return (*this);
-		}
-		tree_const_iterator operator--(int)
-		{
-			tree_const_iterator tmp = *this;
-			if (_pointer->_left != ft::nullptr_t)
-			{
-				_pointer = _pointer->_left;
-				while (_pointer->_right != ft::nullptr_t)
-				{
-					if (_pointer->_right->_left == _pointer)
-						break ;
-					_pointer = _pointer->_right;
-				}
-			}
-			else
-			{
-				Node_pointer y = _pointer->_parent;
-				while (_pointer == y->_left)
-				{
-					_pointer = y;
-					y = y->_parent;
-				}
-				if (_pointer->_left != y)
-					_pointer = y;
-			}
-			return (tmp);
-		}
-		reference operator*() const 
-		{
-			return (this->_pointer->_data);
-		}
-
-		pointer operator->() const
-		{
-			return (&(this->_pointer->_data));
-		}
-	};
-
-
-	template <class T>
-	bool operator==(const tree_iterator<T>& a, const tree_iterator<T>& b)
+	template <class T, class ref, class ptr>
+	bool operator==(const tree_iterator<T, ref, ptr>& a, const tree_iterator<T, ref, ptr>& b)
 	{
 		return (a.base() == b.base());
 	}
 	template <class T>
-	bool operator!=(const tree_iterator<T>& a, const tree_iterator<T>& b)
+	bool operator==(const tree_iterator<T, const T&, const T*>& a, const tree_iterator<T, T&, T*>& b)
 	{
-		return (!(a == b));
+		return (a.base() == b.base());
+	}
+	template <class T>
+	bool operator==(const tree_iterator<T, T&, T*>& a, const tree_iterator<T, const T&, const T*>& b)
+	{
+		return (a.base() == b.base());
+	}
+	template <class T, class ref, class ptr>
+	bool operator!=(const tree_iterator<T, ref, ptr>& a, const tree_iterator<T, ref, ptr>& b)
+	{
+		return (!(a.base() == b.base()));
+	}
+	template <class T>
+	bool operator!=(const tree_iterator<T, const T&, const T*> &a, const tree_iterator<T, T&, T*> &b)
+	{
+		return (!(a.base() == b.base()));
+	}
+	template <class T>
+	bool operator!=(const tree_iterator<T, T&, T*> &a, const tree_iterator<T, const T&, const T*> &b)
+	{
+		return (!(a.base() == b.base()));
 	}
 
 	// template <class _Tp, class _Compare, class _Allocator>
@@ -379,8 +255,12 @@ template <class T>
 
 			typedef typename allocator_type::template rebind<Node_type>::other	node_allocator;
 
-			typedef tree_iterator<Node_type>			iterator;
-			typedef tree_const_iterator<Node_type>		const_iterator;
+
+			typedef tree_iterator<value_type, value_type&, value_type*>				iterator;
+			typedef tree_iterator<value_type, const value_type&, const value_type*>	const_iterator;
+	
+			// typedef tree_iterator<Node_type>			iterator;
+			// typedef tree_iterator<Node_type>		const_iterator;
 		
 		//member var
 		private:

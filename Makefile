@@ -1,7 +1,7 @@
 NAME	= ft_containers
 CC		= c++
-CFLAGS	= -Wall -Wextra -Werror
-SRC		= ft.cpp
+CFLAGS	= -Wall -Wextra -Werror -std=c++98
+SRC		= test.cpp
 OBJ		= $(SRC:.cpp=.o)
 HEAD	= vector.hpp map.hpp stack.hpp _tree.hpp \
 		  iterator.hpp random_access_iterator.hpp reverse_iterator.hpp tree_iterator.hpp \
