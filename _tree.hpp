@@ -116,7 +116,7 @@ namespace ft
 		}
 		tree_iterator operator++(int)
 		{
-			// std::cout << "???????????" << std::endl;
+			std::cout << this->base()->_data.first << std::endl;
 			tree_iterator tmp = *this;
 			if (_pointer->_right != ft::nullptr_t)
 			{
@@ -475,15 +475,8 @@ namespace ft
 			{
 				for ( ; first != last ; first++)
 				{
-					std::cout << first->first << std::endl;
 					erase(first);
 				}
-				// while (first != last)
-				// {
-				// 	std::cout << first->first << std::endl;
-				// 	erase(first);
-				// 	first++;
-				// }
 			}
 			void swap(_AvlTree &x)
 			{
