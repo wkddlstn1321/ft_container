@@ -116,7 +116,6 @@ namespace ft
 		}
 		tree_iterator operator++(int)
 		{
-			std::cout << this->base()->_data.first << std::endl;
 			tree_iterator tmp = *this;
 			if (_pointer->_right != ft::nullptr_t)
 			{
@@ -306,6 +305,8 @@ namespace ft
 			}
 			~_AvlTree()
 			{
+				this->_alloc.destroy(this->_end);
+				this->_alloc.deallocate(this->_end, 1);
 			}
 			// iterator
 			iterator begin()
@@ -416,16 +417,20 @@ namespace ft
 				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
 				{
 					Node_pointer tmp = del_node->_parent;
-					this->_alloc.destroy(del_node);
-					this->_alloc.deallocate(del_node, 1);
-					if (tmp != ft::nullptr_t)
+					if (tmp == ft::nullptr_t)
+						this->_end->_parent = ft::nullptr_t;
+					else
 					{
+						if (this->_comp(tmp->_data.first, del_node->_data.first))
+							tmp->_right = ft::nullptr_t;
+						else
+							tmp->_left = ft::nullptr_t;
 						depth_update(tmp, 1);
 						Balancing(tmp);
 						this->_end->_parent = find_root_node(this->_end->_left);
 					}
-					else
-						this->_end->_parent = ft::nullptr_t;
+					this->_alloc.destroy(del_node);
+					this->_alloc.deallocate(del_node, 1);
 					return ;
 				}
 				Node_pointer tmp = del_node->_left;
@@ -443,6 +448,7 @@ namespace ft
 				}
 				else
 				{
+					std::cout << "???" << std::endl;
 					while (tmp->_right != ft::nullptr_t)
 						tmp = tmp->_right;
 					tmp->_right = del_node->_right;
@@ -473,9 +479,12 @@ namespace ft
 			}
 			void erase(iterator first, iterator last)
 			{
-				for ( ; first != last ; first++)
+				iterator tmp = first;
+				for ( ; first != last ; )
 				{
+					tmp++;
 					erase(first);
+					first = tmp;
 				}
 			}
 			void swap(_AvlTree &x)

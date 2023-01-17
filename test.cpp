@@ -9,7 +9,7 @@ void leaks() { system("leaks ft_containers"); }
 
 int	main(void)
 {
-    // atexit(leaks);
+    atexit(leaks);
 	// std::vector<int> newvec2;
 	// for (int i = 0 ; i < 10 ; i++)
 	// 	newvec.push_back(i);
@@ -22,18 +22,18 @@ int	main(void)
 	ft::map<int, int>::iterator it;
 	// ft::map<int, int>::iterator its;
 	newmap.insert(ft::make_pair(18,3));
-	// newmap.insert(ft::make_pair(16,3));
-	// newmap.insert(ft::make_pair(17,3));
-	// newmap.insert(ft::make_pair(15,13));
-	// newmap.insert(ft::make_pair(14,3));
-	// newmap.insert(ft::make_pair(13,3));
-	// newmap.insert(ft::make_pair(12,3));
-	// newmap[5] = 2;
-	// newmap[1] = 3123;
-	// newmap[2] = 3;
-	// newmap[3] = 3;
-	// newmap[4] = 3;
-	it = newmap.begin();
+	newmap.insert(ft::make_pair(16,3));
+	newmap.insert(ft::make_pair(17,3));
+	newmap.insert(ft::make_pair(15,13));
+	newmap.insert(ft::make_pair(14,3));
+	newmap.insert(ft::make_pair(13,3));
+	newmap.insert(ft::make_pair(12,3));
+	newmap[5] = 2;
+	newmap[1] = 3123;
+	newmap[2] = 3;
+	newmap[3] = 3;
+	newmap[4] = 3;
+	// it = newmap.begin();
 	// its = newmap.end();
 	// if (it == its)
 	// 	std::cout << "????????" << std::endl;
