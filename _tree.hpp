@@ -46,15 +46,15 @@ namespace ft
 
 	//T == _treeNode<>
 	template <class T, class ref, class ptr>
-	class tree_iterator //: public ft::iterator<ft::bidirection_iterator_tag, T>
+	class tree_iterator
 	{
 	//_value == ft::pair<key, value>
 	// private:
 	// 	typedef T* Node_pointer;
 	// 	typedef typename T::value_type _value_type;
 	// 	typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
-	private:
-		typedef _treeNode<T>*	Node_pointer;
+	// private:
+	// 	typedef _treeNode<T>*	Node_pointer;
 	// public:
 	// 	typedef typename _Iterator::iterator_category	iterator_category;
 	// 	typedef typename _Iterator::value_type			value_type;
@@ -69,8 +69,8 @@ namespace ft
 		typedef ptr							pointer;
 
 	private:
-		// typedef _treeNode<value_type>*					Node_pointer;
-		Node_pointer	_pointer;
+		typedef _treeNode<T>*	Node_pointer;
+		Node_pointer			_pointer;
 	public:
 		tree_iterator() : _pointer(ft::nullptr_t) {}
 		tree_iterator(Node_pointer node) : _pointer(node) {}
@@ -116,6 +116,7 @@ namespace ft
 		}
 		tree_iterator operator++(int)
 		{
+			// std::cout << "???????????" << std::endl;
 			tree_iterator tmp = *this;
 			if (_pointer->_right != ft::nullptr_t)
 			{
@@ -305,7 +306,6 @@ namespace ft
 			}
 			~_AvlTree()
 			{
-				// this->_alloc.destroy()
 			}
 			// iterator
 			iterator begin()
@@ -454,8 +454,13 @@ namespace ft
 				}
 				this->_alloc.destroy(del_node);
 				this->_alloc.deallocate(del_node, 1);
-				depth_update(tmp, 1);
-				Balancing(tmp);
+				if (tmp != this->_end)
+				{
+					depth_update(tmp, 1);
+					Balancing(tmp);
+				}
+				else
+					tmp->_parent = ft::nullptr_t;
 				this->_end->_parent = find_root_node(tmp);
 			}
 			size_type erase(const key_type &k)
@@ -468,11 +473,17 @@ namespace ft
 			}
 			void erase(iterator first, iterator last)
 			{
-				while (first != last)
+				for ( ; first != last ; first++)
 				{
+					std::cout << first->first << std::endl;
 					erase(first);
-					first++;
 				}
+				// while (first != last)
+				// {
+				// 	std::cout << first->first << std::endl;
+				// 	erase(first);
+				// 	first++;
+				// }
 			}
 			void swap(_AvlTree &x)
 			{
@@ -676,7 +687,6 @@ namespace ft
 				else
 					right_depth = nd->_right->depth;
 				return (right_depth > left_depth ? right_depth + 1 : left_depth + 1);
-				// return (nd->depth);
 			}
 			int	get_balance_factor(Node_pointer nd)
 			{
@@ -783,7 +793,7 @@ namespace ft
 					return ;
 				show_show(root->_right);
 				show_show(root->_left);
-					std::cout << root->_data.first << " : depth = " << root->depth << std::endl;
+				std::cout << root->_data.first << " : depth = " << root->depth << std::endl;
 			}
 		public:
 			void	show_me_the_depth()

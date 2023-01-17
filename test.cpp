@@ -3,6 +3,8 @@
 #include"map.hpp"
 #include"vector.hpp"
 
+using namespace std;
+
 void leaks() { system("leaks ft_containers"); }
 
 int	main(void)
@@ -17,6 +19,8 @@ int	main(void)
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
 	ft::map<int, int> newmap;
+	ft::map<int, int>::iterator it;
+	// ft::map<int, int>::iterator its;
 	newmap.insert(ft::make_pair(18,3));
 	// newmap.insert(ft::make_pair(16,3));
 	// newmap.insert(ft::make_pair(17,3));
@@ -29,8 +33,11 @@ int	main(void)
 	// newmap[2] = 3;
 	// newmap[3] = 3;
 	// newmap[4] = 3;
-	// newmap[5] = 3;
-	// cout << "size = " << newmap.size() << endl;
+	it = newmap.begin();
+	// its = newmap.end();
+	// if (it == its)
+	// 	std::cout << "????????" << std::endl;
+	// std::cout << it->first << std::endl;
 	// cout << newmap.erase(1) << endl;
 	// cout << "size = " << newmap.size() << endl;
 	// cout << "=======================================" << endl;
