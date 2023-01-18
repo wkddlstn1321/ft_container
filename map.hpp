@@ -65,11 +65,7 @@ namespace ft
 		{
 			insert(first, last);
 		}
-		map (const map& x) : _alloc(x._alloc), _comp(x._comp), _tree(x._tree)
-		{
-			insert(x.begin(), x.end());
-		}
-		// destructor
+		map (const map& x) :  _comp(x._comp), _alloc(x._alloc), _tree(x._tree) { }
 		~map()
 		{
 			clear();
@@ -78,8 +74,7 @@ namespace ft
 		{
 			if (&x != this)
 			{
-				// clear();
-				insert(x.begin(), x.end());
+				this->_tree = x._tree;
 			}
 			return (*this);
 		}

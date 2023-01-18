@@ -68,12 +68,20 @@ namespace ft
 		typedef ref							reference;
 		typedef ptr							pointer;
 
+		// typedef tree_iterator<value_type, value_type&, value_type*>				iterator;
+		// typedef tree_iterator<value_type, const value_type&, const value_type*>	const_iterator;
+
 	private:
 		typedef _treeNode<T>*	Node_pointer;
 		Node_pointer			_pointer;
 	public:
 		tree_iterator() : _pointer(ft::nullptr_t) {}
 		tree_iterator(Node_pointer node) : _pointer(node) {}
+		template<class U>
+		tree_iterator(const U& a)
+		{
+			this->_pointer = a.base();
+		}
 		tree_iterator(const tree_iterator& a)
 		{
 			this->_pointer = a.base();
@@ -255,13 +263,12 @@ namespace ft
 
 			typedef typename allocator_type::template rebind<Node_type>::other	node_allocator;
 
+			// typedef tree_iterator::iterator			iterator;
+			// typedef tree_iterator::const_iterator	const_iterator;
 
 			typedef tree_iterator<value_type, value_type&, value_type*>				iterator;
 			typedef tree_iterator<value_type, const value_type&, const value_type*>	const_iterator;
-	
-			// typedef tree_iterator<Node_type>			iterator;
-			// typedef tree_iterator<Node_type>		const_iterator;
-		
+			
 		//member var
 		private:
 			node_allocator	_alloc;
@@ -284,38 +291,39 @@ namespace ft
 				this->_end->_right = ft::nullptr_t;
 				this->_end->_left = ft::nullptr_t;
 			}
-			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(a._size), _comp(a._comp)
+			_AvlTree(const _AvlTree& a) : _alloc(a._alloc), _size(0), _comp(a._comp)
 			{
 				this->_end = this->_alloc.allocate(1);
 				this->_alloc.construct(this->_end, value_type());
 				this->_end->_parent = ft::nullptr_t;
 				this->_end->_right = ft::nullptr_t;
 				this->_end->_left = ft::nullptr_t;
-				this->_size = a._size;
 				insert(a.begin(), a.end());
 			}
 			_AvlTree& operator=(const _AvlTree& a)
 			{
 				if (this != &a)
 				{
-					_AvlTree tmp(a);
-					swap(tmp);
+					clear();
+					insert(a.begin(), a.end());
+					// swap(tmp);
 				}
 				return (*this);
 			}
 			~_AvlTree()
 			{
+				std::cout << "map destructor" << std::endl;
 				this->_alloc.destroy(this->_end);
 				this->_alloc.deallocate(this->_end, 1);
 			}
 			// iterator
 			iterator begin()
 			{
-				return (iterator(find_min_node(_end->_parent)));
+				return (iterator(find_min_node()));
 			}
 			const_iterator begin() const
 			{
-				return (const_iterator(find_min_node(_end->_parent)));
+				return (const_iterator(find_min_node()));
 			}
 			iterator end()
 			{
@@ -407,7 +415,7 @@ namespace ft
 				while (first != last)
 				{
 					insert(*first);
-					++first;
+					first++;
 				}
 			}
 			void erase(iterator position)
@@ -436,6 +444,7 @@ namespace ft
 				Node_pointer tmp = del_node->_left;
 				if (tmp == ft::nullptr_t)
 				{
+					std::cout << "?????\n";
 					tmp = del_node->_right;
 					if (del_node->_parent != ft::nullptr_t)
 					{
@@ -448,15 +457,17 @@ namespace ft
 				}
 				else
 				{
-					std::cout << "???" << std::endl;
 					while (tmp->_right != ft::nullptr_t)
 						tmp = tmp->_right;
 					tmp->_right = del_node->_right;
 					if (tmp->_parent != del_node)
 					{
 						tmp->_left = del_node->_left;
-						tmp->_parent->_right = ft::nullptr_t;
+						tmp->_parent->_right = tmp->_left;
 					}
+					if (del_node->_right != ft::nullptr_t)
+						del_node->_right->_parent = tmp;
+					tmp->_parent = del_node->_parent;
 				}
 				this->_alloc.destroy(del_node);
 				this->_alloc.deallocate(del_node, 1);
@@ -466,7 +477,10 @@ namespace ft
 					Balancing(tmp);
 				}
 				else
+				{
+					tmp->_left = ft::nullptr_t; 
 					tmp->_parent = ft::nullptr_t;
+				}
 				this->_end->_parent = find_root_node(tmp);
 			}
 			size_type erase(const key_type &k)
@@ -545,7 +559,7 @@ namespace ft
 			//k 보다 크거나 같은 원소
 			iterator lower_bound(const key_type &k)
 			{
-				Node_pointer	root = find_root_node(this->_end->_parent);
+				Node_pointer	root = this->_end->_parent;
 				iterator		result = end();
 				while (root != ft::nullptr_t)
 				{
@@ -561,7 +575,7 @@ namespace ft
 			}
 			const_iterator lower_bound(const key_type &k) const
 			{
-				Node_pointer	root = find_root_node(this->_end->_parent);
+				Node_pointer	root = find_root_node(this->_end);
 				const_iterator	result = end();
 				while (root != ft::nullptr_t)
 				{
@@ -610,11 +624,13 @@ namespace ft
 			}
 			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
-				retunr (ft::make_pair<lower_bound(k), upper_bound(k)>);
+				return (ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
+				// return (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
 			ft::pair<iterator, iterator> equal_range(const key_type &k)
 			{
-				return (ft::make_pair<lower_bound(k), upper_bound(k)>);
+				return (ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
+				// return (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
 			// Allocator
 			allocator_type get_allocator() const
@@ -652,13 +668,22 @@ namespace ft
 				}
 				return (next_nd);
 			}
-			Node_pointer find_min_node(Node_pointer root)
+			// Node_pointer find_min_node(Node_pointer root) const
+			Node_pointer find_min_node() const
 			{
+				if (this->_size == 0)
+					return (this->_end);
+				Node_pointer root = this->_end->_parent;
 				if (root == ft::nullptr_t)
 					return (ft::nullptr_t);
 				while (root->_left != ft::nullptr_t)
 					root = root->_left;
 				return (root);
+				// if (root == ft::nullptr_t)
+				// 	return (ft::nullptr_t);
+				// while (root->_left != ft::nullptr_t)
+				// 	root = root->_left;
+				// return (root);
 			}
 			Node_pointer find_max_node(Node_pointer root)
 			{
@@ -668,7 +693,7 @@ namespace ft
 					root = root->_right;
 				return (root);
 			}
-			Node_pointer find_root_node(Node_pointer nd)
+			Node_pointer find_root_node(Node_pointer nd) const
 			{
 				while (nd->_parent != ft::nullptr_t)
 					nd = nd->_parent;

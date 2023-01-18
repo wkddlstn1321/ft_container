@@ -1,15 +1,37 @@
 #include<vector>
+#include<stack>
 #include<map>
 #include"map.hpp"
 #include"vector.hpp"
+#include<list>
+// #include<vector>
+// #include<list>
+// #include<map>
+// #include"map.hpp"
+// #include"vector.hpp"
+
 
 using namespace std;
+
+#define T1 int
+#define T2 std::string
+#define _pair ft::pair
+typedef _pair<const T1, T2> T3;
+
+// static int iter = 0;
 
 void leaks() { system("leaks ft_containers"); }
 
 int	main(void)
 {
-    atexit(leaks);
+    // atexit(leaks);
+	// std::list<T3> lst;
+	// unsigned int lst_size = 10;
+	// for (unsigned int i = 0; i < lst_size; ++i)
+	// 	lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+	// ft::map<T1, T2> mp(lst.begin(), lst.end());
+	// cout << (++mp.begin())->first << endl;
+	// mp.erase(++mp.begin());
 	// std::vector<int> newvec2;
 	// for (int i = 0 ; i < 10 ; i++)
 	// 	newvec.push_back(i);
@@ -19,20 +41,28 @@ int	main(void)
 	// for ( ; it != its ; it++)
 	// 	cout << *it << endl;
 	ft::map<int, int> newmap;
-	ft::map<int, int>::iterator it;
-	// ft::map<int, int>::iterator its;
-	newmap.insert(ft::make_pair(18,3));
+	ft::map<int, int>::const_iterator it;
+	// ft::map<int, int>::const_iterator its;
 	newmap.insert(ft::make_pair(16,3));
-	newmap.insert(ft::make_pair(17,3));
-	newmap.insert(ft::make_pair(15,13));
-	newmap.insert(ft::make_pair(14,3));
 	newmap.insert(ft::make_pair(13,3));
-	newmap.insert(ft::make_pair(12,3));
-	newmap[5] = 2;
-	newmap[1] = 3123;
-	newmap[2] = 3;
-	newmap[3] = 3;
-	newmap[4] = 3;
+	newmap.insert(ft::make_pair(18,3));
+	newmap.insert(ft::make_pair(15,13));
+	newmap.insert(ft::make_pair(17,3));
+	newmap.insert(ft::make_pair(14,3));
+	it = newmap.begin();
+	// its = newmap.end();
+	it++;
+	newmap.erase(it);
+	newmap.show_me_the_depth();
+	// it--;
+	// its = newmap.end();
+	// ft::map<int, int>::iterator its;
+	// newmap.insert(ft::make_pair(12,3));
+	// newmap[5] = 2;
+	// newmap[1] = 3123;
+	// newmap[2] = 3;
+	// newmap[3] = 3;
+	// newmap[4] = 3;
 	// it = newmap.begin();
 	// its = newmap.end();
 	// if (it == its)
