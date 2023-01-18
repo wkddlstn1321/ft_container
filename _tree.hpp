@@ -444,16 +444,18 @@ namespace ft
 				Node_pointer tmp = del_node->_left;
 				if (tmp == ft::nullptr_t)
 				{
-					std::cout << "?????\n";
 					tmp = del_node->_right;
 					if (del_node->_parent != ft::nullptr_t)
 					{
 						tmp->_parent = del_node->_parent;
-						if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
-							del_node->_parent->_left = tmp;
-						else
-							del_node->_parent->_right = tmp;
+						// if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
+						// 	del_node->_parent->_left = tmp;
+						// else
+						del_node->_parent->_right = tmp;
 					}
+					tmp->_left = del_node->_left;
+					if (tmp->_left != ft::nullptr_t)
+						tmp->_left->_parent = tmp;
 				}
 				else
 				{
@@ -468,6 +470,8 @@ namespace ft
 					if (del_node->_right != ft::nullptr_t)
 						del_node->_right->_parent = tmp;
 					tmp->_parent = del_node->_parent;
+					if (del_node->_parent != ft::nullptr_t)
+						del_node->_parent->_left = tmp;
 				}
 				this->_alloc.destroy(del_node);
 				this->_alloc.deallocate(del_node, 1);

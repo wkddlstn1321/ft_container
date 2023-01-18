@@ -49,9 +49,9 @@ int	main(void)
 	newmap.insert(ft::make_pair(15,13));
 	newmap.insert(ft::make_pair(17,3));
 	newmap.insert(ft::make_pair(14,3));
-	it = newmap.begin();
+	it = newmap.end();
 	// its = newmap.end();
-	it++;
+	it--;
 	newmap.erase(it);
 	newmap.show_me_the_depth();
 	// it--;
