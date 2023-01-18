@@ -448,10 +448,10 @@ namespace ft
 					if (del_node->_parent != ft::nullptr_t)
 					{
 						tmp->_parent = del_node->_parent;
-						// if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
-						// 	del_node->_parent->_left = tmp;
-						// else
-						del_node->_parent->_right = tmp;
+						if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
+							del_node->_parent->_left = tmp;
+						else
+							del_node->_parent->_right = tmp;
 					}
 					tmp->_left = del_node->_left;
 					if (tmp->_left != ft::nullptr_t)
@@ -471,7 +471,12 @@ namespace ft
 						del_node->_right->_parent = tmp;
 					tmp->_parent = del_node->_parent;
 					if (del_node->_parent != ft::nullptr_t)
-						del_node->_parent->_left = tmp;
+					{
+						if (this->_comp(del_node->_parent->_data.first, tmp->_data.first))
+							del_node->_parent->_right = tmp;
+						else
+							del_node->_parent->_left = tmp;
+					}
 				}
 				this->_alloc.destroy(del_node);
 				this->_alloc.deallocate(del_node, 1);
@@ -500,6 +505,7 @@ namespace ft
 				iterator tmp = first;
 				for ( ; first != last ; )
 				{
+					std::cout << first->first << std::endl;
 					tmp++;
 					erase(first);
 					first = tmp;
