@@ -25,35 +25,40 @@ void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
     // atexit(leaks);
-	// std::list<T3> lst;
-	// unsigned int lst_size = 10;
-	// for (unsigned int i = 0; i < lst_size; ++i)
-	// 	lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-	// ft::map<T1, T2> mp(lst.begin(), lst.end());
-	// cout << (++mp.begin())->first << endl;
-	// mp.erase(++mp.begin());
-	// std::vector<int> newvec2;
-	// for (int i = 0 ; i < 10 ; i++)
-	// 	newvec.push_back(i);
-	// newvec.insert(newvec.begin(), newvec.begin(), newvec.end() - 5);
-	// ft::vector<int>::iterator it = newvec.begin();
-	// ft::vector<int>::const_iterator its = it;
+
+	// std::map<int, int> newmap;
+	// newmap.insert(std::make_pair(0,3));
+	// newmap.insert(std::make_pair(1,3));
+	// newmap.insert(std::make_pair(2,13));
+	// newmap.insert(std::make_pair(3,3));
+	// newmap.insert(std::make_pair(4,3));
+	// newmap.insert(std::make_pair(5,3));
+	// std::map<int, int>::reverse_iterator it = newmap.rbegin();
+	// std::map<int, int>::reverse_iterator its = newmap.rend();
+	// // it++;
+	// // its--;
 	// for ( ; it != its ; it++)
-	// 	cout << *it << endl;
+	// 	cout << it->first << endl;
+
+
 	ft::map<int, int> newmap;
-	ft::map<int, int>::const_iterator it;
-	// ft::map<int, int>::const_iterator its;
-	newmap.insert(ft::make_pair(16,3));
-	newmap.insert(ft::make_pair(13,3));
-	newmap.insert(ft::make_pair(18,3));
-	newmap.insert(ft::make_pair(15,13));
-	newmap.insert(ft::make_pair(17,3));
-	newmap.insert(ft::make_pair(14,3));
-	it = newmap.end();
+	newmap.insert(ft::make_pair(0,3));
+	newmap.insert(ft::make_pair(1,3));
+	newmap.insert(ft::make_pair(2,13));
+	newmap.insert(ft::make_pair(3,3));
+	newmap.insert(ft::make_pair(4,3));
+	newmap.insert(ft::make_pair(5,3));
+	ft::map<int, int>::reverse_iterator it = newmap.rbegin();
+	ft::map<int, int>::reverse_iterator its = newmap.rend();
+	// it++;
+	// its--;
+	for ( ; it != its ; it++)
+		cout << it->first << endl;
+
 	// its = newmap.end();
-	it--;
-	newmap.erase(it);
-	newmap.show_me_the_depth();
+	// cout << it->first << endl;
+	// newmap.erase(it->first);
+	// newmap.show_me_the_depth();
 	// it--;
 	// its = newmap.end();
 	// ft::map<int, int>::iterator its;

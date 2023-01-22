@@ -29,87 +29,71 @@ void	printSize(T_MAP const &mp, bool print_content = 1)
 	std::cout << "###############################################" << std::endl;
 }
 
+template <typename T>
+T	inc(T it, int n)
+{
+	while (n-- > 0)
+		++it;
+	return (it);
+}
 
 template <typename T>
-class foo {
-	public:
-		typedef T	value_type;
+T	dec(T it, int n)
+{
+	while (n-- > 0)
+		--it;
+	return (it);
+}
 
-		foo(void) : value(), _verbose(false) { };
-		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
-		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
-		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
-		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
-		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
-		foo &operator=(value_type src) { this->value = src; return *this; };
-		foo &operator=(foo const &src) {
-			if (this->_verbose || src._verbose)
-				std::cout << "foo::operator=(foo) CALLED" << std::endl;
-			this->value = src.value;
-			return *this;
-		};
-		value_type	getValue(void) const { return this->value; };
-		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+template <typename T1, typename T2>
+void	printReverse(ft::map<T1, T2> &mp)
+{
+	typename ft::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
 
-		operator value_type(void) const {
-			return value_type(this->value);
-		}
-	private:
-		value_type	value;
-		bool		_verbose;
-};
+	std::cout << "printReverse:" << std::endl;
+	while (it != ite) {
+		it--;
+		std::cout << "-> " << printPair(it, false) << std::endl;
+	}
+	std::cout << "_______________________________________________" << std::endl;
+}
 
-#define T1 int
-#define T2 std::string
+
+#define T1 char
+#define T2 int
 #define _pair ft::pair
 typedef _pair<const T1, T2> T3;
-
-static int iter = 0;
-
-template <typename MAP, typename U>
-void	ft_erase(MAP &mp, U param)
-{
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param);
-	printSize(mp);
-}
-
-template <typename MAP, typename U, typename V>
-void	ft_erase(MAP &mp, U param, V param2)
-{
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	mp.erase(param, param2);
-	printSize(mp);
-}
 
 int		main(void)
 {
 	std::list<T3> lst;
-	unsigned int lst_size = 10;
+	unsigned int lst_size = 5;
 	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
+		lst.push_back(T3('a' + i, (i + 1) * 7));
+
 	ft::map<T1, T2> mp(lst.begin(), lst.end());
+	ft::map<T1, T2>::iterator it_ = mp.begin();
+	ft::map<T1, T2>::reverse_iterator it(it_), ite;
 	printSize(mp);
+	std::cout << (it_ == it.base()) << std::endl;
+	std::cout << (it_ == dec(it, 3).base()) << std::endl;
 
-	ft_erase(mp, ++mp.begin());
+	printPair(it.base());
+	printPair(inc(it.base(), 1));
 
-	ft_erase(mp, mp.begin());
-	ft_erase(mp, --mp.end());
+	std::cout << "TEST OFFSET" << std::endl;
+	--it;
+	printPair(it);
+	printPair(it.base());
 
-	ft_erase(mp, mp.begin(), ++(++(++mp.begin())));
-	ft_erase(mp, --(--(--mp.end())), --mp.end());
-
-	mp[10] = "Hello";
-	mp[11] = "Hi there";
-	printSize(mp);
-	ft_erase(mp, --(--(--mp.end())), mp.end());
-
-	mp[12] = "ONE";
-	mp[13] = "TWO";
-	mp[14] = "THREE";
-	mp[15] = "FOUR";
-	printSize(mp);
-	ft_erase(mp, mp.begin(), mp.end());
+	it = mp.rbegin(); ite = mp.rend();
+	it++;
+	while (it != ite)
+	{
+		std::cout << "start" << std::endl;
+		std::cout << "[rev] " << printPair(it++, false) << std::endl;
+	}
+	printReverse(mp);
 
 	return (0);
 }

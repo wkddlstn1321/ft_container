@@ -4,10 +4,11 @@
 #include<iostream>
 
 #include<memory>
+#include "utility.hpp"
 #include "iterator.hpp"
 #include "functional.hpp"
 #include "type_traits.hpp"
-#include "utility.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -244,7 +245,7 @@ namespace ft
 	}
 
 	// template <class _Tp, class _Compare, class _Allocator>
-	template <typename T, typename Key, class _Compare, class Alloc = std::allocator<T> >
+	template <typename T, typename Key, class _Compare = ft::less<Key>, class Alloc = std::allocator<T> >
 	class _AvlTree
 	{
 		// typedef __tree_iterator<value_type, __node_pointer, difference_type> iterator;
@@ -312,7 +313,6 @@ namespace ft
 			}
 			~_AvlTree()
 			{
-				std::cout << "map destructor" << std::endl;
 				this->_alloc.destroy(this->_end);
 				this->_alloc.deallocate(this->_end, 1);
 			}
@@ -346,6 +346,7 @@ namespace ft
 			size_type max_size() const
 			{
 				return (this->_alloc.max_size());
+				// return (std::numeric_limits<node_allocator>::max());
 			}
 
 			// Modifiers 
@@ -407,7 +408,7 @@ namespace ft
 			iterator insert(iterator position, const value_type &val)
 			{
 				(void)position;
-				insert(val);
+				return (insert(val).first);
 			}
 			template <class InputIterator>
 			void insert(InputIterator first, InputIterator last)
@@ -425,50 +426,79 @@ namespace ft
 				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
 				{
 					Node_pointer tmp = del_node->_parent;
-					if (tmp == ft::nullptr_t)
-						this->_end->_parent = ft::nullptr_t;
+					// if (tmp == ft::nullptr_t)
+					// {
+					// 	this->_end->_parent = ft::nullptr_t;
+					// 	this->_end->_left = ft::nullptr_t;
+					// }
+					// else
+					// {
+					if (this->_comp(tmp->_data.first, del_node->_data.first))
+						tmp->_right = ft::nullptr_t;
 					else
-					{
-						if (this->_comp(tmp->_data.first, del_node->_data.first))
-							tmp->_right = ft::nullptr_t;
-						else
-							tmp->_left = ft::nullptr_t;
-						depth_update(tmp, 1);
-						Balancing(tmp);
-						this->_end->_parent = find_root_node(this->_end->_left);
-					}
+						tmp->_left = ft::nullptr_t;
+					depth_update(tmp, 1);
+					Balancing(tmp);
+					this->_end->_parent = find_root_node(this->_end->_parent);
+					// this->_end->_parent = find_root_node(this->_end->_left);
+					// }
 					this->_alloc.destroy(del_node);
 					this->_alloc.deallocate(del_node, 1);
 					return ;
 				}
 				Node_pointer tmp = del_node->_left;
+				//왼쪽 노드가 없을 때
 				if (tmp == ft::nullptr_t)
 				{
 					tmp = del_node->_right;
-					if (del_node->_parent != ft::nullptr_t)
+					if (tmp == this->_end)
+					{
+						tmp->_left = del_node->_parent;
+						if (del_node->_parent != ft::nullptr_t)
+							del_node->_parent->_right = tmp;
+						else
+							tmp->_parent = ft::nullptr_t;
+					}
+					else
 					{
 						tmp->_parent = del_node->_parent;
-						if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
-							del_node->_parent->_left = tmp;
-						else
-							del_node->_parent->_right = tmp;
+						if (del_node->_parent != ft::nullptr_t)
+						{
+							if (this->_comp(del_node->_data.first, del_node->_parent->_data.first))
+								del_node->_parent->_left = tmp;
+							else
+								del_node->_parent->_right = tmp;
+						}
+						// std::cout << "before root = " << this->_end->_parent->_data.first << std::endl;
+						// std::cout << "tmp = " << tmp->_data.first << std::endl;
+						this->_end->_parent = find_root_node(tmp);
+						// if (this->_end->_parent != ft::nullptr_t)
+						// 	std::cout << "root = " << this->_end->_parent->_data.first << std::endl;
 					}
-					tmp->_left = del_node->_left;
-					if (tmp->_left != ft::nullptr_t)
-						tmp->_left->_parent = tmp;
 				}
+				//왼쪽 노드가 있을 때
 				else
 				{
 					while (tmp->_right != ft::nullptr_t)
 						tmp = tmp->_right;
 					tmp->_right = del_node->_right;
+					if (del_node->_right != ft::nullptr_t)
+					{
+						if (del_node->_right == this->_end)
+							del_node->_right->_left = tmp;
+						else
+							del_node->_right->_parent = tmp;
+					}
 					if (tmp->_parent != del_node)
 					{
+						Node_pointer save_left = tmp->_left;
 						tmp->_left = del_node->_left;
-						tmp->_parent->_right = tmp->_left;
+						if (del_node->_left != ft::nullptr_t)
+							del_node->_left->_parent = tmp;
+						tmp->_parent->_right = save_left;
+						if (save_left != ft::nullptr_t)
+							save_left->_parent = tmp->_parent;
 					}
-					if (del_node->_right != ft::nullptr_t)
-						del_node->_right->_parent = tmp;
 					tmp->_parent = del_node->_parent;
 					if (del_node->_parent != ft::nullptr_t)
 					{
@@ -477,6 +507,7 @@ namespace ft
 						else
 							del_node->_parent->_left = tmp;
 					}
+					this->_end->_parent = find_root_node(tmp);
 				}
 				this->_alloc.destroy(del_node);
 				this->_alloc.deallocate(del_node, 1);
@@ -484,13 +515,13 @@ namespace ft
 				{
 					depth_update(tmp, 1);
 					Balancing(tmp);
+					this->_end->_parent = find_root_node(this->_end->_parent);
 				}
 				else
 				{
-					tmp->_left = ft::nullptr_t; 
-					tmp->_parent = ft::nullptr_t;
+					if (this->_size != 0)
+						depth_update(tmp->_left, 1);
 				}
-				this->_end->_parent = find_root_node(tmp);
 			}
 			size_type erase(const key_type &k)
 			{
@@ -505,7 +536,6 @@ namespace ft
 				iterator tmp = first;
 				for ( ; first != last ; )
 				{
-					std::cout << first->first << std::endl;
 					tmp++;
 					erase(first);
 					first = tmp;
@@ -535,14 +565,22 @@ namespace ft
 			iterator find(const key_type &k)
 			{
 				Node_pointer tmp = this->_end->_parent;
-				while (tmp != ft::nullptr_t)
+				// std::cout << "root node : " << this->_end->_parent->_data.first << std::endl;
+				while (tmp != ft::nullptr_t && tmp != this->_end)
 				{
-					if (tmp->_data.first == k)
-						return (iterator(tmp));
-					else if (this->_comp(tmp->_data.first, k))
+					if (this->_comp(tmp->_data.first, k))
+					{
+						// std::cout << "find!" << std::endl;
+						// std::cout << tmp->_data.first << std::endl;
 						tmp = tmp->_right;
-					else
+					}
+					else if (this->_comp(k, tmp->_data.first))
 						tmp = tmp->_left;
+					else
+					{
+						// std::cout << "return!" << std::endl;
+						return (iterator(tmp));
+					}
 				}
 				return (end());
 			}
@@ -551,12 +589,12 @@ namespace ft
 				Node_pointer tmp = this->_end->_parent;
 				while (tmp != ft::nullptr_t)
 				{
-					if (tmp->_data.first == k)
-						return (iterator(tmp));
-					else if (this->_comp(tmp->_data.first, k))
+					if (this->_comp(tmp->_data.first, k))
 						tmp = tmp->_right;
-					else
+					else if (this->_comp(k, tmp->_data.first))
 						tmp = tmp->_left;
+					else
+						return (iterator(tmp));
 				}
 				return (end());
 			}
