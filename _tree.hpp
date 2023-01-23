@@ -49,19 +49,6 @@ namespace ft
 	template <class T, class ref, class ptr>
 	class tree_iterator
 	{
-	//_value == ft::pair<key, value>
-	// private:
-	// 	typedef T* Node_pointer;
-	// 	typedef typename T::value_type _value_type;
-	// 	typedef typename ft::iterator<ft::bidirection_iterator_tag, _value_type> _Iterator;
-	// private:
-	// 	typedef _treeNode<T>*	Node_pointer;
-	// public:
-	// 	typedef typename _Iterator::iterator_category	iterator_category;
-	// 	typedef typename _Iterator::value_type			value_type;
-	// 	typedef typename _Iterator::difference_type		difference_type;
-	// 	typedef typename _Iterator::reference			reference;
-	// 	typedef typename _Iterator::pointer				pointer;
 	public:
 		typedef bidirection_iterator_tag	iterator_category;
 		typedef T							value_type;
@@ -69,23 +56,20 @@ namespace ft
 		typedef ref							reference;
 		typedef ptr							pointer;
 
-		// typedef tree_iterator<value_type, value_type&, value_type*>				iterator;
-		// typedef tree_iterator<value_type, const value_type&, const value_type*>	const_iterator;
-
 	private:
 		typedef _treeNode<T>*	Node_pointer;
 		Node_pointer			_pointer;
 	public:
 		tree_iterator() : _pointer(ft::nullptr_t) {}
 		tree_iterator(Node_pointer node) : _pointer(node) {}
-		template<class U>
-		tree_iterator(const U& a)
-		{
-			this->_pointer = a.base();
-		}
 		tree_iterator(const tree_iterator& a)
 		{
 			this->_pointer = a.base();
+		}
+		//형변환 연산자 non to const 경우 처리
+		operator tree_iterator<value_type, const value_type&, const value_type*>(void) const
+		{
+			return (tree_iterator<value_type, const value_type&, const value_type*>(base()));
 		}
 		tree_iterator& operator=(const tree_iterator& a)
 		{

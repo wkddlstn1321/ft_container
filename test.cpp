@@ -24,18 +24,19 @@ void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
     // atexit(leaks);
-	std::map<int, int> newmap2;
-	newmap2.insert(std::make_pair(0,3));
-	newmap2.insert(std::make_pair(1,3));
-	newmap2.insert(std::make_pair(2,13));
-	newmap2.insert(std::make_pair(3,3));
-	newmap2.insert(std::make_pair(4,3));
-	newmap2.insert(std::make_pair(5,3));
-	std::map<int, int>::iterator it = newmap2.end();
+	ft::map<int, int> newmap2;
+	ft::map<int, int>::const_iterator it = newmap2.begin();
+
+	// newmap2.insert(std::make_pair(0,3));
+	// newmap2.insert(std::make_pair(1,3));
+	// newmap2.insert(std::make_pair(2,13));
+	// newmap2.insert(std::make_pair(3,3));
+	// newmap2.insert(std::make_pair(4,3));
+	// newmap2.insert(std::make_pair(5,3));
 	// std::map<int, int>::reverse_iterator its = newmap.rend();
 	// it++;
-	it--;
-	cout << it->first << endl;
+	// it--;
+	// cout << it->first << endl;
 	// // its--;
 	// for ( ; it != its ; it++)
 	// 	cout << it->first << endl;
