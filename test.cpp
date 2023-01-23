@@ -26,34 +26,40 @@ int	main(void)
 {
     // atexit(leaks);
 
-	// std::map<int, int> newmap;
-	// newmap.insert(std::make_pair(0,3));
-	// newmap.insert(std::make_pair(1,3));
-	// newmap.insert(std::make_pair(2,13));
-	// newmap.insert(std::make_pair(3,3));
-	// newmap.insert(std::make_pair(4,3));
-	// newmap.insert(std::make_pair(5,3));
-	// std::map<int, int>::reverse_iterator it = newmap.rbegin();
+	std::map<int, int> newmap2;
+	newmap2.insert(std::make_pair(0,3));
+	newmap2.insert(std::make_pair(1,3));
+	newmap2.insert(std::make_pair(2,13));
+	newmap2.insert(std::make_pair(3,3));
+	newmap2.insert(std::make_pair(4,3));
+	newmap2.insert(std::make_pair(5,3));
+	std::map<int, int>::iterator it = newmap2.end();
 	// std::map<int, int>::reverse_iterator its = newmap.rend();
-	// // it++;
+	it++;
+	// it--;
+	// cout << it->first << endl;
 	// // its--;
 	// for ( ; it != its ; it++)
 	// 	cout << it->first << endl;
 
 
-	ft::map<int, int> newmap;
-	newmap.insert(ft::make_pair(0,3));
-	newmap.insert(ft::make_pair(1,3));
-	newmap.insert(ft::make_pair(2,13));
-	newmap.insert(ft::make_pair(3,3));
-	newmap.insert(ft::make_pair(4,3));
-	newmap.insert(ft::make_pair(5,3));
-	ft::map<int, int>::reverse_iterator it = newmap.rbegin();
-	ft::map<int, int>::reverse_iterator its = newmap.rend();
+	// ft::map<int, int> newmap;
+	// newmap.insert(ft::make_pair(0,3));
+	// newmap.insert(ft::make_pair(1,3));
+	// newmap.insert(ft::make_pair(2,13));
+	// newmap.insert(ft::make_pair(3,3));
+	// newmap.insert(ft::make_pair(4,3));
+	// newmap.insert(ft::make_pair(5,3));
+	// ft::map<int, int>::iterator it = newmap.end();
+	// it++;
+	// it--;
+	// cout << it->first << endl;
+	// cout << it->first << endl;
+	// ft::map<int, int>::reverse_iterator its = newmap.rend();
 	// it++;
 	// its--;
-	for ( ; it != its ; it++)
-		cout << it->first << endl;
+	// for ( ; it != its ; it++)
+	// 	cout << it->first << endl;
 
 	// its = newmap.end();
 	// cout << it->first << endl;

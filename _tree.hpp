@@ -118,8 +118,8 @@ namespace ft
 					_pointer = y;
 					y = y->_parent;
 				}
-				if (_pointer->_right != y)
-					_pointer = y;
+				// if (_pointer->_right != y)
+				_pointer = y;
 			}
 			return (*this);
 		}
@@ -139,15 +139,15 @@ namespace ft
 			else
 			{
 				Node_pointer y = _pointer->_parent;
-				if (y == ft::nullptr_t)
-					return (*this);
+				// if (y == ft::nullptr_t)
+				// 	return (*this);
 				while (_pointer == y->_right)
 				{
 					_pointer = y;
 					y = y->_parent;
 				}
-				if (_pointer->_right != y)
-					_pointer = y;
+				// if (_pointer->_right != y)
+				_pointer = y;
 			}
 			return (tmp);
 		}
@@ -346,7 +346,7 @@ namespace ft
 			size_type max_size() const
 			{
 				return (this->_alloc.max_size());
-				// return (std::numeric_limits<node_allocator>::max());
+				// return (std::min<size_type>(std::numeric_limits<size_type>::max(), this->_alloc.max_size()));
 			}
 
 			// Modifiers 
