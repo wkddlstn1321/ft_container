@@ -264,9 +264,6 @@ namespace ft
 
 			typedef typename allocator_type::template rebind<Node_type>::other	node_allocator;
 
-			// typedef tree_iterator::iterator			iterator;
-			// typedef tree_iterator::const_iterator	const_iterator;
-
 			typedef tree_iterator<value_type, value_type&, value_type*>				iterator;
 			typedef tree_iterator<value_type, const value_type&, const value_type*>	const_iterator;
 			
@@ -345,8 +342,9 @@ namespace ft
 			}
 			size_type max_size() const
 			{
-				return (this->_alloc.max_size());
-				// return (std::min<size_type>(std::numeric_limits<size_type>::max(), this->_alloc.max_size()));
+				// return (std::max_element);
+				return (node_allocator().max_size());
+				// return (this->_alloc.max_size());
 			}
 
 			// Modifiers 

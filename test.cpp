@@ -17,7 +17,6 @@ using namespace std;
 #define T2 std::string
 #define _pair ft::pair
 typedef _pair<const T1, T2> T3;
-
 // static int iter = 0;
 
 void leaks() { system("leaks ft_containers"); }
@@ -25,7 +24,6 @@ void leaks() { system("leaks ft_containers"); }
 int	main(void)
 {
     // atexit(leaks);
-
 	std::map<int, int> newmap2;
 	newmap2.insert(std::make_pair(0,3));
 	newmap2.insert(std::make_pair(1,3));
@@ -35,9 +33,9 @@ int	main(void)
 	newmap2.insert(std::make_pair(5,3));
 	std::map<int, int>::iterator it = newmap2.end();
 	// std::map<int, int>::reverse_iterator its = newmap.rend();
-	it++;
-	// it--;
-	// cout << it->first << endl;
+	// it++;
+	it--;
+	cout << it->first << endl;
 	// // its--;
 	// for ( ; it != its ; it++)
 	// 	cout << it->first << endl;
@@ -49,6 +47,10 @@ int	main(void)
 	// newmap.insert(ft::make_pair(2,13));
 	// newmap.insert(ft::make_pair(3,3));
 	// newmap.insert(ft::make_pair(4,3));
+	// newmap.erase(2);
+	// cout << newmap2.max_size() << endl;
+	// newmap2.insert(newmap.begin(), newmap.end());
+	// cout << newmap.max_size() << endl;
 	// newmap.insert(ft::make_pair(5,3));
 	// ft::map<int, int>::iterator it = newmap.end();
 	// it++;

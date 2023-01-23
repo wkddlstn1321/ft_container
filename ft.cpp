@@ -134,10 +134,10 @@ int		main(void)
 	for (unsigned int i = 0; i < lst_size; ++i)
 		lst.push_back(T3(i + 1, (i + 1) * 3));
 	ft::map<T1, T2> mp(lst.begin(), lst.end());
-	for (int i = 0 ; i < 10 ; i++)
-	{
-		mp[i] = T2();
-	}
+	// for (int i = 0 ; i < 10 ; i++)
+	// {
+	// 	mp[i] = T2();
+	// }
 	std::map<T1, T2> mp2;
 	std::cout << "max_size: " << mp2.max_size() << std::endl;
 	std::cout << "max_size: " << mp.max_size() << std::endl;
