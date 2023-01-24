@@ -34,9 +34,14 @@ int	vector_time_test(size_t seed, vector vec)
 	{
 		vec.push_back(i);
 		vec[i] = i * 0;
+		vec.at(i);
 	}
 	{
 		vector newvec(vec);
+		newvec.assign(vec.begin(), vec.end());
+		newvec.insert(newvec.begin(), vec.begin(), vec.end());
+		vector newvec2;
+		newvec2.swap(newvec);
 	}
 	vec.erase(vec.begin(), vec.end());
 	std::clock_t result = std::clock() - time;
@@ -90,9 +95,12 @@ int	map_time_test(size_t seed, Map map)
 	{
 		map[i] = i * 0;
 		map.find(i);
+		map.at(i);
 	}
 	{
-		Map tmp(map);
+		Map newmap(map);
+		newmap.clear();
+		newmap.insert(newmap.begin(), newmap.end());
 	}
 	map.erase(map.begin(), map.end());
 	std::clock_t result = std::clock() - time;
