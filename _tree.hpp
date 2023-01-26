@@ -232,9 +232,6 @@ namespace ft
 	template <typename T, typename Key, class _Compare = ft::less<Key>, class Alloc = std::allocator<T> >
 	class _AvlTree
 	{
-		// typedef __tree_iterator<value_type, __node_pointer, difference_type> iterator;
-		// typedef __tree_const_iterator<value_type, __node_pointer, difference_type> const_iterator;
-		//define
 		public:
 			typedef _Compare						key_compare;
 			typedef T								value_type;
@@ -257,10 +254,6 @@ namespace ft
 			Node_pointer	_end;
 			size_type		_size;
 			key_compare		_comp;
-
-		// 	__iter_pointer __begin_node_;
-		// 	__compressed_pair<__end_node_t, __node_allocator> __pair1_;
-		// 	__compressed_pair<size_type, value_compare> __pair3_;
 		
 		public:
 			_AvlTree(const allocator_type& alloc = allocator_type(), const key_compare &comp = key_compare())
@@ -326,9 +319,7 @@ namespace ft
 			}
 			size_type max_size() const
 			{
-				// return (std::max_element);
 				return (node_allocator().max_size());
-				// return (this->_alloc.max_size());
 			}
 
 			// Modifiers 
@@ -389,7 +380,43 @@ namespace ft
 			}
 			iterator insert(iterator position, const value_type &val)
 			{
-				(void)position;
+				Node_pointer new_node;
+				Node_pointer pos_data;
+
+				if (position == begin() && this->_comp(val.first, position->first))
+				{
+					this->_size++;
+					new_node = this->_alloc.allocate(1);
+					this->_alloc.construct(new_node, Node_type(val));
+					pos_data = position.base();
+					pos_data->_left = new_node;
+					new_node->_parent = pos_data;
+					new_node->_right = ft::nullptr_t;
+					new_node->_left = ft::nullptr_t;
+					depth_update(new_node, 1);
+					Balancing(new_node);
+					return (iterator(new_node));
+				}
+				else if (position == end() && this->_size != 0)
+				{
+					iterator tmp_iter(position);
+					tmp_iter--;
+					if	(this->_comp(tmp_iter->first, val.first))
+					{
+						this->_size++;
+						new_node = this->_alloc.allocate(1);
+						this->_alloc.construct(new_node, Node_type(val));
+						pos_data = tmp_iter.base();
+						pos_data->_right = new_node;
+						new_node->_parent = pos_data;
+						new_node->_right = this->_end;
+						this->_end->_left = new_node;
+						new_node->_left = ft::nullptr_t;
+						depth_update(new_node, 1);
+						Balancing(new_node);
+						return (iterator(new_node));
+					}
+				}
 				return (insert(val).first);
 			}
 			template <class InputIterator>
@@ -408,13 +435,6 @@ namespace ft
 				if (del_node->_left == ft::nullptr_t && del_node->_right == ft::nullptr_t)
 				{
 					Node_pointer tmp = del_node->_parent;
-					// if (tmp == ft::nullptr_t)
-					// {
-					// 	this->_end->_parent = ft::nullptr_t;
-					// 	this->_end->_left = ft::nullptr_t;
-					// }
-					// else
-					// {
 					if (this->_comp(tmp->_data.first, del_node->_data.first))
 						tmp->_right = ft::nullptr_t;
 					else
@@ -422,8 +442,6 @@ namespace ft
 					depth_update(tmp, 1);
 					Balancing(tmp);
 					this->_end->_parent = find_root_node(this->_end->_parent);
-					// this->_end->_parent = find_root_node(this->_end->_left);
-					// }
 					this->_alloc.destroy(del_node);
 					this->_alloc.deallocate(del_node, 1);
 					return ;
@@ -451,11 +469,7 @@ namespace ft
 							else
 								del_node->_parent->_right = tmp;
 						}
-						// std::cout << "before root = " << this->_end->_parent->_data.first << std::endl;
-						// std::cout << "tmp = " << tmp->_data.first << std::endl;
 						this->_end->_parent = find_root_node(tmp);
-						// if (this->_end->_parent != ft::nullptr_t)
-						// 	std::cout << "root = " << this->_end->_parent->_data.first << std::endl;
 					}
 				}
 				//왼쪽 노드가 있을 때
@@ -547,20 +561,16 @@ namespace ft
 			iterator find(const key_type &k)
 			{
 				Node_pointer tmp = this->_end->_parent;
-				// std::cout << "root node : " << this->_end->_parent->_data.first << std::endl;
 				while (tmp != ft::nullptr_t && tmp != this->_end)
 				{
 					if (this->_comp(tmp->_data.first, k))
 					{
-						// std::cout << "find!" << std::endl;
-						// std::cout << tmp->_data.first << std::endl;
 						tmp = tmp->_right;
 					}
 					else if (this->_comp(k, tmp->_data.first))
 						tmp = tmp->_left;
 					else
 					{
-						// std::cout << "return!" << std::endl;
 						return (iterator(tmp));
 					}
 				}
@@ -655,12 +665,10 @@ namespace ft
 			ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 			{
 				return (ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
-				// return (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
 			ft::pair<iterator, iterator> equal_range(const key_type &k)
 			{
 				return (ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
-				// return (ft::make_pair<lower_bound(k), upper_bound(k)>);
 			}
 			// Allocator
 			allocator_type get_allocator() const
