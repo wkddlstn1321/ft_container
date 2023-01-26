@@ -30,8 +30,7 @@ namespace ft
 		typedef ptrdiff_t										difference_type;
 		typedef size_t											size_type;
 
-	// friend keyword need protected not private
-	protected:
+	private:
 		allocator_type	_alloc;
 		pointer			_data;
 		size_type		_capacity;
@@ -180,7 +179,6 @@ namespace ft
 			if (this->_capacity >= n)
 				return ;
 			pointer temp;
-			//할당 실패 시 bad_alloc throw?
 			temp = this->_alloc.allocate(n);
 			for (size_type i = 0 ; i < this->_size ; i++)
 			{
@@ -245,7 +243,6 @@ namespace ft
 		void assign(InputIterator first, InputIterator last,
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = ft::nullptr_t)
 		{
-			//기존 요소들 제거 반복자 포인터 참조도 전부 무효화 흙으로 돌아간다.
 			this->clear();
 			size_type n = ft::distance(first, last);
 			if (n > this->_capacity)
@@ -308,11 +305,6 @@ namespace ft
 			position = begin() + st;
 			if (position != position + pos)
 				std::copy_backward(position, position + pos, end());
-			// for (iterator tmp = begin(); tmp != end(); tmp++)
-			// 	std::cout << *tmp << std::endl;
-			// if (position == begin())
-			// 	st = 1;
-			// std::copy_backward(position , position + st, end());
 			for (size_type i = 0; i < n ; i++)
 				*(this->_data + st + i) = val;
 		}
@@ -365,9 +357,6 @@ namespace ft
 		}
 		void swap(vector &x)
 		{
-			//swap 후에도 반복자는 유효
-			//물론 이제는 바뀐 컨테이너를 가리키는
-			//ex) iter = vec[0] -> vec.swap(vec2) -> iter = vec2[0] ㅇㅇ
 			vector temp;
 
 			temp._data = x._data;
@@ -380,7 +369,6 @@ namespace ft
 			this->_capacity = temp._capacity;
 			this->_size = temp._size;
 
-			//NULL로 안바꾸면 복사된 this의 소멸자에서 문제가 생기나? 확인해봐야됨
 			temp._data = NULL;
 		}
 		void clear()
