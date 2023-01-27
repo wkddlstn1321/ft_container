@@ -240,10 +240,6 @@ namespace ft
 		{
 			return (_tree.get_allocator());
 		}
-		void show_me_the_depth()
-		{
-			_tree.show_me_the_depth();
-		}
 		// template <class _K, class _T, class _C, class _A>
 		// friend bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs);
 		// template <class _K, class _T, class _C, class _A>

@@ -717,11 +717,6 @@ namespace ft
 				while (root->_left != ft::nullptr_t)
 					root = root->_left;
 				return (root);
-				// if (root == ft::nullptr_t)
-				// 	return (ft::nullptr_t);
-				// while (root->_left != ft::nullptr_t)
-				// 	root = root->_left;
-				// return (root);
 			}
 			Node_pointer find_max_node(Node_pointer root)
 			{
@@ -851,20 +846,6 @@ namespace ft
 			{
 				LL_rotate(nd->_right);
 				return (RR_rotate(nd));
-			}
-			void	show_show(Node_pointer root)
-			{
-				if (root == ft::nullptr_t || root == this->_end)
-					return ;
-				show_show(root->_right);
-				show_show(root->_left);
-				std::cout << root->_data.first << " : depth = " << root->depth << std::endl;
-			}
-		public:
-			void	show_me_the_depth()
-			{
-				Node_pointer root = find_root_node(this->_end->_parent);
-				show_show(root);
 			}
 	};
 }
