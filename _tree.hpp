@@ -718,14 +718,6 @@ namespace ft
 					root = root->_left;
 				return (root);
 			}
-			Node_pointer find_max_node(Node_pointer root)
-			{
-				if (root == ft::nullptr_t)
-					return (ft::nullptr_t);
-				while (root->_right != ft::nullptr_t)
-					root = root->_right;
-				return (root);
-			}
 			Node_pointer find_root_node(Node_pointer nd) const
 			{
 				while (nd->_parent != ft::nullptr_t)
